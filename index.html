@@ -1,525 +1,60 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Rojak Drive</title>
-
-  <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
-
-  <link rel="stylesheet" href="style.css">
-
-  <!-- Google Identity Services -->
-  <script src="https://accounts.google.com/gsi/client" async defer></script>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>Rojak Drive</title>
+<link rel="stylesheet" href="style.css">
+<script src="https://accounts.google.com/gsi/client" async defer></script>
 </head>
-
 <body>
-
-  <!-- LOGIN -->
-  <div id="loginScreen" class="login-screen">
-
-    <div class="login-card">
-
-      <div class="brand-big">
-        <div class="brand-logo">R</div>
-
-        <div>
-          <h1>Rojak Drive</h1>
-          <p>Cloud workspace sederhana untuk kamu.</p>
-        </div>
-      </div>
-
-      <div class="login-content">
-        <h2>Selamat datang</h2>
-        <p>Login menggunakan akun Google untuk melanjutkan.</p>
-
-        <div id="googleButton" class="google-button-area"></div>
-
-        <div id="loginStatus" class="login-status"></div>
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- APP -->
-  <div id="app" class="app hidden">
-
-    <!-- SIDEBAR -->
-    <aside class="sidebar">
-
-      <div class="sidebar-top">
-
-        <div class="brand">
-          <div class="brand-logo small">R</div>
-
-          <div class="brand-text">
-            <strong>Rojak Drive</strong>
-            <span>Workspace</span>
-          </div>
-        </div>
-
-        <button id="newButton" class="new-button">
-          <span>＋</span>
-          <span>Baru</span>
-        </button>
-
-        <nav class="nav">
-
-          <button class="nav-item active" data-page="drive">
-            <span class="nav-icon">▣</span>
-            <span>Drive Saya</span>
-          </button>
-
-          <button class="nav-item" data-page="recent">
-            <span class="nav-icon">◷</span>
-            <span>Terbaru</span>
-          </button>
-
-          <button class="nav-item" data-page="starred">
-            <span class="nav-icon">★</span>
-            <span>Berbintang</span>
-          </button>
-
-          <button class="nav-item ai-nav" data-page="ai">
-            <span class="nav-icon">✦</span>
-            <span>Rojak AI</span>
-          </button>
-
-        </nav>
-
-      </div>
-
-
-      <div class="sidebar-bottom">
-
-        <button class="nav-item" data-page="settings">
-          <span class="nav-icon">⚙</span>
-          <span>Pengaturan</span>
-        </button>
-
-        <div class="storage">
-
-          <div class="storage-title">
-            <span>Penyimpanan</span>
-            <span id="storageText">0 MB</span>
-          </div>
-
-          <div class="storage-bar">
-            <div id="storageProgress"></div>
-          </div>
-
-        </div>
-
-      </div>
-
-    </aside>
-
-
-    <!-- MAIN -->
-    <main class="main">
-
-      <!-- TOPBAR -->
-      <header class="topbar">
-
-        <div class="search-box">
-          <span>⌕</span>
-          <input
-            id="searchInput"
-            type="text"
-            placeholder="Cari file di Rojak Drive..."
-          >
-        </div>
-
-        <div class="top-actions">
-
-          <button id="helpButton" class="icon-button">?</button>
-
-          <button id="notificationButton" class="icon-button">♢</button>
-
-          <button id="profileButton" class="profile-button">
-
-            <img
-              id="profilePhoto"
-              src=""
-              alt="Profile"
-            >
-
-            <div class="profile-name">
-              <strong id="profileName">User</strong>
-              <span id="profileEmail">-</span>
-            </div>
-
-            <span>⌄</span>
-
-          </button>
-
-        </div>
-
-      </header>
-
-
-      <!-- CONTENT -->
-      <section class="content">
-
-
-        <!-- DRIVE PAGE -->
-        <div id="page-drive" class="page active">
-
-          <div class="page-header">
-
-            <div>
-              <h1>Drive Saya</h1>
-              <p>Kelola file dan folder kamu.</p>
-            </div>
-
-            <div class="header-buttons">
-
-              <button id="uploadButton" class="primary-button">
-                ↑ Upload
-              </button>
-
-              <button id="folderButton" class="secondary-button">
-                ＋ Folder
-              </button>
-
-              <input
-                id="fileInput"
-                type="file"
-                multiple
-                hidden
-              >
-
-            </div>
-
-          </div>
-
-
-          <div class="quick-actions">
-
-            <button id="quickUpload" class="quick-card">
-              <div class="quick-icon red">↑</div>
-              <div>
-                <strong>Upload file</strong>
-                <span>Tambah file baru</span>
-              </div>
-            </button>
-
-            <button id="quickFolder" class="quick-card">
-              <div class="quick-icon orange">＋</div>
-              <div>
-                <strong>Folder baru</strong>
-                <span>Buat folder</span>
-              </div>
-            </button>
-
-            <button id="quickAI" class="quick-card">
-              <div class="quick-icon purple">✦</div>
-              <div>
-                <strong>Tanya Rojak AI</strong>
-                <span>Buka asisten AI</span>
-              </div>
-            </button>
-
-          </div>
-
-
-          <div class="section-title">
-            <h2>File saya</h2>
-
-            <select id="sortSelect">
-              <option value="newest">Terbaru</option>
-              <option value="oldest">Terlama</option>
-              <option value="name">Nama</option>
-            </select>
-          </div>
-
-
-          <div id="fileGrid" class="file-grid"></div>
-
-
-          <div id="emptyState" class="empty-state">
-
-            <div class="empty-icon">▣</div>
-
-            <h3>Belum ada file</h3>
-
-            <p>
-              Upload file atau buat folder untuk mulai menggunakan Rojak Drive.
-            </p>
-
-            <button id="emptyUpload" class="primary-button">
-              Upload file
-            </button>
-
-          </div>
-
-        </div>
-
-
-        <!-- RECENT -->
-        <div id="page-recent" class="page">
-
-          <div class="page-header">
-
-            <div>
-              <h1>Terbaru</h1>
-              <p>File yang baru saja kamu tambahkan.</p>
-            </div>
-
-          </div>
-
-          <div id="recentGrid" class="file-grid"></div>
-
-          <div id="recentEmpty" class="empty-state">
-
-            <div class="empty-icon">◷</div>
-
-            <h3>Belum ada file terbaru</h3>
-
-            <p>File yang kamu upload akan muncul di sini.</p>
-
-          </div>
-
-        </div>
-
-
-        <!-- STARRED -->
-        <div id="page-starred" class="page">
-
-          <div class="page-header">
-
-            <div>
-              <h1>Berbintang</h1>
-              <p>File yang kamu tandai sebagai favorit.</p>
-            </div>
-
-          </div>
-
-          <div id="starredGrid" class="file-grid"></div>
-
-          <div id="starredEmpty" class="empty-state">
-
-            <div class="empty-icon">★</div>
-
-            <h3>Belum ada file berbintang</h3>
-
-            <p>Klik ikon bintang pada file untuk menambahkannya.</p>
-
-          </div>
-
-        </div>
-
-
-        <!-- AI -->
-        <div id="page-ai" class="page">
-
-          <div class="ai-wrapper">
-
-            <div class="ai-header">
-
-              <div class="ai-title">
-
-                <div class="ai-logo">✦</div>
-
-                <div>
-                  <h1>Rojak AI</h1>
-                  <p>Asisten AI untuk membantu pekerjaanmu.</p>
-                </div>
-
-              </div>
-
-              <button id="clearChat" class="secondary-button">
-                Bersihkan
-              </button>
-
-            </div>
-
-
-            <div id="aiChat" class="ai-chat">
-
-              <div class="ai-message bot">
-
-                <div class="message-avatar">R</div>
-
-                <div class="message-content">
-
-                  <strong>Rojak AI</strong>
-
-                  <p>
-                    Halo! 👋 Saya Rojak AI.
-                    Ada yang bisa saya bantu?
-                  </p>
-
-                </div>
-
-              </div>
-
-            </div>
-
-
-            <div class="ai-input-area">
-
-              <textarea
-                id="aiInput"
-                placeholder="Tulis pertanyaan kamu..."
-                rows="1"
-              ></textarea>
-
-              <button id="aiSendButton" class="ai-send">
-                ↑
-              </button>
-
-            </div>
-
-            <div id="aiStatus" class="ai-status"></div>
-
-          </div>
-
-        </div>
-
-
-        <!-- SETTINGS -->
-        <div id="page-settings" class="page">
-
-          <div class="page-header">
-
-            <div>
-              <h1>Pengaturan</h1>
-              <p>Kelola akun dan Rojak Drive.</p>
-            </div>
-
-          </div>
-
-
-          <div class="settings-card">
-
-            <div class="settings-profile">
-
-              <img id="settingsPhoto" src="" alt="Profile">
-
-              <div>
-                <h3 id="settingsName">User</h3>
-                <p id="settingsEmail">-</p>
-              </div>
-
-            </div>
-
-            <div class="settings-row">
-              <div>
-                <strong>Akun Google</strong>
-                <span>Akun yang digunakan untuk login.</span>
-              </div>
-
-              <span class="connected">Terhubung</span>
-            </div>
-
-            <div class="settings-row">
-
-              <div>
-                <strong>Keluar</strong>
-                <span>Keluar dari akun Google.</span>
-              </div>
-
-              <button id="logoutButton" class="danger-button">
-                Keluar
-              </button>
-
-            </div>
-
-          </div>
-
-        </div>
-
-      </section>
-
-    </main>
-
-  </div>
-
-
-  <!-- NEW MENU -->
-  <div id="newMenu" class="popup-menu hidden">
-
-    <button id="menuUpload">
-      ↑ Upload file
-    </button>
-
-    <button id="menuFolder">
-      ＋ Folder baru
-    </button>
-
-  </div>
-
-
-  <!-- PROFILE MENU -->
-  <div id="profileMenu" class="profile-menu hidden">
-
-    <div class="profile-menu-user">
-
-      <img id="menuProfilePhoto" src="" alt="Profile">
-
-      <div>
-        <strong id="menuProfileName">User</strong>
-        <span id="menuProfileEmail">-</span>
-      </div>
-
-    </div>
-
-    <button id="menuSettings">⚙ Pengaturan</button>
-
-    <button id="menuLogout" class="logout-menu">
-      ↪ Keluar
-    </button>
-
-  </div>
-
-
-  <!-- FOLDER MODAL -->
-  <div id="folderModal" class="modal-overlay hidden">
-
-    <div class="modal">
-
-      <div class="modal-header">
-
-        <h2>Folder baru</h2>
-
-        <button id="closeFolderModal">×</button>
-
-      </div>
-
-      <input
-        id="folderName"
-        type="text"
-        placeholder="Nama folder"
-        maxlength="60"
-      >
-
-      <div class="modal-buttons">
-
-        <button id="cancelFolder" class="secondary-button">
-          Batal
-        </button>
-
-        <button id="createFolder" class="primary-button">
-          Buat folder
-        </button>
-
-      </div>
-
-    </div>
-
-  </div>
-
-
-  <!-- TOAST -->
-  <div id="toast" class="toast"></div>
-
-
-  <script src="script.js"></script>
-
-</body>
-</html>
+<div id="loginScreen" class="login"><div class="login-card">
+<div class="logo">R</div><h1>Rojak Drive</h1><p>Drive pribadi + TXT Editor + Rojak AI</p>
+<div id="googleButton"></div><div id="loginStatus"></div>
+<button id="demoLogin" class="btn secondary">Masuk Demo</button>
+<small>Google Login aktif setelah Client ID diisi di script.js.</small>
+</div></div>
+
+<div id="app" class="hidden">
+<aside><div class="brand"><b>R</b> Rojak Drive</div>
+<button class="nav active" data-page="drive">⌂ Drive Saya</button>
+<button class="nav" data-page="recent">◷ Terbaru</button>
+<button class="nav" data-page="starred">★ Berbintang</button>
+<button class="nav" data-page="ai">✦ Rojak AI</button>
+<button class="nav" data-page="settings">⚙ Pengaturan</button>
+<div class="storage"><span id="storageText">0 item</span><div><i id="storageBar"></i></div></div>
+</aside>
+
+<main><header><input id="searchInput" placeholder="Cari file atau folder..."><button data-page="ai">✦</button><span id="profileName">User</span></header>
+
+<section id="page-drive" class="page active">
+<div class="head"><div><label>ROJAK DRIVE</label><h2>Drive Saya</h2></div>
+<div><button id="newTxtButton" class="btn secondary">＋ File TXT</button><button id="folderButton" class="btn secondary">＋ Folder</button><button id="uploadButton" class="btn primary">↑ Upload</button></div></div>
+<input id="fileInput" type="file" multiple hidden>
+<div class="quick">
+<button data-action="txt">📄 <b>Buat File TXT</b><small>Catatan atau kode</small></button>
+<button data-action="folder">📁 <b>Buat Folder</b><small>Kelompokkan file</small></button>
+<button data-action="upload">↑ <b>Upload File</b><small>Dari perangkat</small></button>
+<button data-action="ai">✦ <b>Tanya Rojak AI</b><small>Bantuan cepat</small></button>
+</div>
+<div id="emptyState" class="empty">Belum ada file.<br><small>Buat TXT, folder, atau upload file.</small></div>
+<div id="fileGrid" class="grid"></div>
+</section>
+
+<section id="page-recent" class="page"><label>AKTIVITAS</label><h2>Terbaru</h2><div id="recentGrid" class="grid"></div></section>
+<section id="page-starred" class="page"><label>FAVORIT</label><h2>Berbintang</h2><div id="starredGrid" class="grid"></div></section>
+
+<section id="page-ai" class="page"><label>AI ASSISTANT</label><h2>Rojak AI</h2><span id="aiStatus">Online</span>
+<div class="ai"><div id="aiChat"><div class="msg bot">Halo! Saya Rojak AI. Ada yang bisa saya bantu?</div></div>
+<div class="compose"><textarea id="aiInput" placeholder="Tulis pertanyaan..."></textarea><button id="aiSendButton" class="btn primary">Kirim</button></div>
+<button id="clearChat" class="clear">Bersihkan chat</button></div></section>
+
+<section id="page-settings" class="page"><label>ACCOUNT</label><h2>Pengaturan</h2><div class="settings"><h3 id="settingsName">User</h3><p id="settingsEmail">-</p><button id="logoutButton" class="btn danger">Logout</button></div></section>
+</main></div>
+
+<div id="txtModal" class="modal hidden"><div class="modal-card"><button id="closeTxt" class="close">×</button><label>TEXT FILE</label><h2 id="txtTitle">Buat File TXT</h2>
+<input id="txtName" placeholder="Nama file.txt"><textarea id="txtContent" placeholder="Tulis isi file TXT..."></textarea>
+<div class="right"><button id="cancelTxt" class="btn secondary">Batal</button><button id="saveTxt" class="btn primary">Simpan TXT</button></div></div></div>
+<div id="toast"></div>
+<script src="script.js"></script>
+</body></html>
