@@ -9,7 +9,7 @@
    ========================= */
 
 const GOOGLE_CLIENT_ID =
-  "GANTI_DENGAN_GOOGLE_CLIENT_ID_KAMU.apps.googleusercontent.com";
+  "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com";
 
 
 /* =========================
