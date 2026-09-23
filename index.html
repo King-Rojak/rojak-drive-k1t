@@ -3,110 +3,113 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <title>Rojak DriveKit</title>
+  <title>Gemini AI</title>
 
   <style>
-    :root {
-      --bg: #11110f;
-      --panel: #181816;
-      --panel2: #0f0f0d;
-      --border: #2b2b27;
-      --text: #eeeeea;
-      --muted: #8d8d85;
-      --accent: #d95735;
-      --accent-hover: #ed6945;
-      --success: #55a86b;
-      --danger: #d94b4b;
-    }
-
     * {
       box-sizing: border-box;
     }
 
     body {
       margin: 0;
-      background: var(--bg);
-      color: var(--text);
-      font-family: Arial, Helvetica, sans-serif;
-    }
-
-    button,
-    input,
-    textarea {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    .hidden {
-      display: none !important;
-    }
-
-    /* =========================
-       LOGIN
-    ========================= */
-
-    #loginScreen {
+      font-family: Arial, sans-serif;
+      background: #0f0f0f;
+      color: white;
       min-height: 100vh;
       display: flex;
-      align-items: center;
       justify-content: center;
+      align-items: center;
       padding: 20px;
     }
 
-    .login-card {
+    .container {
       width: 100%;
-      max-width: 430px;
-      background: var(--panel);
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      padding: 32px;
+      max-width: 700px;
+      background: #181818;
+      border-radius: 20px;
+      padding: 25px;
+      border: 1px solid #292929;
     }
 
-    .logo {
-      font-size: 26px;
-      font-weight: 800;
-      letter-spacing: -1px;
+    h1 {
+      margin-top: 0;
     }
 
-    .logo span {
-      color: var(--accent);
-    }
-
-    .login-description {
-      color: var(--muted);
-      line-height: 1.6;
-      margin: 10px 0 25px;
-    }
-
-    .google-btn {
+    textarea {
       width: 100%;
-      height: 46px;
-      border: 0;
-      border-radius: 7px;
-      background: #f5f5f2;
-      color: #171713;
-      font-weight: 700;
+      min-height: 150px;
+      resize: vertical;
+      background: #101010;
+      color: white;
+      border: 1px solid #333;
+      border-radius: 12px;
+      padding: 15px;
+      font-size: 16px;
+      outline: none;
     }
 
-    .google-btn:hover {
-      background: white;
-    }
-
-    .error-box {
+    button {
       margin-top: 15px;
-      padding: 12px;
-      border-radius: 7px;
-      border: 1px solid #653030;
-      background: #251313;
-      color: #f0aaaa;
-      font-size: 13px;
-      line-height: 1.5;
+      width: 100%;
+      padding: 14px;
+      border: 0;
+      border-radius: 12px;
+      background: #8b0000;
+      color: white;
+      font-size: 16px;
+      cursor: pointer;
     }
 
+    button:hover {
+      background: #a00000;
+    }
+
+    button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+    }
+
+    #status {
+      margin-top: 15px;
+      color: #aaa;
+    }
+
+    #result {
+      margin-top: 20px;
+      padding: 18px;
+      background: #101010;
+      border-radius: 12px;
+      white-space: pre-wrap;
+      line-height: 1.6;
+      min-height: 80px;
+    }
+  </style>
+</head>
+
+<body>
+
+  <div class="container">
+    <h1>Gemini AI</h1>
+
+    <textarea
+      id="prompt"
+      placeholder="Tulis pertanyaan kamu..."
+    ></textarea>
+
+    <button id="sendBtn">
+      Kirim ke Gemini
+    </button>
+
+    <div id="status"></div>
+
+    <div id="result">
+      Jawaban akan muncul di sini.
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>
     /* =========================
        HEADER
     ========================= */
