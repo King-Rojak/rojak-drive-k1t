@@ -35,6 +35,10 @@
       padding: 0;
     }
 
+    html {
+      scroll-behavior: smooth;
+    }
+
     body {
       background: var(--bg);
       color: var(--text);
@@ -48,6 +52,8 @@
         sans-serif;
 
       min-height: 100vh;
+
+      animation: pageFade 0.55s ease both;
     }
 
     button,
@@ -59,6 +65,101 @@
     button {
       cursor: pointer;
     }
+
+    /* =========================
+       ANIMATION SYSTEM
+    ========================= */
+
+    @keyframes pageFade {
+      from {
+        opacity: 0;
+      }
+
+      to {
+        opacity: 1;
+      }
+    }
+
+    @keyframes fadeUp {
+      from {
+        opacity: 0;
+        transform: translateY(12px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes appAppear {
+      from {
+        opacity: 0;
+        transform: translateY(14px) scale(0.995);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0) scale(1);
+      }
+    }
+
+    @keyframes sectionAppear {
+      from {
+        opacity: 0;
+        transform: translateY(7px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes fileAppear {
+      from {
+        opacity: 0;
+        transform: translateY(8px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes statusAppear {
+      from {
+        opacity: 0;
+        transform: translateY(-5px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    @keyframes connectedPulse {
+      0%,
+      100% {
+        opacity: 1;
+      }
+
+      50% {
+        opacity: 0.55;
+      }
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    /* =========================
+       PAGE
+    ========================= */
 
     .page {
       width: min(760px, calc(100% - 32px));
@@ -72,6 +173,7 @@
 
     .header {
       margin-bottom: 28px;
+      animation: fadeUp 0.6s ease 0.05s both;
     }
 
     .logo {
@@ -106,7 +208,1874 @@
 
     .login {
       padding: 34px;
+      animation: fadeUp 0.6s ease 0.12s both;
     }
+
+    .login h1 {
+      font-size: 22px;
+      margin-bottom: 9px;
+    }
+
+    .login p {
+      color: var(--muted);
+      font-size: 14px;
+      line-height: 1.6;
+      margin-bottom: 25px;
+    }
+
+    .google-button {
+      width: 100%;
+      height: 46px;
+
+      background: #eeeeea;
+      color: #11110f;
+
+      border: none;
+      border-radius: 6px;
+
+      font-weight: 600;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .google-button:hover {
+      background: #ffffff;
+      transform: translateY(-2px);
+      box-shadow: 0 5px 16px rgba(0, 0, 0, 0.18);
+    }
+
+    .google-button:active {
+      transform: translateY(0);
+    }
+
+    /* =========================
+       APP
+    ========================= */
+
+    .app {
+      display: none;
+    }
+
+    .app.app-visible {
+      animation: appAppear 0.45s ease both;
+    }
+
+    .topbar {
+      padding: 18px 20px;
+      border-bottom: 1px solid var(--border);
+
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 15px;
+    }
+
+    .account {
+      display: flex;
+      flex-direction: column;
+      gap: 3px;
+      min-width: 0;
+    }
+
+    .account-title {
+      font-size: 13px;
+      font-weight: 600;
+    }
+
+    .account-status {
+      color: var(--success);
+      font-size: 12px;
+    }
+
+    .account-status::first-letter {
+      animation: connectedPulse 2s ease-in-out infinite;
+    }
+
+    .disconnect {
+      background: transparent;
+      color: var(--muted);
+
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      padding: 8px 12px;
+      font-size: 12px;
+
+      white-space: nowrap;
+
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        transform 0.2s ease,
+        background 0.2s ease;
+    }
+
+    .disconnect:hover {
+      color: var(--text);
+      border-color: #44443e;
+      background: #1d1d1a;
+      transform: translateY(-1px);
+    }
+
+    /* =========================
+       NAV
+    ========================= */
+
+    .nav {
+      display: flex;
+      gap: 2px;
+
+      padding: 8px;
+
+      border-bottom: 1px solid var(--border);
+      background: #151513;
+    }
+
+    .nav button {
+      flex: 1;
+
+      border: none;
+      background: transparent;
+
+      color: var(--muted);
+
+      padding: 10px 12px;
+
+      border-radius: 5px;
+
+      font-size: 13px;
+
+      transition:
+        color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .nav button:hover {
+      color: var(--text);
+      background: #1e1e1b;
+      transform: translateY(-1px);
+    }
+
+    .nav button.active {
+      color: var(--text);
+      background: #242420;
+    }
+
+    .nav button:active {
+      transform: translateY(0);
+    }
+
+    /* =========================
+       CONTENT
+    ========================= */
+
+    .content {
+      padding: 25px;
+    }
+
+    .section {
+      display: none;
+    }
+
+    .section.active {
+      display: block;
+      animation: sectionAppear 0.3s ease both;
+    }
+
+    .section-title {
+      font-size: 18px;
+      margin-bottom: 5px;
+    }
+
+    .section-description {
+      color: var(--muted);
+      font-size: 13px;
+      margin-bottom: 23px;
+    }
+
+    /* =========================
+       FORM
+    ========================= */
+
+    .field {
+      margin-bottom: 18px;
+    }
+
+    .field label {
+      display: block;
+
+      font-size: 12px;
+      font-weight: 600;
+
+      margin-bottom: 8px;
+    }
+
+    input,
+    textarea {
+      width: 100%;
+
+      background: var(--input);
+      color: var(--text);
+
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      outline: none;
+
+      transition:
+        border-color 0.2s ease,
+        box-shadow 0.2s ease,
+        background 0.2s ease;
+    }
+
+    input {
+      height: 44px;
+      padding: 0 13px;
+    }
+
+    textarea {
+      min-height: 220px;
+      padding: 13px;
+
+      resize: vertical;
+
+      line-height: 1.55;
+    }
+
+    input:focus,
+    textarea:focus {
+      border-color: #55554e;
+      background: #11110f;
+      box-shadow: 0 0 0 2px rgba(217, 87, 53, 0.06);
+    }
+
+    input::placeholder,
+    textarea::placeholder {
+      color: #62625c;
+      transition: opacity 0.2s ease;
+    }
+
+    input:focus::placeholder,
+    textarea:focus::placeholder {
+      opacity: 0.55;
+    }
+
+    /* =========================
+       CREATE BUTTON
+    ========================= */
+
+    .create-button {
+      width: 100%;
+      height: 45px;
+
+      background: var(--accent);
+      color: white;
+
+      border: none;
+      border-radius: 6px;
+
+      font-weight: 600;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .create-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(217, 87, 53, 0.12);
+    }
+
+    .create-button:active {
+      transform: translateY(0);
+      box-shadow: none;
+    }
+
+    .create-button:disabled {
+      opacity: 0.5;
+      cursor: not-allowed;
+      transform: none;
+      box-shadow: none;
+    }
+
+    /* =========================
+       LOADING BUTTON
+    ========================= */
+
+    .create-button.loading {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 9px;
+    }
+
+    .loading-spinner {
+      width: 13px;
+      height: 13px;
+
+      border: 2px solid rgba(255, 255, 255, 0.35);
+      border-top-color: white;
+
+      border-radius: 50%;
+
+      animation: spin 0.7s linear infinite;
+    }
+
+    /* =========================
+       STATUS
+    ========================= */
+
+    .status {
+      display: none;
+
+      margin-top: 15px;
+
+      padding: 12px;
+
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      font-size: 13px;
+      line-height: 1.5;
+    }
+
+    .status.success {
+      display: block;
+      color: var(--success);
+      border-color: rgba(112, 183, 126, 0.3);
+      background: rgba(112, 183, 126, 0.05);
+      animation: statusAppear 0.3s ease both;
+    }
+
+    .status.error {
+      display: block;
+      color: var(--error);
+      border-color: rgba(217, 107, 95, 0.3);
+      background: rgba(217, 107, 95, 0.05);
+      animation: statusAppear 0.3s ease both;
+    }
+
+    /* =========================
+       RECENT FILES
+    ========================= */
+
+    .recent-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 18px;
+    }
+
+    .refresh-button {
+      background: transparent;
+
+      color: var(--muted);
+
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      padding: 7px 11px;
+
+      font-size: 12px;
+
+      transition:
+        color 0.2s ease,
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .refresh-button:hover {
+      color: var(--text);
+      border-color: #44443e;
+      background: #1d1d1a;
+      transform: translateY(-1px);
+    }
+
+    .refresh-button:active {
+      transform: translateY(0);
+    }
+
+    .refresh-button.loading {
+      opacity: 0.65;
+      pointer-events: none;
+    }
+
+    .file-list {
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .file-item {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      gap: 15px;
+
+      padding: 14px;
+
+      background: var(--input);
+
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .file-item:hover {
+      border-color: #3a3a35;
+      background: #121210;
+      transform: translateX(2px);
+    }
+
+    .file-info {
+      min-width: 0;
+    }
+
+    .file-name {
+      font-size: 13px;
+      font-weight: 600;
+
+      overflow: hidden;
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .file-date {
+      margin-top: 4px;
+
+      color: var(--muted);
+      font-size: 11px;
+    }
+
+    .open-file {
+      flex-shrink: 0;
+
+      background: transparent;
+
+      color: var(--text);
+
+      border: 1px solid var(--border);
+      border-radius: 5px;
+
+      padding: 7px 10px;
+
+      font-size: 11px;
+
+      transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .open-file:hover {
+      border-color: #55554e;
+      background: #1d1d1a;
+      transform: translateY(-1px);
+    }
+
+    .open-file:active {
+      transform: translateY(0);
+    }
+
+    .file-item.animate-in {
+      animation: fileAppear 0.35s ease both;
+    }
+
+    .empty {
+      padding: 35px 15px;
+
+      text-align: center;
+
+      color: var(--muted);
+
+      font-size: 13px;
+
+      border: 1px dashed var(--border);
+      border-radius: 6px;
+
+      animation: fadeUp 0.3s ease both;
+    }
+
+    /* =========================
+       DRIVE
+    ========================= */
+
+    .drive-box {
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      padding: 22px;
+
+      transition:
+        border-color 0.2s ease,
+        background 0.2s ease,
+        transform 0.2s ease;
+    }
+
+    .drive-box:hover {
+      border-color: #383833;
+      background: #1a1a18;
+      transform: translateY(-1px);
+    }
+
+    .drive-box h3 {
+      font-size: 15px;
+      margin-bottom: 7px;
+    }
+
+    .drive-box p {
+      color: var(--muted);
+
+      font-size: 13px;
+      line-height: 1.6;
+
+      margin-bottom: 18px;
+    }
+
+    .drive-button {
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+
+      min-height: 42px;
+
+      padding: 0 15px;
+
+      background: var(--accent);
+      color: white;
+
+      border-radius: 6px;
+
+      text-decoration: none;
+
+      font-size: 13px;
+      font-weight: 600;
+
+      transition:
+        background 0.2s ease,
+        transform 0.2s ease,
+        box-shadow 0.2s ease;
+    }
+
+    .drive-button:hover {
+      background: var(--accent-hover);
+      transform: translateY(-2px);
+      box-shadow: 0 6px 18px rgba(217, 87, 53, 0.12);
+    }
+
+    .drive-button:active {
+      transform: translateY(0);
+    }
+
+    /* =========================
+       FOOTER
+    ========================= */
+
+    footer {
+      margin-top: 22px;
+
+      color: #5f5f58;
+
+      text-align: center;
+
+      font-size: 11px;
+
+      animation: fadeUp 0.6s ease 0.25s both;
+    }
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media (max-width: 600px) {
+
+      .page {
+        width: min(100% - 20px, 760px);
+        padding-top: 30px;
+      }
+
+      .login {
+        padding: 25px 20px;
+      }
+
+      .content {
+        padding: 20px;
+      }
+
+      .topbar {
+        align-items: flex-start;
+      }
+
+      .nav button {
+        font-size: 12px;
+        padding: 10px 5px;
+      }
+
+      .file-item {
+        align-items: flex-start;
+      }
+
+      .open-file {
+        margin-top: 1px;
+      }
+
+    }
+
+    /* =========================
+       REDUCED MOTION
+    ========================= */
+
+    @media (prefers-reduced-motion: reduce) {
+
+      *,
+      *::before,
+      *::after {
+        animation-duration: 0.01ms !important;
+        animation-iteration-count: 1 !important;
+        transition-duration: 0.01ms !important;
+        scroll-behavior: auto !important;
+      }
+
+    }
+  </style>
+</head>
+
+<body>
+
+  <main class="page">
+
+    <!-- =========================
+         HEADER
+    ========================= -->
+
+    <header class="header">
+
+      <div class="logo">
+        Rojak <span>DriveKit</span>
+      </div>
+
+      <div class="description">
+        Small tools for Google Drive.
+      </div>
+
+    </header>
+
+
+    <!-- =========================
+         LOGIN
+    ========================= -->
+
+    <section class="panel login" id="loginBox">
+
+      <h1>Connect Google Drive</h1>
+
+      <p>
+        Hubungkan akun Google kamu untuk membuat file
+        <strong>.txt</strong> langsung ke Google Drive.
+      </p>
+
+      <button
+        class="google-button"
+        onclick="loginGoogle()"
+      >
+        Continue with Google
+      </button>
+
+    </section>
+
+
+    <!-- =========================
+         APP
+    ========================= -->
+
+    <section class="panel app" id="appBox">
+
+      <!-- TOP BAR -->
+
+      <div class="topbar">
+
+        <div class="account">
+
+          <div class="account-title">
+            Google Drive
+          </div>
+
+          <div class="account-status">
+            ● Connected
+          </div>
+
+        </div>
+
+        <button
+          class="disconnect"
+          onclick="logoutGoogle()"
+        >
+          Disconnect
+        </button>
+
+      </div>
+
+
+      <!-- NAVIGATION -->
+
+      <nav class="nav">
+
+        <button
+          id="navCreate"
+          class="active"
+          onclick="showSection('create')"
+        >
+          Create
+        </button>
+
+        <button
+          id="navRecent"
+          onclick="showSection('recent')"
+        >
+          Recent Files
+        </button>
+
+        <button
+          id="navDrive"
+          onclick="showSection('drive')"
+        >
+          Open Drive
+        </button>
+
+      </nav>
+
+
+      <!-- CONTENT -->
+
+      <div class="content">
+
+
+        <!-- =========================
+             CREATE
+        ========================= -->
+
+        <section
+          class="section active"
+          id="createSection"
+        >
+
+          <h2 class="section-title">
+            New text file
+          </h2>
+
+          <p class="section-description">
+            Buat file TXT baru dan simpan langsung ke Google Drive.
+          </p>
+
+
+          <div class="field">
+
+            <label for="fileName">
+              File name
+            </label>
+
+            <input
+              id="fileName"
+              type="text"
+              placeholder="contoh: catatan-harian"
+              autocomplete="off"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="fileContent">
+              Content
+            </label>
+
+            <textarea
+              id="fileContent"
+              placeholder="Tulis isi file di sini..."
+            ></textarea>
+
+          </div>
+
+
+          <button
+            class="create-button"
+            id="createBtn"
+            onclick="createTxtFile()"
+          >
+            Create .txt file
+          </button>
+
+
+          <div
+            class="status"
+            id="status"
+          ></div>
+
+        </section>
+
+
+        <!-- =========================
+             RECENT FILES
+        ========================= -->
+
+        <section
+          class="section"
+          id="recentSection"
+        >
+
+          <div class="recent-header">
+
+            <div>
+
+              <h2 class="section-title">
+                Recent Files
+              </h2>
+
+              <p
+                class="section-description"
+                style="margin-bottom:0;"
+              >
+                File terbaru yang dapat diakses oleh DriveKit.
+              </p>
+
+            </div>
+
+            <button
+              class="refresh-button"
+              id="refreshBtn"
+              onclick="loadRecentFiles()"
+            >
+              Refresh
+            </button>
+
+          </div>
+
+
+          <div
+            class="file-list"
+            id="fileList"
+          >
+
+            <div class="empty">
+              Klik Refresh untuk memuat file.
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- =========================
+             OPEN DRIVE
+        ========================= -->
+
+        <section
+          class="section"
+          id="driveSection"
+        >
+
+          <h2 class="section-title">
+            Google Drive
+          </h2>
+
+          <p class="section-description">
+            Buka Google Drive untuk melihat dan mengelola semua file kamu.
+          </p>
+
+
+          <div class="drive-box">
+
+            <h3>
+              Open your Drive
+            </h3>
+
+            <p>
+              DriveKit hanya menangani pembuatan file.
+              Untuk mengelola file secara lengkap, buka Google Drive.
+            </p>
+
+            <a
+              class="drive-button"
+              href="https://drive.google.com/drive/my-drive"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              Open Google Drive
+            </a>
+
+          </div>
+
+        </section>
+
+
+      </div>
+
+    </section>
+
+
+    <footer>
+      Rojak DriveKit
+    </footer>
+
+  </main>
+
+
+  <script>
+
+    /* =====================================================
+       GOOGLE CONFIG
+    ===================================================== */
+
+    const CLIENT_ID =
+      "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com";
+
+    const SCOPES =
+      "https://www.googleapis.com/auth/drive.file";
+
+    const DISCOVERY_DOC =
+      "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
+
+
+    /* =====================================================
+       VARIABLES
+    ===================================================== */
+
+    let tokenClient;
+
+    let gapiInited = false;
+    let gisInited = false;
+
+    let accessToken = null;
+
+
+    /* =====================================================
+       GOOGLE API INITIALIZATION
+    ===================================================== */
+
+    function gapiLoaded() {
+
+      gapi.load(
+        "client",
+        initializeGapiClient
+      );
+
+    }
+
+
+    async function initializeGapiClient() {
+
+      try {
+
+        await gapi.client.init({
+          discoveryDocs: [DISCOVERY_DOC]
+        });
+
+        gapiInited = true;
+
+      } catch (error) {
+
+        console.error(
+          "GAPI initialization error:",
+          error
+        );
+
+      }
+
+    }
+
+
+    function gisLoaded() {
+
+      tokenClient =
+        google.accounts.oauth2.initTokenClient({
+
+          client_id: CLIENT_ID,
+
+          scope: SCOPES,
+
+          callback: ""
+
+        });
+
+      gisInited = true;
+
+    }
+
+
+    /* =====================================================
+       LOGIN
+    ===================================================== */
+
+    function loginGoogle() {
+
+      if (!gapiInited || !gisInited) {
+
+        showLoginError(
+          "Google API masih dimuat. Coba lagi sebentar."
+        );
+
+        return;
+
+      }
+
+
+      tokenClient.callback =
+        async (response) => {
+
+          if (response.error) {
+
+            console.error(response);
+
+            showLoginError(
+              "Login Google gagal. Coba lagi."
+            );
+
+            return;
+
+          }
+
+
+          accessToken =
+            response.access_token;
+
+
+          gapi.client.setToken({
+            access_token: accessToken
+          });
+
+
+          showApp();
+
+        };
+
+
+      if (!accessToken) {
+
+        tokenClient.requestAccessToken({
+          prompt: "consent"
+        });
+
+      } else {
+
+        tokenClient.requestAccessToken({
+          prompt: ""
+        });
+
+      }
+
+    }
+
+
+    /* =====================================================
+       SHOW APP
+    ===================================================== */
+
+    function showApp() {
+
+      const loginBox =
+        document.getElementById(
+          "loginBox"
+        );
+
+      const appBox =
+        document.getElementById(
+          "appBox"
+        );
+
+
+      loginBox.style.display = "none";
+
+      appBox.style.display = "block";
+
+      /*
+        Restart animation setiap kali login.
+      */
+
+      appBox.classList.remove(
+        "app-visible"
+      );
+
+      void appBox.offsetWidth;
+
+      appBox.classList.add(
+        "app-visible"
+      );
+
+
+      showSection("create");
+
+    }
+
+
+    /* =====================================================
+       CREATE TXT FILE
+    ===================================================== */
+
+    async function createTxtFile() {
+
+      const fileNameInput =
+        document.getElementById(
+          "fileName"
+        );
+
+      const contentInput =
+        document.getElementById(
+          "fileContent"
+        );
+
+      const createBtn =
+        document.getElementById(
+          "createBtn"
+        );
+
+
+      let fileName =
+        fileNameInput.value.trim();
+
+      const content =
+        contentInput.value;
+
+
+      if (!fileName) {
+
+        showStatus(
+          "Masukkan nama file terlebih dahulu.",
+          "error"
+        );
+
+        fileNameInput.focus();
+
+        return;
+
+      }
+
+
+      if (!fileName.toLowerCase().endsWith(".txt")) {
+
+        fileName += ".txt";
+
+      }
+
+
+      if (!accessToken) {
+
+        showStatus(
+          "Google Drive belum terhubung.",
+          "error"
+        );
+
+        return;
+
+      }
+
+
+      /* -------------------------
+         LOADING
+      ------------------------- */
+
+      createBtn.disabled = true;
+
+      createBtn.classList.add(
+        "loading"
+      );
+
+      createBtn.innerHTML = `
+        <span class="loading-spinner"></span>
+        Creating...
+      `;
+
+
+      showStatus(
+        "",
+        ""
+      );
+
+
+      try {
+
+        const metadata = {
+
+          name: fileName,
+
+          mimeType: "text/plain"
+
+        };
+
+
+        const boundary =
+          "-------RojakDriveKitBoundary";
+
+
+        const delimiter =
+          "\r\n--" +
+          boundary +
+          "\r\n";
+
+
+        const closeDelimiter =
+          "\r\n--" +
+          boundary +
+          "--";
+
+
+        const body =
+          delimiter +
+
+          "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+
+          JSON.stringify(metadata) +
+
+          delimiter +
+
+          "Content-Type: text/plain; charset=UTF-8\r\n\r\n" +
+
+          content +
+
+          closeDelimiter;
+
+
+        const response =
+          await fetch(
+            "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,mimeType,modifiedTime,webViewLink",
+            {
+
+              method: "POST",
+
+              headers: {
+
+                "Authorization":
+                  "Bearer " + accessToken,
+
+                "Content-Type":
+                  "multipart/related; boundary=" +
+                  boundary
+
+              },
+
+              body: body
+
+            }
+          );
+
+
+        const data =
+          await response.json();
+
+
+        if (!response.ok) {
+
+          console.error(
+            "Drive API error:",
+            data
+          );
+
+          throw new Error(
+            data?.error?.message ||
+            "Gagal membuat file."
+          );
+
+        }
+
+
+        showStatus(
+          `File "${data.name}" berhasil dibuat di Google Drive.`,
+          "success"
+        );
+
+
+        fileNameInput.value = "";
+
+        contentInput.value = "";
+
+
+        loadRecentFiles();
+
+
+      } catch (error) {
+
+        console.error(error);
+
+
+        showStatus(
+          "Gagal membuat file: " +
+          error.message,
+          "error"
+        );
+
+
+      } finally {
+
+        createBtn.disabled = false;
+
+        createBtn.classList.remove(
+          "loading"
+        );
+
+        createBtn.innerHTML =
+          "Create .txt file";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       RECENT FILES
+    ===================================================== */
+
+    async function loadRecentFiles() {
+
+      const fileList =
+        document.getElementById(
+          "fileList"
+        );
+
+      const refreshBtn =
+        document.getElementById(
+          "refreshBtn"
+        );
+
+
+      if (!accessToken) {
+
+        fileList.innerHTML = `
+          <div class="empty">
+            Google Drive belum terhubung.
+          </div>
+        `;
+
+        return;
+
+      }
+
+
+      refreshBtn.classList.add(
+        "loading"
+      );
+
+      refreshBtn.textContent =
+        "Loading...";
+
+
+      fileList.innerHTML = `
+        <div class="empty">
+          Loading files...
+        </div>
+      `;
+
+
+      try {
+
+        const response =
+          await gapi.client.drive.files.list({
+
+            pageSize: 10,
+
+            orderBy:
+              "modifiedTime desc",
+
+            fields:
+              "files(id,name,mimeType,modifiedTime,webViewLink)",
+
+            q:
+              "trashed = false"
+
+          });
+
+
+        const files =
+          response.result.files || [];
+
+
+        if (files.length === 0) {
+
+          fileList.innerHTML = `
+            <div class="empty">
+              Belum ada file yang dapat ditampilkan.
+            </div>
+          `;
+
+          return;
+
+        }
+
+
+        fileList.innerHTML =
+          files.map(
+            (file, index) => {
+
+              const safeName =
+                escapeHtml(
+                  file.name
+                );
+
+
+              const date =
+                formatDate(
+                  file.modifiedTime
+                );
+
+
+              return `
+                <div
+                  class="file-item animate-in"
+                  style="animation-delay:${index * 45}ms;"
+                >
+
+                  <div class="file-info">
+
+                    <div class="file-name">
+                      ${safeName}
+                    </div>
+
+                    <div class="file-date">
+                      Modified ${date}
+                    </div>
+
+                  </div>
+
+                  <button
+                    class="open-file"
+                    onclick="openFile('${file.id}')"
+                  >
+                    Open
+                  </button>
+
+                </div>
+              `;
+
+            }
+          ).join("");
+
+
+      } catch (error) {
+
+        console.error(
+          "Recent files error:",
+          error
+        );
+
+
+        fileList.innerHTML = `
+          <div class="empty">
+            Gagal memuat Recent Files.
+          </div>
+        `;
+
+      } finally {
+
+        refreshBtn.classList.remove(
+          "loading"
+        );
+
+        refreshBtn.textContent =
+          "Refresh";
+
+      }
+
+    }
+
+
+    /* =====================================================
+       OPEN FILE
+    ===================================================== */
+
+    async function openFile(fileId) {
+
+      try {
+
+        const response =
+          await gapi.client.drive.files.get({
+
+            fileId: fileId,
+
+            fields:
+              "id,name,mimeType,webViewLink"
+
+          });
+
+
+        const file =
+          response.result;
+
+
+        if (file.webViewLink) {
+
+          window.open(
+            file.webViewLink,
+            "_blank",
+            "noopener,noreferrer"
+          );
+
+          return;
+
+        }
+
+
+        window.open(
+          "https://drive.google.com/file/d/" +
+          fileId +
+          "/view",
+          "_blank",
+          "noopener,noreferrer"
+        );
+
+
+      } catch (error) {
+
+        console.error(
+          "Open file error:",
+          error
+        );
+
+
+        showStatus(
+          "Tidak dapat membuka file.",
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       NAVIGATION
+    ===================================================== */
+
+    function showSection(section) {
+
+      const sections = {
+
+        create:
+          document.getElementById(
+            "createSection"
+          ),
+
+        recent:
+          document.getElementById(
+            "recentSection"
+          ),
+
+        drive:
+          document.getElementById(
+            "driveSection"
+          )
+
+      };
+
+
+      const navButtons = {
+
+        create:
+          document.getElementById(
+            "navCreate"
+          ),
+
+        recent:
+          document.getElementById(
+            "navRecent"
+          ),
+
+        drive:
+          document.getElementById(
+            "navDrive"
+          )
+
+      };
+
+
+      Object.values(
+        sections
+      ).forEach(
+        element => {
+
+          element.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+      Object.values(
+        navButtons
+      ).forEach(
+        button => {
+
+          button.classList.remove(
+            "active"
+          );
+
+        }
+      );
+
+
+      sections[
+        section
+      ].classList.add(
+        "active"
+      );
+
+
+      navButtons[
+        section
+      ].classList.add(
+        "active"
+      );
+
+
+      if (
+        section === "recent"
+      ) {
+
+        loadRecentFiles();
+
+      }
+
+    }
+
+
+    /* =====================================================
+       LOGOUT
+    ===================================================== */
+
+    function logoutGoogle() {
+
+      if (accessToken) {
+
+        google.accounts.oauth2.revoke(
+          accessToken,
+          () => {
+
+            console.log(
+              "Google access revoked."
+            );
+
+          }
+        );
+
+      }
+
+
+      accessToken = null;
+
+
+      if (gapi.client) {
+
+        gapi.client.setToken(null);
+
+      }
+
+
+      document.getElementById(
+        "appBox"
+      ).style.display = "none";
+
+
+      document.getElementById(
+        "appBox"
+      ).classList.remove(
+        "app-visible"
+      );
+
+
+      const loginBox =
+        document.getElementById(
+          "loginBox"
+        );
+
+
+      loginBox.style.display =
+        "block";
+
+
+      loginBox.style.animation =
+        "none";
+
+
+      void loginBox.offsetWidth;
+
+
+      loginBox.style.animation =
+        "fadeUp 0.4s ease both";
+
+
+      document.getElementById(
+        "fileName"
+      ).value = "";
+
+
+      document.getElementById(
+        "fileContent"
+      ).value = "";
+
+
+      showStatus(
+        "",
+        ""
+      );
+
+    }
+
+
+    /* =====================================================
+       STATUS
+    ===================================================== */
+
+    function showStatus(
+      message,
+      type
+    ) {
+
+      const status =
+        document.getElementById(
+          "status"
+        );
+
+
+      status.textContent =
+        message;
+
+
+      status.className =
+        "status";
+
+
+      if (
+        type === "success"
+      ) {
+
+        status.classList.add(
+          "success"
+        );
+
+      }
+
+
+      if (
+        type === "error"
+      ) {
+
+        status.classList.add(
+          "error"
+        );
+
+      }
+
+    }
+
+
+    /* =====================================================
+       LOGIN ERROR
+    ===================================================== */
+
+    function showLoginError(
+      message
+    ) {
+
+      alert(message);
+
+    }
+
+
+    /* =====================================================
+       ESCAPE HTML
+    ===================================================== */
+
+    function escapeHtml(
+      value
+    ) {
+
+      return String(value)
+        .replace(
+          /&/g,
+          "&amp;"
+        )
+        .replace(
+          /</g,
+          "&lt;"
+        )
+        .replace(
+          />/g,
+          "&gt;"
+        )
+        .replace(
+          /"/g,
+          "&quot;"
+        )
+        .replace(
+          /'/g,
+          "&#039;"
+        );
+
+    }
+
+
+    /* =====================================================
+       FORMAT DATE
+    ===================================================== */
+
+    function formatDate(
+      dateString
+    ) {
+
+      if (!dateString) {
+        return "-";
+      }
+
+
+      const date =
+        new Date(dateString);
+
+
+      return date.toLocaleString(
+        "id-ID",
+        {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit"
+        }
+      );
+
+    }
+
+
+    /* =====================================================
+       START GOOGLE API
+    ===================================================== */
+
+    window.addEventListener(
+      "load",
+      () => {
+
+        gapiLoaded();
+
+        gisLoaded();
+
+      }
+    );
+
+  </script>
+
+</body>
+</html>    }
 
     .login h1 {
       font-size: 22px;
