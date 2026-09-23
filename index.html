@@ -3,110 +3,558 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gemini AI</title>
+  <title>Rojak Drive</title>
+  <meta name="description" content="Rojak Drive - File storage and AI assistant">
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
-
-    body {
-      margin: 0;
-      font-family: Arial, sans-serif;
-      background: #0f0f0f;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      padding: 20px;
-    }
-
-    .container {
-      width: 100%;
-      max-width: 700px;
-      background: #181818;
-      border-radius: 20px;
-      padding: 25px;
-      border: 1px solid #292929;
-    }
-
-    h1 {
-      margin-top: 0;
-    }
-
-    textarea {
-      width: 100%;
-      min-height: 150px;
-      resize: vertical;
-      background: #101010;
-      color: white;
-      border: 1px solid #333;
-      border-radius: 12px;
-      padding: 15px;
-      font-size: 16px;
-      outline: none;
-    }
-
-    button {
-      margin-top: 15px;
-      width: 100%;
-      padding: 14px;
-      border: 0;
-      border-radius: 12px;
-      background: #8b0000;
-      color: white;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #a00000;
-    }
-
-    button:disabled {
-      opacity: 0.5;
-      cursor: not-allowed;
-    }
-
-    #status {
-      margin-top: 15px;
-      color: #aaa;
-    }
-
-    #result {
-      margin-top: 20px;
-      padding: 18px;
-      background: #101010;
-      border-radius: 12px;
-      white-space: pre-wrap;
-      line-height: 1.6;
-      min-height: 80px;
-    }
-  </style>
+  <link rel="stylesheet" href="style.css">
 </head>
 
 <body>
 
-  <div class="container">
-    <h1>Gemini AI</h1>
+  <div class="app">
 
-    <textarea
-      id="prompt"
-      placeholder="Tulis pertanyaan kamu..."
-    ></textarea>
+    <!-- SIDEBAR -->
+    <aside class="sidebar">
 
-    <button id="sendBtn">
-      Kirim ke Gemini
-    </button>
+      <div class="brand">
+        <div class="brand-logo">R</div>
 
-    <div id="status"></div>
+        <div>
+          <h1>Rojak Drive</h1>
+          <span>Personal Workspace</span>
+        </div>
+      </div>
 
-    <div id="result">
-      Jawaban akan muncul di sini.
-    </div>
+
+      <nav class="nav">
+
+        <button class="nav-item active" data-page="drive">
+          <span>⌂</span>
+          <span>My Drive</span>
+        </button>
+
+        <button class="nav-item" data-page="recent">
+          <span>◷</span>
+          <span>Recent</span>
+        </button>
+
+        <button class="nav-item" data-page="starred">
+          <span>☆</span>
+          <span>Starred</span>
+        </button>
+
+        <div class="nav-title">
+          AI TOOLS
+        </div>
+
+        <button class="nav-item ai-button" data-page="ai">
+          <span>✦</span>
+          <span>Rojak AI</span>
+        </button>
+
+        <div class="nav-title">
+          SYSTEM
+        </div>
+
+        <button class="nav-item" data-page="settings">
+          <span>⚙</span>
+          <span>Settings</span>
+        </button>
+
+      </nav>
+
+
+      <div class="sidebar-bottom">
+
+        <div class="storage">
+          <div class="storage-title">
+            Storage
+          </div>
+
+          <div class="storage-bar">
+            <div class="storage-progress"></div>
+          </div>
+
+          <small>
+            Local workspace
+          </small>
+        </div>
+
+      </div>
+
+    </aside>
+
+
+    <!-- MAIN -->
+    <section class="main">
+
+      <!-- HEADER -->
+      <header class="header">
+
+        <div class="mobile-brand">
+          Rojak Drive
+        </div>
+
+        <div class="search-box">
+          <span>⌕</span>
+
+          <input
+            id="searchInput"
+            type="text"
+            placeholder="Search files..."
+          >
+        </div>
+
+        <div class="header-actions">
+
+          <button
+            class="icon-button"
+            title="Notifications"
+          >
+            ♢
+          </button>
+
+          <div class="profile">
+            <div class="profile-avatar">
+              R
+            </div>
+          </div>
+
+        </div>
+
+      </header>
+
+
+      <!-- CONTENT -->
+      <main id="content">
+
+        <!-- DRIVE PAGE -->
+        <section class="page active-page" id="page-drive">
+
+          <div class="page-heading">
+
+            <div>
+              <div class="eyebrow">
+                WORKSPACE
+              </div>
+
+              <h2>
+                My Drive
+              </h2>
+
+              <p>
+                Manage your files and workspace.
+              </p>
+            </div>
+
+            <button
+              id="newFileButton"
+              class="primary-button"
+            >
+              + New
+            </button>
+
+          </div>
+
+
+          <div class="quick-cards">
+
+            <div class="quick-card">
+              <div class="quick-icon folder">
+                📁
+              </div>
+
+              <div>
+                <strong id="folderCount">0</strong>
+                <span>Folders</span>
+              </div>
+            </div>
+
+
+            <div class="quick-card">
+              <div class="quick-icon file">
+                ▣
+              </div>
+
+              <div>
+                <strong id="fileCount">0</strong>
+                <span>Files</span>
+              </div>
+            </div>
+
+
+            <div class="quick-card ai-card">
+
+              <div class="quick-icon ai">
+                ✦
+              </div>
+
+              <div>
+                <strong>Rojak AI</strong>
+                <span>AI Assistant</span>
+              </div>
+
+            </div>
+
+          </div>
+
+
+          <div class="section-heading">
+
+            <h3>
+              Files
+            </h3>
+
+            <select id="sortSelect">
+              <option value="name">
+                Name
+              </option>
+
+              <option value="type">
+                Type
+              </option>
+
+              <option value="newest">
+                Newest
+              </option>
+            </select>
+
+          </div>
+
+
+          <div
+            id="fileGrid"
+            class="file-grid"
+          ></div>
+
+        </section>
+
+
+        <!-- RECENT -->
+        <section class="page" id="page-recent">
+
+          <div class="page-heading">
+
+            <div>
+              <div class="eyebrow">
+                FILES
+              </div>
+
+              <h2>
+                Recent
+              </h2>
+
+              <p>
+                Recently added files.
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            id="recentGrid"
+            class="file-grid"
+          ></div>
+
+        </section>
+
+
+        <!-- STARRED -->
+        <section class="page" id="page-starred">
+
+          <div class="page-heading">
+
+            <div>
+              <div class="eyebrow">
+                FAVORITES
+              </div>
+
+              <h2>
+                Starred
+              </h2>
+
+              <p>
+                Your favorite files.
+              </p>
+            </div>
+
+          </div>
+
+          <div
+            id="starredGrid"
+            class="file-grid"
+          ></div>
+
+        </section>
+
+
+        <!-- AI -->
+        <section class="page" id="page-ai">
+
+          <div class="ai-page">
+
+            <div class="ai-heading">
+
+              <div class="ai-symbol">
+                ✦
+              </div>
+
+              <div>
+                <div class="eyebrow">
+                  ROJAK AI
+                </div>
+
+                <h2>
+                  Your AI Assistant
+                </h2>
+
+                <p>
+                  Ask questions, explain concepts,
+                  generate ideas, and more.
+                </p>
+              </div>
+
+            </div>
+
+
+            <div class="ai-card">
+
+              <div class="ai-card-top">
+
+                <div>
+                  <strong>
+                    Gemini AI
+                  </strong>
+
+                  <span>
+                    Gemini 2.5 Flash
+                  </span>
+                </div>
+
+                <div class="online">
+                  <i></i>
+                  Online
+                </div>
+
+              </div>
+
+
+              <div
+                id="aiResult"
+                class="ai-result"
+              >
+                <div class="empty-ai">
+                  <div class="empty-ai-icon">
+                    ✦
+                  </div>
+
+                  <h3>
+                    How can I help?
+                  </h3>
+
+                  <p>
+                    Tulis pertanyaan di bawah untuk
+                    memulai percakapan.
+                  </p>
+                </div>
+              </div>
+
+
+              <div class="ai-input-area">
+
+                <textarea
+                  id="aiPrompt"
+                  placeholder="Tanyakan sesuatu kepada Rojak AI..."
+                ></textarea>
+
+                <div class="ai-input-bottom">
+
+                  <span id="aiStatus">
+                    Gemini siap digunakan
+                  </span>
+
+                  <button
+                    id="aiSend"
+                    class="send-button"
+                  >
+                    Kirim
+                  </button>
+
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+
+        <!-- SETTINGS -->
+        <section class="page" id="page-settings">
+
+          <div class="page-heading">
+
+            <div>
+              <div class="eyebrow">
+                SYSTEM
+              </div>
+
+              <h2>
+                Settings
+              </h2>
+
+              <p>
+                Manage your Rojak Drive preferences.
+              </p>
+            </div>
+
+          </div>
+
+
+          <div class="settings-card">
+
+            <div class="setting">
+
+              <div>
+                <strong>
+                  Workspace
+                </strong>
+
+                <p>
+                  Rojak Drive
+                </p>
+              </div>
+
+            </div>
+
+
+            <div class="setting">
+
+              <div>
+                <strong>
+                  AI Model
+                </strong>
+
+                <p>
+                  Gemini 2.5 Flash
+                </p>
+              </div>
+
+            </div>
+
+
+            <div class="setting">
+
+              <div>
+                <strong>
+                  API Status
+                </strong>
+
+                <p id="apiStatus">
+                  Checking...
+                </p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </section>
+
+      </main>
+
+
+      <footer>
+        Rojak Drive • Rojak AI
+      </footer>
+
+    </section>
+
   </div>
 
+
+  <!-- NEW FILE MODAL -->
+
+  <div
+    id="newModal"
+    class="modal hidden"
+  >
+
+    <div class="modal-box">
+
+      <div class="modal-header">
+
+        <div>
+          <strong>
+            Create New
+          </strong>
+
+          <span>
+            Add something to your workspace
+          </span>
+        </div>
+
+        <button
+          id="closeModal"
+          class="close-button"
+        >
+          ×
+        </button>
+
+      </div>
+
+
+      <button
+        id="createFolder"
+        class="modal-option"
+      >
+        <span>📁</span>
+
+        <div>
+          <strong>
+            New Folder
+          </strong>
+
+          <small>
+            Create a workspace folder
+          </small>
+        </div>
+      </button>
+
+
+      <label
+        class="modal-option upload-option"
+      >
+        <span>↑</span>
+
+        <div>
+          <strong>
+            Upload File
+          </strong>
+
+          <small>
+            Upload a file from your device
+          </small>
+        </div>
+
+        <input
+          id="fileUpload"
+          type="file"
+          hidden
+        >
+      </label>
+
+    </div>
+
+  </div>
+
+
+  <script src="script.js"></script>
+
+</body>
+</html>
   <script src="script.js"></script>
 </body>
 </html>
