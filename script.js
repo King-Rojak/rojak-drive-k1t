@@ -1,41 +1,13 @@
-/* =========================================================
-   ROJAK DRIVE
-   Google Login + Drive + Upload + Folder + Rojak AI
-   ========================================================= */
-
-
-/* =========================
-   GOOGLE CONFIG
-   ========================= */
-
 const GOOGLE_CLIENT_ID =
-  "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com";
-
-
-/* =========================
-   STATE
-   ========================= */
+  "GANTI_DENGAN_GOOGLE_CLIENT_ID_KAMU.apps.googleusercontent.com";
 
 let currentUser = null;
 let files = [];
 
-const STORAGE_KEY = "rojak_drive_files";
-const USER_KEY = "rojak_drive_user";
-
-
-/* =========================
-   DOM
-   ========================= */
-
-const $ = (id) => document.getElementById(id);
-
-
-/* =========================
-   INIT
-   ========================= */
+const STORAGE_FILES = "rojak_drive_files";
+const STORAGE_USER = "rojak_drive_user";
 
 document.addEventListener("DOMContentLoaded", () => {
-
   loadSavedData();
 
   setupNavigation();
@@ -46,1663 +18,938 @@ document.addEventListener("DOMContentLoaded", () => {
   initializeGoogleLogin();
 
   renderFiles();
-
+  updateProfile();
 });
 
+/* =========================================================
+   LOCAL STORAGE
+========================================================= */
 
-/* =========================
+function loadSavedData() {
+  try {
+    const savedFiles = localStorage.getItem(STORAGE_FILES);
+    const savedUser = localStorage.getItem(STORAGE_USER);
+
+    files = savedFiles ? JSON.parse(savedFiles) : [];
+    currentUser = savedUser ? JSON.parse(savedUser) : null;
+  } catch (error) {
+    console.error("Gagal memuat data:", error);
+
+    files = [];
+    currentUser = null;
+  }
+
+  if (currentUser) {
+    showApp();
+  } else {
+    showLogin();
+  }
+}
+
+function saveFiles() {
+  localStorage.setItem(STORAGE_FILES, JSON.stringify(files));
+}
+
+function saveUser() {
+  if (currentUser) {
+    localStorage.setItem(
+      STORAGE_USER,
+      JSON.stringify(currentUser)
+    );
+  }
+}
+
+/* =========================================================
    GOOGLE LOGIN
-   ========================= */
+========================================================= */
 
 function initializeGoogleLogin() {
-
   if (
     typeof google === "undefined" ||
     !google.accounts ||
     !google.accounts.id
   ) {
-
-    setTimeout(initializeGoogleLogin, 500);
-
+    console.error("Google Identity Services belum tersedia.");
     return;
   }
+
+  const button = document.getElementById("googleButton");
+
+  if (!button) return;
 
   if (
+    !GOOGLE_CLIENT_ID ||
     GOOGLE_CLIENT_ID.includes("GANTI_DENGAN")
   ) {
-
-    $("loginStatus").textContent =
-      "Masukkan Google Client ID di script.js terlebih dahulu.";
+    document.getElementById("loginStatus").textContent =
+      "Google Client ID belum diatur.";
 
     return;
   }
 
-
   google.accounts.id.initialize({
-
     client_id: GOOGLE_CLIENT_ID,
-
     callback: handleGoogleLogin,
-
     auto_select: false,
-
     cancel_on_tap_outside: true
-
   });
 
-
-  google.accounts.id.renderButton(
-
-    $("googleButton"),
-
-    {
-      theme: "filled_black",
-      size: "large",
-      width: 360,
-      text: "signin_with",
-      shape: "rectangular"
-    }
-
-  );
+  google.accounts.id.renderButton(button, {
+    theme: "filled_black",
+    size: "large",
+    shape: "pill",
+    width: 320
+  });
 }
-
-
-/* =========================
-   GOOGLE CALLBACK
-   ========================= */
 
 function handleGoogleLogin(response) {
-
   try {
-
-    if (!response || !response.credential) {
-
-      throw new Error("Credential Google tidak ditemukan.");
-
-    }
-
-
-    const user = parseJwt(response.credential);
+    const payload = parseJwt(response.credential);
 
     currentUser = {
-
-      id: user.sub,
-
-      name:
-        user.name ||
-        user.given_name ||
-        "User",
-
-      email:
-        user.email ||
-        "-",
-
-      picture:
-        user.picture ||
-        createAvatar(user.name || "User")
-
+      id: payload.sub,
+      name: payload.name || "Pengguna",
+      email: payload.email || "",
+      picture: payload.picture || ""
     };
 
-
-    localStorage.setItem(
-      USER_KEY,
-      JSON.stringify(currentUser)
-    );
-
+    saveUser();
 
     showApp();
+    updateProfile();
 
-    showToast("Login berhasil.");
-
+    showToast("Login berhasil!");
   } catch (error) {
-
     console.error(error);
 
-    $("loginStatus").textContent =
-      "Login berhasil, tetapi data Google gagal dimuat.";
+    const status = document.getElementById("loginStatus");
 
+    if (status) {
+      status.textContent =
+        "Login Google gagal diproses.";
+    }
   }
-
 }
 
-
-/* =========================
-   JWT PARSER
-   ========================= */
-
 function parseJwt(token) {
+  const base64Url = token.split(".")[1];
 
-  const parts = token.split(".");
-
-  if (parts.length !== 3) {
-
-    throw new Error("Token Google tidak valid.");
-
-  }
-
-  const base64 = parts[1]
+  const base64 = base64Url
     .replace(/-/g, "+")
     .replace(/_/g, "/");
 
-  const jsonPayload =
-    decodeURIComponent(
-      atob(base64)
-        .split("")
-        .map(
-          c =>
-            "%" +
-            ("00" + c.charCodeAt(0).toString(16)).slice(-2)
-        )
-        .join("")
-    );
+  const jsonPayload = decodeURIComponent(
+    atob(base64)
+      .split("")
+      .map(
+        (char) =>
+          "%" +
+          ("00" + char.charCodeAt(0).toString(16)).slice(-2)
+      )
+      .join("")
+  );
 
   return JSON.parse(jsonPayload);
-
 }
-
-
-/* =========================
-   AVATAR
-   ========================= */
-
-function createAvatar(name) {
-
-  const letter =
-    encodeURIComponent(
-      (name || "U").charAt(0).toUpperCase()
-    );
-
-  return `https://ui-avatars.com/api/?name=${letter}&background=ef4444&color=fff`;
-
-}
-
-
-/* =========================
-   SHOW APP
-   ========================= */
-
-function showApp() {
-
-  $("loginScreen").classList.add("hidden");
-
-  $("app").classList.remove("hidden");
-
-  updateUserUI();
-
-}
-
-
-/* =========================
-   USER UI
-   ========================= */
-
-function updateUserUI() {
-
-  if (!currentUser) return;
-
-
-  $("profileName").textContent =
-    currentUser.name;
-
-  $("profileEmail").textContent =
-    currentUser.email;
-
-  $("profilePhoto").src =
-    currentUser.picture;
-
-
-  $("settingsName").textContent =
-    currentUser.name;
-
-  $("settingsEmail").textContent =
-    currentUser.email;
-
-  $("settingsPhoto").src =
-    currentUser.picture;
-
-
-  $("menuProfileName").textContent =
-    currentUser.name;
-
-  $("menuProfileEmail").textContent =
-    currentUser.email;
-
-  $("menuProfilePhoto").src =
-    currentUser.picture;
-
-}
-
-
-/* =========================
-   LOGOUT
-   ========================= */
 
 function logout() {
-
   currentUser = null;
 
-  localStorage.removeItem(USER_KEY);
+  localStorage.removeItem(STORAGE_USER);
 
   if (
-    window.google &&
+    typeof google !== "undefined" &&
     google.accounts &&
     google.accounts.id
   ) {
-
     google.accounts.id.disableAutoSelect();
-
   }
 
-  $("app").classList.add("hidden");
+  showLogin();
 
-  $("loginScreen").classList.remove("hidden");
-
-  $("profileMenu").classList.add("hidden");
-
-  showToast("Kamu telah keluar.");
-
+  showToast("Berhasil logout.");
 }
 
+/* =========================================================
+   LOGIN / APP
+========================================================= */
 
-/* =========================
-   LOAD SAVED DATA
-   ========================= */
+function showLogin() {
+  const loginScreen = document.getElementById("loginScreen");
+  const app = document.getElementById("app");
 
-function loadSavedData() {
-
-  try {
-
-    const savedUser =
-      localStorage.getItem(USER_KEY);
-
-    const savedFiles =
-      localStorage.getItem(STORAGE_KEY);
-
-
-    if (savedUser) {
-
-      currentUser =
-        JSON.parse(savedUser);
-
-      showApp();
-
-    }
-
-
-    if (savedFiles) {
-
-      files =
-        JSON.parse(savedFiles);
-
-    }
-
-  } catch (error) {
-
-    console.error(
-      "Gagal membaca data:",
-      error
-    );
-
-    files = [];
-
+  if (loginScreen) {
+    loginScreen.style.display = "flex";
   }
 
+  if (app) {
+    app.style.display = "none";
+  }
 }
 
+function showApp() {
+  const loginScreen = document.getElementById("loginScreen");
+  const app = document.getElementById("app");
 
-/* =========================
-   SAVE FILES
-   ========================= */
+  if (loginScreen) {
+    loginScreen.style.display = "none";
+  }
 
-function saveFiles() {
+  if (app) {
+    app.style.display = "flex";
+  }
+}
 
-  localStorage.setItem(
-    STORAGE_KEY,
-    JSON.stringify(files)
+function updateProfile() {
+  if (!currentUser) return;
+
+  const nameElements = document.querySelectorAll(
+    "[data-user-name]"
   );
 
+  nameElements.forEach((element) => {
+    element.textContent = currentUser.name;
+  });
+
+  const emailElements = document.querySelectorAll(
+    "[data-user-email]"
+  );
+
+  emailElements.forEach((element) => {
+    element.textContent = currentUser.email;
+  });
+
+  const imageElements = document.querySelectorAll(
+    "[data-user-picture]"
+  );
+
+  imageElements.forEach((element) => {
+    if (currentUser.picture) {
+      element.src = currentUser.picture;
+    }
+  });
 }
 
-
-/* =========================
+/* =========================================================
    NAVIGATION
-   ========================= */
+========================================================= */
 
 function setupNavigation() {
+  const navItems = document.querySelectorAll("[data-page]");
 
-  document
-    .querySelectorAll(".nav-item[data-page]")
-    .forEach(button => {
+  navItems.forEach((item) => {
+    item.addEventListener("click", () => {
+      const page = item.dataset.page;
 
-      button.addEventListener("click", () => {
+      openPage(page);
 
-        openPage(
-          button.dataset.page
-        );
-
+      navItems.forEach((nav) => {
+        nav.classList.remove("active");
       });
 
+      item.classList.add("active");
     });
-
+  });
 }
 
-
 function openPage(page) {
-
   document
     .querySelectorAll(".page")
-    .forEach(item => {
-
-      item.classList.remove("active");
-
+    .forEach((element) => {
+      element.classList.remove("active");
     });
 
-
-  const target =
-    $(`page-${page}`);
+  const target = document.getElementById(
+    `page-${page}`
+  );
 
   if (target) {
-
     target.classList.add("active");
-
   }
 
-
-  document
-    .querySelectorAll(".nav-item[data-page]")
-    .forEach(item => {
-
-      item.classList.toggle(
-        "active",
-        item.dataset.page === page
-      );
-
-    });
-
+  if (page === "drive") {
+    renderFiles();
+  }
 
   if (page === "recent") {
-
     renderRecent();
-
   }
 
   if (page === "starred") {
-
     renderStarred();
-
   }
-
 }
 
-
-/* =========================
+/* =========================================================
    BUTTONS
-   ========================= */
+========================================================= */
 
 function setupButtons() {
-
-
-  /* NEW */
-
-  $("newButton").addEventListener(
-    "click",
-    () => {
-
-      $("newMenu")
-        .classList.toggle("hidden");
-
-    }
-  );
-
-
-  $("menuUpload").addEventListener(
-    "click",
-    () => {
-
-      $("newMenu").classList.add("hidden");
-
-      openFilePicker();
-
-    }
-  );
-
-
-  $("menuFolder").addEventListener(
-    "click",
-    () => {
-
-      $("newMenu").classList.add("hidden");
-
-      openFolderModal();
-
-    }
-  );
-
-
-  /* UPLOAD */
-
-  $("uploadButton").addEventListener(
-    "click",
-    openFilePicker
-  );
-
-
-  $("quickUpload").addEventListener(
-    "click",
-    openFilePicker
-  );
-
-
-  $("emptyUpload").addEventListener(
-    "click",
-    openFilePicker
-  );
-
-
-  $("fileInput").addEventListener(
-    "change",
-    handleFiles
-  );
-
-
-  /* FOLDER */
-
-  $("folderButton").addEventListener(
-    "click",
-    openFolderModal
-  );
-
-
-  $("quickFolder").addEventListener(
-    "click",
-    openFolderModal
-  );
-
-
-  $("closeFolderModal").addEventListener(
-    "click",
-    closeFolderModal
-  );
-
-
-  $("cancelFolder").addEventListener(
-    "click",
-    closeFolderModal
-  );
-
-
-  $("createFolder").addEventListener(
-    "click",
-    createFolder
-  );
-
-
-  $("folderName").addEventListener(
-    "keydown",
-    event => {
-
-      if (event.key === "Enter") {
-
-        createFolder();
-
-      }
-
-    }
-  );
-
-
-  /* AI */
-
-  $("quickAI").addEventListener(
-    "click",
-    () => openPage("ai")
-  );
-
-
-  /* PROFILE */
-
-  $("profileButton").addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-      $("profileMenu")
-        .classList.toggle("hidden");
-
-    }
-  );
-
-
-  $("menuSettings").addEventListener(
-    "click",
-    () => {
-
-      $("profileMenu").classList.add("hidden");
-
-      openPage("settings");
-
-    }
-  );
-
-
-  $("menuLogout").addEventListener(
-    "click",
-    logout
-  );
-
-
-  $("logoutButton").addEventListener(
-    "click",
-    logout
-  );
-
-
-  /* CLEAR CHAT */
-
-  $("clearChat").addEventListener(
-    "click",
-    clearChat
-  );
-
-
-  /* SORT */
-
-  $("sortSelect").addEventListener(
-    "change",
-    renderFiles
-  );
-
-
-  /* HELP */
-
-  $("helpButton").addEventListener(
-    "click",
-    () => {
-
-      showToast(
-        "Upload file, buat folder, atau gunakan Rojak AI."
+  const uploadButton =
+    document.getElementById("uploadButton");
+
+  const fileInput =
+    document.getElementById("fileInput");
+
+  const folderButton =
+    document.getElementById("folderButton");
+
+  const logoutButton =
+    document.getElementById("logoutButton");
+
+  const clearChat =
+    document.getElementById("clearChat");
+
+  if (uploadButton) {
+    uploadButton.addEventListener(
+      "click",
+      openFilePicker
+    );
+  }
+
+  if (fileInput) {
+    fileInput.addEventListener(
+      "change",
+      handleFiles
+    );
+  }
+
+  if (folderButton) {
+    folderButton.addEventListener(
+      "click",
+      createFolder
+    );
+  }
+
+  if (logoutButton) {
+    logoutButton.addEventListener(
+      "click",
+      logout
+    );
+  }
+
+  if (clearChat) {
+    clearChat.addEventListener(
+      "click",
+      clearAIChat
+    );
+  }
+
+  document
+    .querySelectorAll("[data-action='upload']")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        openFilePicker
       );
+    });
 
-    }
-  );
+  document
+    .querySelectorAll("[data-action='folder']")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        createFolder
+      );
+    });
 
-
-  $("notificationButton").addEventListener(
-    "click",
-    () => {
-
-      showToast("Tidak ada notifikasi baru.");
-
-    }
-  );
-
-
-  document.addEventListener(
-    "click",
-    () => {
-
-      $("profileMenu").classList.add("hidden");
-
-    }
-  );
-
-
-  $("profileMenu").addEventListener(
-    "click",
-    event => {
-
-      event.stopPropagation();
-
-    }
-  );
-
+  document
+    .querySelectorAll("[data-action='ai']")
+    .forEach((button) => {
+      button.addEventListener(
+        "click",
+        () => openPage("ai")
+      );
+    });
 }
 
-
-/* =========================
-   FILE PICKER
-   ========================= */
+/* =========================================================
+   FILE
+========================================================= */
 
 function openFilePicker() {
+  const input = document.getElementById("fileInput");
 
-  $("fileInput").click();
-
+  if (input) {
+    input.click();
+  }
 }
 
+async function handleFiles(event) {
+  const selectedFiles = Array.from(
+    event.target.files || []
+  );
 
-/* =========================
-   HANDLE UPLOAD
-   ========================= */
+  if (!selectedFiles.length) return;
 
-function handleFiles(event) {
-
-  const selected =
-    Array.from(event.target.files || []);
-
-
-  if (!selected.length) return;
-
-
-  selected.forEach(file => {
-
-    const id =
-      Date.now() +
-      "-" +
-      Math.random()
-        .toString(36)
-        .slice(2);
-
-
-    const reader =
-      new FileReader();
-
-
-    reader.onload = () => {
-
-      const item = {
-
-        id,
-
-        name: file.name,
-
-        type: "file",
-
-        mime: file.type,
-
-        size: file.size,
-
-        data:
-          file.type.startsWith("image/")
-            ? reader.result
-            : null,
-
-        createdAt:
-          Date.now(),
-
-        starred: false
-
-      };
-
-
-      files.unshift(item);
-
-      saveFiles();
-
-      renderFiles();
-
-      updateStorage();
-
-    };
-
+  for (const file of selectedFiles) {
+    let preview = "";
 
     if (file.type.startsWith("image/")) {
-
-      reader.readAsDataURL(file);
-
-    } else {
-
-      reader.onload();
-
+      preview = await readFileAsDataURL(file);
     }
 
-  });
+    files.push({
+      id:
+        Date.now() +
+        "_" +
+        Math.random()
+          .toString(36)
+          .slice(2),
 
+      name: file.name,
+
+      type: file.type.startsWith("image/")
+        ? "image"
+        : "file",
+
+      mimeType: file.type,
+
+      size: file.size,
+
+      preview,
+
+      starred: false,
+
+      createdAt: Date.now()
+    });
+  }
+
+  saveFiles();
+  renderFiles();
 
   event.target.value = "";
 
   showToast(
-    `${selected.length} file berhasil ditambahkan.`
+    `${selectedFiles.length} file berhasil ditambahkan.`
   );
-
 }
 
+function readFileAsDataURL(file) {
+  return new Promise((resolve, reject) => {
+    const reader = new FileReader();
 
-/* =========================
-   FOLDER
-   ========================= */
+    reader.onload = () => {
+      resolve(reader.result);
+    };
 
-function openFolderModal() {
+    reader.onerror = reject;
 
-  $("folderModal")
-    .classList.remove("hidden");
-
-  $("folderName").value = "";
-
-  setTimeout(
-    () => $("folderName").focus(),
-    50
-  );
-
+    reader.readAsDataURL(file);
+  });
 }
-
-
-function closeFolderModal() {
-
-  $("folderModal")
-    .classList.add("hidden");
-
-}
-
 
 function createFolder() {
+  const name = prompt("Masukkan nama folder:");
 
-  const name =
-    $("folderName").value.trim();
+  if (!name || !name.trim()) return;
 
-
-  if (!name) {
-
-    showToast("Masukkan nama folder.");
-
-    return;
-
-  }
-
-
-  files.unshift({
-
+  files.push({
     id:
       Date.now() +
-      "-" +
+      "_" +
       Math.random()
         .toString(36)
         .slice(2),
 
-    name,
+    name: name.trim(),
 
     type: "folder",
 
-    mime: "folder",
+    mimeType: "folder",
 
     size: 0,
 
-    data: null,
+    preview: "",
 
-    createdAt:
-      Date.now(),
+    starred: false,
 
-    starred: false
-
+    createdAt: Date.now()
   });
 
-
   saveFiles();
-
   renderFiles();
 
-  updateStorage();
-
-  closeFolderModal();
-
   showToast("Folder berhasil dibuat.");
-
 }
 
-
-/* =========================
+/* =========================================================
    RENDER FILES
-   ========================= */
+========================================================= */
 
 function renderFiles() {
-
-  let result =
-    [...files];
-
-
-  const search =
-    $("searchInput").value
-      .trim()
-      .toLowerCase();
-
-
-  if (search) {
-
-    result =
-      result.filter(item =>
-        item.name
-          .toLowerCase()
-          .includes(search)
-      );
-
-  }
-
-
-  const sort =
-    $("sortSelect").value;
-
-
-  if (sort === "newest") {
-
-    result.sort(
-      (a,b) =>
-        b.createdAt -
-        a.createdAt
-    );
-
-  }
-
-
-  if (sort === "oldest") {
-
-    result.sort(
-      (a,b) =>
-        a.createdAt -
-        b.createdAt
-    );
-
-  }
-
-
-  if (sort === "name") {
-
-    result.sort(
-      (a,b) =>
-        a.name.localeCompare(
-          b.name
-        )
-    );
-
-  }
-
-
   renderGrid(
-    $("fileGrid"),
-    result
+    document.getElementById("fileGrid"),
+    files
   );
 
+  const empty =
+    document.getElementById("emptyState");
 
-  $("emptyState")
-    .classList.toggle(
-      "hidden",
-      result.length > 0
-    );
-
-
-  updateStorage();
-
+  if (empty) {
+    empty.style.display =
+      files.length === 0
+        ? "flex"
+        : "none";
+  }
 }
-
-
-/* =========================
-   RECENT
-   ========================= */
 
 function renderRecent() {
-
-  const result =
-    [...files]
-      .sort(
-        (a,b) =>
-          b.createdAt -
-          a.createdAt
-      )
-      .slice(0, 30);
-
+  const recent = [...files]
+    .sort(
+      (a, b) =>
+        (b.createdAt || 0) -
+        (a.createdAt || 0)
+    )
+    .slice(0, 20);
 
   renderGrid(
-    $("recentGrid"),
-    result
+    document.getElementById("recentGrid"),
+    recent
   );
-
-
-  $("recentEmpty")
-    .classList.toggle(
-      "hidden",
-      result.length > 0
-    );
-
 }
-
-
-/* =========================
-   STARRED
-   ========================= */
 
 function renderStarred() {
-
-  const result =
-    files.filter(
-      item => item.starred
-    );
-
-
-  renderGrid(
-    $("starredGrid"),
-    result
+  const starred = files.filter(
+    (file) => file.starred
   );
 
-
-  $("starredEmpty")
-    .classList.toggle(
-      "hidden",
-      result.length > 0
-    );
-
+  renderGrid(
+    document.getElementById("starredGrid"),
+    starred
+  );
 }
 
-
-/* =========================
-   GRID
-   ========================= */
-
-function renderGrid(
-  container,
-  list
-) {
+function renderGrid(container, items) {
+  if (!container) return;
 
   container.innerHTML = "";
 
+  if (!items.length) {
+    container.innerHTML = `
+      <div class="empty-grid">
+        Belum ada file.
+      </div>
+    `;
 
-  list.forEach(item => {
+    return;
+  }
 
-    const card =
-      document.createElement("div");
+  items.forEach((file) => {
+    const card = document.createElement("div");
 
+    card.className = "file-card";
 
-    card.className =
-      "file-card";
+    card.innerHTML = `
+      <div class="file-preview">
+        ${
+          file.type === "image" && file.preview
+            ? `<img src="${file.preview}" alt="">`
+            : file.type === "folder"
+            ? "📁"
+            : "📄"
+        }
+      </div>
 
+      <div class="file-info">
+        <div class="file-name">
+          ${escapeHtml(file.name)}
+        </div>
 
-    const preview =
-      document.createElement("div");
+        <div class="file-meta">
+          ${formatSize(file.size)}
+        </div>
+      </div>
 
+      <button
+        class="star-button ${
+          file.starred ? "active" : ""
+        }"
+        data-star="${file.id}"
+        title="Bintangi"
+      >
+        ★
+      </button>
+    `;
 
-    preview.className =
-      "file-preview";
+    card.addEventListener("click", (event) => {
+      if (
+        event.target.closest(
+          "[data-star]"
+        )
+      ) {
+        return;
+      }
 
+      openFile(file);
+    });
 
-    if (
-      item.type === "file" &&
-      item.mime &&
-      item.mime.startsWith("image/") &&
-      item.data
-    ) {
+    const starButton =
+      card.querySelector("[data-star]");
 
-      const img =
-        document.createElement("img");
-
-      img.src =
-        item.data;
-
-      img.alt =
-        item.name;
-
-      preview.appendChild(img);
-
-    } else {
-
-      const icon =
-        document.createElement("div");
-
-      icon.className =
-        "file-icon";
-
-      icon.textContent =
-        item.type === "folder"
-          ? "▰"
-          : getFileIcon(item.name);
-
-      preview.appendChild(icon);
-
+    if (starButton) {
+      starButton.addEventListener(
+        "click",
+        () => toggleStar(file.id)
+      );
     }
 
-
-    const info =
-      document.createElement("div");
-
-    info.className =
-      "file-info";
-
-
-    const name =
-      document.createElement("div");
-
-    name.className =
-      "file-name";
-
-    name.textContent =
-      item.name;
-
-
-    const meta =
-      document.createElement("div");
-
-    meta.className =
-      "file-meta";
-
-    meta.textContent =
-      item.type === "folder"
-        ? "Folder"
-        : formatSize(item.size);
-
-
-    info.appendChild(name);
-
-    info.appendChild(meta);
-
-
-    const star =
-      document.createElement("button");
-
-    star.className =
-      "file-star" +
-      (item.starred ? " active" : "");
-
-    star.textContent =
-      item.starred
-        ? "★"
-        : "☆";
-
-
-    star.addEventListener(
-      "click",
-      event => {
-
-        event.stopPropagation();
-
-        toggleStar(item.id);
-
-      }
-    );
-
-
-    card.appendChild(preview);
-
-    card.appendChild(info);
-
-    card.appendChild(star);
-
-
-    card.addEventListener(
-      "click",
-      () => {
-
-        if (item.type === "file") {
-
-          openFile(item);
-
-        }
-
-      }
-    );
-
-
     container.appendChild(card);
-
   });
-
 }
-
-
-/* =========================
-   FILE ICON
-   ========================= */
-
-function getFileIcon(name) {
-
-  const ext =
-    name
-      .split(".")
-      .pop()
-      .toLowerCase();
-
-
-  const icons = {
-
-    pdf: "PDF",
-
-    doc:
-      "DOC",
-
-    docx:
-      "DOC",
-
-    xls:
-      "XLS",
-
-    xlsx:
-      "XLS",
-
-    ppt:
-      "PPT",
-
-    pptx:
-      "PPT",
-
-    zip:
-      "ZIP",
-
-    rar:
-      "RAR",
-
-    mp4:
-      "▶",
-
-    mp3:
-      "♫"
-
-  };
-
-
-  return icons[ext] || "▤";
-
-}
-
-
-/* =========================
-   STAR
-   ========================= */
 
 function toggleStar(id) {
+  const file = files.find(
+    (item) => item.id === id
+  );
 
-  const item =
-    files.find(
-      file => file.id === id
-    );
+  if (!file) return;
 
-
-  if (!item) return;
-
-
-  item.starred =
-    !item.starred;
-
+  file.starred = !file.starred;
 
   saveFiles();
 
   renderFiles();
-
   renderStarred();
-
+  renderRecent();
 }
 
+function openFile(file) {
+  if (file.type === "folder") {
+    showToast(
+      `Folder "${file.name}" dipilih.`
+    );
 
-/* =========================
-   OPEN FILE
-   ========================= */
-
-function openFile(item) {
+    return;
+  }
 
   if (
-    item.mime &&
-    item.mime.startsWith("image/") &&
-    item.data
+    file.type === "image" &&
+    file.preview
   ) {
+    const newWindow = window.open();
 
-    const win =
-      window.open();
+    if (newWindow) {
+      newWindow.document.write(`
+        <title>${escapeHtml(
+          file.name
+        )}</title>
 
-    if (win) {
+        <style>
+          body {
+            margin: 0;
+            background: #111;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+          }
 
-      win.document.write(`
-        <html>
-        <head>
-          <title>${escapeHtml(item.name)}</title>
-          <style>
-            body{
-              margin:0;
-              background:#09090b;
-              display:flex;
-              align-items:center;
-              justify-content:center;
-              min-height:100vh;
-            }
-            img{
-              max-width:95%;
-              max-height:95vh;
-              object-fit:contain;
-            }
-          </style>
-        </head>
-        <body>
-          <img src="${item.data}">
-        </body>
-        </html>
+          img {
+            max-width: 95vw;
+            max-height: 95vh;
+            object-fit: contain;
+          }
+        </style>
+
+        <img
+          src="${file.preview}"
+          alt=""
+        >
       `);
-
-      win.document.close();
-
     }
 
     return;
-
   }
 
-
   showToast(
-    `${item.name} • ${formatSize(item.size)}`
+    `File "${file.name}" tersimpan di Rojak Drive.`
   );
-
 }
 
-
-/* =========================
+/* =========================================================
    SEARCH
-   ========================= */
+========================================================= */
 
 function setupSearch() {
+  const searchInput =
+    document.getElementById("searchInput");
 
-  $("searchInput")
-    .addEventListener(
-      "input",
-      renderFiles
-    );
+  if (!searchInput) return;
 
+  searchInput.addEventListener(
+    "input",
+    () => {
+      const keyword =
+        searchInput.value
+          .toLowerCase()
+          .trim();
+
+      const result = files.filter(
+        (file) =>
+          file.name
+            .toLowerCase()
+            .includes(keyword)
+      );
+
+      renderGrid(
+        document.getElementById("fileGrid"),
+        result
+      );
+    }
+  );
 }
 
+/* =========================================================
+   ROJAK AI
+========================================================= */
 
-/* =========================
-   STORAGE
-   ========================= */
+function setupAI() {
+  const input =
+    document.getElementById("aiInput");
 
-function updateStorage() {
-
-  const total =
-    files.reduce(
-      (sum, item) =>
-        sum +
-        (Number(item.size) || 0),
-      0
+  const button =
+    document.getElementById(
+      "aiSendButton"
     );
 
+  if (!input || !button) return;
 
-  $("storageText").textContent =
-    formatSize(total);
+  button.addEventListener(
+    "click",
+    sendAIMessage
+  );
 
+  input.addEventListener(
+    "keydown",
+    (event) => {
+      if (
+        event.key === "Enter" &&
+        !event.shiftKey
+      ) {
+        event.preventDefault();
 
-  const max =
-    1024 * 1024 * 1024;
-
-
-  const percent =
-    Math.min(
-      (total / max) * 100,
-      100
-    );
-
-
-  $("storageProgress")
-    .style.width =
-    `${percent}%`;
-
+        sendAIMessage();
+      }
+    }
+  );
 }
 
+async function askRojakAI(prompt) {
+  const response = await fetch(
+    "/api/gemini",
+    {
+      method: "POST",
 
-/* =========================
-   FORMAT SIZE
-   ========================= */
+      headers: {
+        "Content-Type": "application/json"
+      },
+
+      body: JSON.stringify({
+        prompt
+      })
+    }
+  );
+
+  const rawText =
+    await response.text();
+
+  let data = null;
+
+  try {
+    data = JSON.parse(rawText);
+  } catch {
+    throw new Error(
+      `Server mengirim response tidak valid. HTTP ${response.status}`
+    );
+  }
+
+  if (!response.ok) {
+    throw new Error(
+      data?.error ||
+      `Gemini API gagal. HTTP ${response.status}`
+    );
+  }
+
+  if (!data?.text) {
+    throw new Error(
+      "Gemini tidak memberikan jawaban."
+    );
+  }
+
+  return data.text;
+}
+
+async function sendAIMessage() {
+  const input =
+    document.getElementById("aiInput");
+
+  const button =
+    document.getElementById(
+      "aiSendButton"
+    );
+
+  const chat =
+    document.getElementById("aiChat");
+
+  if (!input || !button || !chat) return;
+
+  const prompt =
+    input.value.trim();
+
+  if (!prompt) return;
+
+  addAIMessage(
+    prompt,
+    "user"
+  );
+
+  input.value = "";
+
+  button.disabled = true;
+
+  const status =
+    document.getElementById(
+      "aiStatus"
+    );
+
+  if (status) {
+    status.textContent =
+      "Rojak AI sedang berpikir...";
+  }
+
+  try {
+    const answer =
+      await askRojakAI(prompt);
+
+    addAIMessage(
+      answer,
+      "assistant"
+    );
+
+  } catch (error) {
+    console.error(
+      "Rojak AI error:",
+      error
+    );
+
+    addAIMessage(
+      `Maaf, Rojak AI sedang mengalami masalah.\n\n${error.message}`,
+      "assistant error"
+    );
+
+  } finally {
+    button.disabled = false;
+
+    if (status) {
+      status.textContent =
+        "Online";
+    }
+  }
+}
+
+function addAIMessage(
+  text,
+  type
+) {
+  const chat =
+    document.getElementById("aiChat");
+
+  if (!chat) return;
+
+  const message =
+    document.createElement("div");
+
+  message.className =
+    `ai-message ${type}`;
+
+  message.textContent = text;
+
+  chat.appendChild(message);
+
+  chat.scrollTop =
+    chat.scrollHeight;
+}
+
+function clearAIChat() {
+  const chat =
+    document.getElementById("aiChat");
+
+  if (!chat) return;
+
+  chat.innerHTML = `
+    <div class="ai-message assistant">
+      Halo! Saya Rojak AI. Ada yang bisa saya bantu?
+    </div>
+  `;
+}
+
+/* =========================================================
+   UTILITY
+========================================================= */
 
 function formatSize(bytes) {
+  if (!bytes) return "0 KB";
 
-  if (!bytes) return "0 B";
+  const units = [
+    "B",
+    "KB",
+    "MB",
+    "GB"
+  ];
 
-
-  const units =
-    ["B", "KB", "MB", "GB"];
-
-
-  const index =
-    Math.floor(
-      Math.log(bytes) /
+  const index = Math.floor(
+    Math.log(bytes) /
       Math.log(1024)
-    );
-
+  );
 
   const size =
     bytes /
     Math.pow(1024, index);
 
-
-  return (
-    size.toFixed(
-      index === 0 ? 0 : 1
-    ) +
-    " " +
-    units[index]
-  );
-
+  return `${size.toFixed(
+    index === 0 ? 0 : 1
+  )} ${units[index]}`;
 }
-
-
-/* =========================
-   AI
-   ========================= */
-
-function setupAI() {
-
-  $("aiSendButton")
-    .addEventListener(
-      "click",
-      sendAIMessage
-    );
-
-
-  $("aiInput")
-    .addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key === "Enter" &&
-          !event.shiftKey
-        ) {
-
-          event.preventDefault();
-
-          sendAIMessage();
-
-        }
-
-      }
-    );
-
-}
-
-
-async function sendAIMessage() {
-
-  const input =
-    $("aiInput");
-
-  const prompt =
-    input.value.trim();
-
-
-  if (!prompt) return;
-
-
-  addAIMessage(
-    "user",
-    prompt
-  );
-
-
-  input.value = "";
-
-  $("aiSendButton").disabled = true;
-
-  $("aiStatus").textContent =
-    "Rojak AI sedang berpikir...";
-
-
-  try {
-
-    const answer =
-      await askRojakAI(prompt);
-
-
-    addAIMessage(
-      "bot",
-      answer
-    );
-
-
-    $("aiStatus").textContent = "";
-
-
-  } catch (error) {
-
-    console.error(error);
-
-    addAIMessage(
-      "bot",
-      "Maaf, Rojak AI sedang mengalami masalah.\n\n" +
-      error.message
-    );
-
-
-    $("aiStatus").textContent =
-      "Gagal menghubungi Rojak AI.";
-
-  }
-
-
-  $("aiSendButton").disabled = false;
-
-  scrollAI();
-
-}
-
-
-/* =========================
-   GEMINI REQUEST
-   ========================= */
-
-async function askRojakAI(prompt) {
-
-  const response =
-    await fetch(
-      "/api/gemini",
-      {
-        method: "POST",
-
-        headers: {
-          "Content-Type":
-            "application/json"
-        },
-
-        body:
-          JSON.stringify({
-            prompt
-          })
-      }
-    );
-
-
-  const rawText =
-    await response.text();
-
-
-  let data;
-
-
-  try {
-
-    data =
-      JSON.parse(rawText);
-
-  } catch {
-
-    throw new Error(
-      `Server mengirim response tidak valid. HTTP ${response.status}`
-    );
-
-  }
-
-
-  if (!response.ok) {
-
-    throw new Error(
-      data.error ||
-      "Gemini API gagal."
-    );
-
-  }
-
-
-  if (!data.text) {
-
-    throw new Error(
-      "Gemini tidak memberikan jawaban."
-    );
-
-  }
-
-
-  return data.text;
-
-}
-
-
-/* =========================
-   AI MESSAGE
-   ========================= */
-
-function addAIMessage(
-  type,
-  text
-) {
-
-  const message =
-    document.createElement("div");
-
-
-  message.className =
-    `ai-message ${type}`;
-
-
-  const avatar =
-    document.createElement("div");
-
-
-  avatar.className =
-    "message-avatar";
-
-
-  avatar.textContent =
-    type === "user"
-      ? "U"
-      : "R";
-
-
-  const content =
-    document.createElement("div");
-
-
-  content.className =
-    "message-content";
-
-
-  const title =
-    document.createElement("strong");
-
-
-  title.textContent =
-    type === "user"
-      ? "Kamu"
-      : "Rojak AI";
-
-
-  const paragraph =
-    document.createElement("p");
-
-
-  paragraph.textContent =
-    text;
-
-
-  content.appendChild(title);
-
-  content.appendChild(paragraph);
-
-
-  message.appendChild(avatar);
-
-  message.appendChild(content);
-
-
-  $("aiChat")
-    .appendChild(message);
-
-
-  scrollAI();
-
-}
-
-
-function scrollAI() {
-
-  const chat =
-    $("aiChat");
-
-  chat.scrollTop =
-    chat.scrollHeight;
-
-}
-
-
-function clearChat() {
-
-  $("aiChat").innerHTML = `
-
-    <div class="ai-message bot">
-
-      <div class="message-avatar">
-        R
-      </div>
-
-      <div class="message-content">
-
-        <strong>Rojak AI</strong>
-
-        <p>
-          Chat dibersihkan. Ada yang ingin kamu tanyakan?
-        </p>
-
-      </div>
-
-    </div>
-
-  `;
-
-}
-
-
-/* =========================
-   TOAST
-   ========================= */
-
-let toastTimer;
-
-
-function showToast(message) {
-
-  const toast =
-    $("toast");
-
-
-  toast.textContent =
-    message;
-
-
-  toast.classList.add(
-    "show"
-  );
-
-
-  clearTimeout(
-    toastTimer
-  );
-
-
-  toastTimer =
-    setTimeout(
-      () => {
-
-        toast.classList.remove(
-          "show"
-        );
-
-      },
-      2500
-    );
-
-}
-
-
-/* =========================
-   ESCAPE HTML
-   ========================= */
 
 function escapeHtml(text) {
-
   const div =
     document.createElement("div");
 
-  div.textContent =
-    text;
+  div.textContent = text;
 
   return div.innerHTML;
+}
 
-        }
+function showToast(message) {
+  let toast =
+    document.getElementById(
+      "toast"
+    );
+
+  if (!toast) {
+    toast =
+      document.createElement("div");
+
+    toast.id = "toast";
+
+    toast.className = "toast";
+
+    document.body.appendChild(toast);
+  }
+
+  toast.textContent = message;
+
+  toast.classList.add("show");
+
+  clearTimeout(
+    showToast.timeout
+  );
+
+  showToast.timeout =
+    setTimeout(() => {
+      toast.classList.remove(
+        "show"
+      );
+    }, 2500);
+                         }
