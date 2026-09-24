@@ -2,6 +2,7 @@
 <html lang="id">
 <head>
   <meta charset="UTF-8">
+
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
@@ -16,45 +17,40 @@
   >
 
   <style>
-
-    /* =====================================================
-       BASE
-    ===================================================== */
-
     :root {
-      --bg: #0b0b0c;
-      --surface: #111112;
-      --surface2: #171718;
-      --surface3: #1d1d1f;
+      --bg: #0d0e0b;
+      --panel: #151614;
+      --panel-2: #191a18;
+      --input: #0b0c0a;
 
-      --line: #29292b;
-      --line2: #38383b;
+      --border: #292a27;
+      --border-soft: #222320;
 
-      --text: #e7e7e9;
-      --muted: #85858b;
+      --text: #eeeeea;
+      --muted: #8b8c86;
+      --muted-2: #676861;
 
-      --accent: #c94f32;
-      --accent-hover: #db5d3d;
+      --orange: #e45632;
+      --orange-hover: #f0643f;
 
-      --green: #67b87a;
-      --red: #d8665c;
+      --green: #69b879;
+      --red: #d9655c;
     }
 
     * {
       box-sizing: border-box;
     }
 
-    html {
+    html,
+    body {
+      margin: 0;
+      padding: 0;
       min-height: 100%;
       background: var(--bg);
+      color: var(--text);
     }
 
     body {
-      margin: 0;
-      min-height: 100vh;
-      background: var(--bg);
-      color: var(--text);
-
       font-family:
         Inter,
         system-ui,
@@ -75,18 +71,18 @@
       cursor: pointer;
     }
 
-
-    /* =====================================================
+    /* ================================
        LOADING
-    ===================================================== */
+    ================================= */
 
     .loading-screen {
       position: fixed;
       inset: 0;
       z-index: 9999;
 
-      display: grid;
-      place-items: center;
+      display: flex;
+      align-items: center;
+      justify-content: center;
 
       background: var(--bg);
     }
@@ -96,17 +92,17 @@
     }
 
     .loading-logo {
-      width: 58px;
-      height: 58px;
+      width: 46px;
+      height: 46px;
 
-      margin: 0 auto;
+      margin: 0 auto 10px;
 
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: 9px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
 
-      background: var(--surface2);
+      background: var(--panel);
     }
 
     .loading-logo img {
@@ -119,17 +115,14 @@
     }
 
     .loading-text {
-      margin-top: 11px;
-
       color: var(--muted);
 
       font-size: 9px;
     }
 
-
-    /* =====================================================
+    /* ================================
        LOGIN
-    ===================================================== */
+    ================================= */
 
     .login-screen {
       min-height: 100vh;
@@ -143,35 +136,31 @@
     }
 
     .login-box {
-      width: min(350px, 100%);
+      width: min(360px, 100%);
 
-      padding: 27px;
+      padding: 25px;
 
-      border: 1px solid var(--line);
-      border-radius: 9px;
+      border: 1px solid var(--border);
+      border-radius: 7px;
 
-      background: var(--surface);
+      background: var(--panel);
     }
 
     .login-logo {
-      width: 48px;
-      height: 48px;
+      width: 45px;
+      height: 45px;
 
-      margin-bottom: 18px;
+      margin-bottom: 15px;
 
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: 8px;
-
-      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 7px;
     }
 
     .login-logo img {
       width: 100%;
       height: 100%;
-
-      display: block;
 
       object-fit: cover;
     }
@@ -179,29 +168,28 @@
     .login-box h1 {
       margin: 0;
 
-      font-size: 20px;
+      font-size: 19px;
       font-weight: 700;
-
       letter-spacing: -.5px;
     }
 
     .login-box p {
-      margin: 7px 0 21px;
+      margin: 6px 0 18px;
 
       color: var(--muted);
 
       font-size: 9px;
-      line-height: 1.6;
+      line-height: 1.5;
     }
 
     .google-login {
       width: 100%;
-      height: 40px;
+      height: 38px;
 
-      border: 1px solid var(--line2);
-      border-radius: 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
 
-      background: var(--surface2);
+      background: var(--panel-2);
       color: var(--text);
 
       font-size: 9px;
@@ -209,29 +197,28 @@
     }
 
     .google-login:hover {
-      background: var(--surface3);
+      background: #1e1f1c;
     }
 
     .google-login:disabled {
       opacity: .5;
-      cursor: default;
+      cursor: wait;
     }
 
     .login-error {
       min-height: 15px;
 
-      margin-top: 11px;
+      margin-top: 9px;
 
       color: var(--red);
 
       font-size: 8px;
-      line-height: 1.5;
+      line-height: 1.4;
     }
 
-
-    /* =====================================================
+    /* ================================
        APP
-    ===================================================== */
+    ================================= */
 
     .app {
       display: none;
@@ -239,52 +226,48 @@
       min-height: 100vh;
     }
 
-
-    /* =====================================================
+    /* ================================
        HEADER
-    ===================================================== */
+    ================================= */
 
     .topbar {
-      height: 62px;
+      height: 58px;
 
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      padding: 0 18px;
+      padding: 0 16px;
 
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--border);
 
-      background: var(--surface);
+      background: #10110f;
     }
 
     .brand {
       display: flex;
       align-items: center;
 
-      gap: 10px;
+      gap: 9px;
 
       min-width: 0;
     }
 
-    .brand-mark {
-      width: 40px;
-      height: 40px;
+    .brand-logo {
+      width: 35px;
+      height: 35px;
 
-      flex: 0 0 40px;
+      flex: 0 0 35px;
 
       overflow: hidden;
 
-      display: grid;
-      place-items: center;
+      border: 1px solid var(--border);
+      border-radius: 6px;
 
-      border: 1px solid var(--line2);
-      border-radius: 8px;
-
-      background: var(--surface2);
+      background: var(--panel);
     }
 
-    .brand-mark img {
+    .brand-logo img {
       width: 100%;
       height: 100%;
 
@@ -293,31 +276,32 @@
       object-fit: cover;
     }
 
-    .brand-name {
-      color: var(--text);
-
-      font-size: 12px;
+    .brand-text {
+      font-size: 11px;
       font-weight: 700;
-
       letter-spacing: -.2px;
+    }
+
+    .brand-text span {
+      color: var(--orange);
     }
 
     .top-actions {
       display: flex;
       align-items: center;
 
-      gap: 6px;
+      gap: 5px;
     }
 
     .top-button {
-      height: 30px;
+      height: 29px;
 
       padding: 0 9px;
 
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
 
-      background: var(--surface2);
+      background: transparent;
       color: var(--muted);
 
       font-size: 8px;
@@ -325,25 +309,22 @@
     }
 
     .top-button:hover {
-      border-color: var(--line2);
-
-      background: var(--surface3);
-
+      background: var(--panel-2);
       color: var(--text);
     }
 
     .profile-button {
-      width: 32px;
-      height: 32px;
+      width: 30px;
+      height: 30px;
 
       padding: 0;
 
       overflow: hidden;
 
-      border: 1px solid var(--line);
+      border: 1px solid var(--border);
       border-radius: 50%;
 
-      background: var(--surface2);
+      background: var(--panel);
     }
 
     .profile-button img {
@@ -355,76 +336,84 @@
       object-fit: cover;
     }
 
-
-    /* =====================================================
+    /* ================================
        MAIN
-    ===================================================== */
+    ================================= */
 
     .container {
-      width: min(920px, calc(100% - 28px));
+      width: min(850px, calc(100% - 20px));
 
       margin: 0 auto;
 
-      padding: 13px 0 35px;
+      padding: 16px 0 28px;
     }
 
+    /* ================================
+       DRIVE
+    ================================= */
 
-    /* =====================================================
-       DRIVE BAR
-    ===================================================== */
-
-    .utility-bar {
-      min-height: 43px;
-
+    .drive-card {
       display: flex;
       align-items: center;
       justify-content: space-between;
 
       gap: 12px;
 
-      padding: 7px 0;
+      padding: 12px 13px;
 
-      border-bottom: 1px solid var(--line);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      background: var(--panel);
     }
 
-    .drive-status {
+    .drive-info {
+      min-width: 0;
+    }
+
+    .drive-title {
+      margin-bottom: 4px;
+
+      color: var(--text);
+
+      font-size: 9px;
+      font-weight: 700;
+    }
+
+    .drive-state {
       display: flex;
       align-items: center;
 
-      gap: 7px;
+      gap: 5px;
 
       color: var(--muted);
 
       font-size: 8px;
     }
 
-    .status-dot {
-      width: 6px;
-      height: 6px;
-
-      flex: 0 0 auto;
+    .drive-dot {
+      width: 5px;
+      height: 5px;
 
       border-radius: 50%;
 
       background: #555;
     }
 
-    .status-dot.connected {
+    .drive-dot.connected {
       background: var(--green);
     }
 
-    .status-dot.error {
+    .drive-dot.loading {
+      background: var(--orange);
+      animation: blink 1s infinite;
+    }
+
+    .drive-dot.error {
       background: var(--red);
     }
 
-    .status-dot.loading {
-      background: var(--accent);
-
-      animation: pulse 1s infinite;
-    }
-
-    @keyframes pulse {
-
+    @keyframes blink {
       0%,
       100% {
         opacity: .35;
@@ -433,76 +422,78 @@
       50% {
         opacity: 1;
       }
-
     }
 
-    .drive-connect {
-      height: 28px;
+    .drive-button {
+      height: 29px;
 
-      padding: 0 11px;
+      flex: 0 0 auto;
 
-      border: 1px solid var(--line2);
-      border-radius: 6px;
+      padding: 0 10px;
 
-      background: var(--surface2);
-      color: var(--text);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+
+      background: transparent;
+      color: var(--muted);
 
       font-size: 8px;
       font-weight: 600;
-
-      white-space: nowrap;
     }
 
-    .drive-connect:hover {
-      border-color: var(--accent);
-
-      color: var(--accent-hover);
+    .drive-button:hover {
+      background: var(--panel-2);
+      color: var(--text);
     }
 
-    .drive-connect.connected {
-      border-color: rgba(103, 184, 122, .3);
-
-      background: rgba(103, 184, 122, .06);
-
+    .drive-button.connected {
       color: var(--green);
+
+      border-color: rgba(105, 184, 121, .3);
     }
 
-    .drive-connect:disabled {
-      opacity: .55;
-
+    .drive-button:disabled {
+      opacity: .5;
       cursor: wait;
     }
 
-
-    /* =====================================================
+    /* ================================
        TABS
-    ===================================================== */
+    ================================= */
 
     .tabs {
-      display: flex;
-      align-items: center;
+      height: 42px;
 
-      gap: 2px;
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
 
-      margin-bottom: 10px;
+      margin-top: 8px;
 
-      border-bottom: 1px solid var(--line);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      background: var(--panel);
     }
 
     .tab {
-      height: 34px;
-
-      padding: 0 12px;
+      height: 100%;
 
       border: 0;
-      border-bottom: 2px solid transparent;
 
       background: transparent;
 
-      color: #77777d;
+      color: var(--muted);
 
-      font-size: 9px;
+      font-size: 8px;
       font-weight: 600;
+    }
+
+    .tab:first-child {
+      border-radius: 5px 0 0 5px;
+    }
+
+    .tab:last-child {
+      border-radius: 0 5px 5px 0;
     }
 
     .tab:hover {
@@ -510,67 +501,95 @@
     }
 
     .tab.active {
-      border-bottom-color: var(--accent);
+      margin: 4px;
+
+      height: calc(100% - 8px);
+
+      border-radius: 4px;
+
+      background: #242521;
 
       color: var(--text);
     }
 
-
-    /* =====================================================
-       PANEL
-    ===================================================== */
+    /* ================================
+       PANELS
+    ================================= */
 
     .panel {
       display: none;
 
+      margin-top: 8px;
+
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
 
-      background: var(--surface);
+      background: var(--panel);
     }
 
     .panel.active {
       display: block;
     }
 
-    .panel-head {
-      padding: 13px 15px;
+    .panel-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
 
-      border-bottom: 1px solid var(--line);
+      padding: 14px 14px 12px;
+
+      border-bottom: 1px solid var(--border);
     }
 
-    .panel-head h2 {
+    .panel-title h2 {
       margin: 0;
 
-      font-size: 11px;
+      font-size: 13px;
       font-weight: 700;
+
+      letter-spacing: -.2px;
     }
 
-    .panel-head p {
+    .panel-title p {
       margin: 4px 0 0;
 
       color: var(--muted);
 
       font-size: 8px;
+      line-height: 1.4;
     }
 
+    .refresh-button {
+      height: 28px;
 
-    /* =====================================================
+      padding: 0 9px;
+
+      border: 1px solid var(--border);
+      border-radius: 5px;
+
+      background: transparent;
+      color: var(--muted);
+
+      font-size: 8px;
+    }
+
+    .refresh-button:hover {
+      background: var(--panel-2);
+      color: var(--text);
+    }
+
+    /* ================================
        FORM
-    ===================================================== */
+    ================================= */
 
     .form {
-      padding: 15px;
+      padding: 14px;
     }
 
     .field {
       margin-bottom: 12px;
-    }
-
-    .field:last-child {
-      margin-bottom: 0;
     }
 
     .field label {
@@ -578,7 +597,7 @@
 
       margin-bottom: 6px;
 
-      color: var(--muted);
+      color: #b4b5af;
 
       font-size: 8px;
       font-weight: 600;
@@ -588,19 +607,19 @@
     .textarea {
       width: 100%;
 
-      border: 1px solid var(--line);
-      border-radius: 6px;
-
       outline: none;
 
-      background: var(--surface2);
+      border: 1px solid var(--border);
+      border-radius: 5px;
+
+      background: var(--input);
       color: var(--text);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .input {
-      height: 38px;
+      height: 39px;
 
       padding: 0 10px;
     }
@@ -615,76 +634,75 @@
       line-height: 1.5;
     }
 
+    .input::placeholder,
+    .textarea::placeholder {
+      color: #595a55;
+    }
+
     .input:focus,
     .textarea:focus {
-      border-color: var(--line2);
+      border-color: #3b3c38;
     }
 
     .form-actions {
       display: flex;
-      align-items: center;
 
       gap: 6px;
 
-      margin-top: 12px;
+      margin-top: 4px;
     }
 
-    .primary {
-      height: 36px;
+    .create-button {
+      height: 37px;
 
-      padding: 0 13px;
+      flex: 1;
 
-      border: 1px solid var(--accent);
-      border-radius: 6px;
+      border: 1px solid var(--orange);
+      border-radius: 5px;
 
-      background: var(--accent);
-      color: #fff;
+      background: var(--orange);
+      color: white;
 
       font-size: 9px;
       font-weight: 700;
     }
 
-    .primary:hover {
-      border-color: var(--accent-hover);
-
-      background: var(--accent-hover);
+    .create-button:hover {
+      background: var(--orange-hover);
+      border-color: var(--orange-hover);
     }
 
-    .primary:disabled {
+    .create-button:disabled {
       opacity: .5;
-
       cursor: wait;
     }
 
-    .secondary {
-      height: 36px;
+    .clear-button {
+      height: 37px;
 
-      padding: 0 13px;
+      padding: 0 14px;
 
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
 
-      background: var(--surface2);
+      background: transparent;
       color: var(--muted);
 
       font-size: 9px;
       font-weight: 600;
     }
 
-    .secondary:hover {
-      background: var(--surface3);
-
+    .clear-button:hover {
+      background: var(--panel-2);
       color: var(--text);
     }
 
     .status {
-      min-height: 15px;
+      min-height: 14px;
 
-      margin-top: 9px;
+      margin-top: 8px;
 
       font-size: 8px;
-
-      line-height: 1.5;
     }
 
     .status.success {
@@ -695,37 +713,40 @@
       color: var(--red);
     }
 
-
-    /* =====================================================
+    /* ================================
        RECENT FILES
-    ===================================================== */
+    ================================= */
 
-    .files-list {
-      display: flex;
-
-      flex-direction: column;
+    .files {
+      padding: 9px;
     }
 
     .file-row {
-      min-height: 57px;
-
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      gap: 12px;
+      gap: 10px;
 
-      padding: 9px 14px;
+      min-height: 58px;
 
-      border-bottom: 1px solid var(--line);
+      padding: 9px 10px;
+
+      margin-bottom: 5px;
+
+      border: 1px solid var(--border-soft);
+      border-radius: 5px;
+
+      background: #11120f;
     }
 
     .file-row:last-child {
-      border-bottom: 0;
+      margin-bottom: 0;
     }
 
     .file-row:hover {
-      background: #131314;
+      border-color: var(--border);
+      background: #151613;
     }
 
     .file-info {
@@ -738,7 +759,7 @@
       color: var(--text);
 
       font-size: 9px;
-      font-weight: 600;
+      font-weight: 700;
 
       text-overflow: ellipsis;
       white-space: nowrap;
@@ -749,114 +770,136 @@
 
       color: var(--muted);
 
-      font-size: 8px;
+      font-size: 7px;
     }
 
-    .file-open {
+    .open-file {
       height: 28px;
 
       flex: 0 0 auto;
 
       padding: 0 9px;
 
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
 
-      background: var(--surface2);
+      background: transparent;
       color: var(--muted);
 
       font-size: 8px;
       font-weight: 600;
     }
 
-    .file-open:hover {
-      border-color: var(--line2);
-
+    .open-file:hover {
+      background: var(--panel-2);
       color: var(--text);
     }
 
     .empty {
-      padding: 35px 15px;
+      padding: 30px 15px;
 
       text-align: center;
 
       color: var(--muted);
 
-      font-size: 9px;
+      font-size: 8px;
     }
 
+    /* ================================
+       OPEN DRIVE
+    ================================= */
 
-    /* =====================================================
-       DRIVE PANEL
-    ===================================================== */
-
-    .drive-panel {
-      padding: 22px 15px;
+    .open-drive {
+      padding: 25px 15px;
 
       text-align: center;
     }
 
-    .drive-panel h3 {
+    .open-drive h3 {
       margin: 0;
 
       font-size: 12px;
     }
 
-    .drive-panel p {
-      margin: 6px 0 15px;
+    .open-drive p {
+      margin: 5px 0 14px;
 
       color: var(--muted);
 
-      font-size: 9px;
+      font-size: 8px;
     }
 
+    .open-drive-button {
+      height: 35px;
 
-    /* =====================================================
+      padding: 0 13px;
+
+      border: 1px solid var(--orange);
+      border-radius: 5px;
+
+      background: var(--orange);
+      color: white;
+
+      font-size: 8px;
+      font-weight: 700;
+    }
+
+    .open-drive-button:hover {
+      background: var(--orange-hover);
+    }
+
+    /* ================================
        SPOTIFY
-    ===================================================== */
+    ================================= */
 
-    .spotify-panel {
-      margin-top: 12px;
+    .spotify-section {
+      margin-top: 8px;
 
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: 8px;
+      border: 1px solid var(--border);
+      border-radius: 6px;
 
-      background: #121212;
+      background: var(--panel);
     }
 
-    .spotify-head {
-      height: 34px;
+    .spotify-title {
+      padding: 9px 12px;
 
-      display: flex;
-      align-items: center;
+      border-bottom: 1px solid var(--border);
 
-      padding: 0 12px;
-
-      border-bottom: 1px solid #252525;
-
-      color: #a9a9ad;
+      color: var(--muted);
 
       font-size: 8px;
       font-weight: 600;
-
-      letter-spacing: .2px;
     }
 
     .spotify {
       display: block;
 
       width: 100%;
-      height: 180px;
+      height: 152px;
 
       border: 0;
     }
 
+    /* ================================
+       FOOTER
+    ================================= */
 
-    /* =====================================================
-       PROFILE MODAL
-    ===================================================== */
+    .footer {
+      padding: 12px 0 0;
+
+      text-align: center;
+
+      color: #50514c;
+
+      font-size: 7px;
+    }
+
+    /* ================================
+       MODAL
+    ================================= */
 
     .modal {
       position: fixed;
@@ -869,9 +912,9 @@
       align-items: center;
       justify-content: center;
 
-      padding: 20px;
+      padding: 18px;
 
-      background: rgba(0, 0, 0, .65);
+      background: rgba(0, 0, 0, .7);
     }
 
     .modal.open {
@@ -879,66 +922,74 @@
     }
 
     .modal-box {
-      width: min(380px, 100%);
+      width: min(350px, 100%);
 
-      border: 1px solid var(--line);
-      border-radius: 9px;
+      overflow: hidden;
 
-      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 6px;
+
+      background: var(--panel);
     }
 
-    .modal-head {
+    .modal-header {
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      padding: 13px 15px;
+      padding: 12px 13px;
 
-      border-bottom: 1px solid var(--line);
+      border-bottom: 1px solid var(--border);
     }
 
-    .modal-head h2 {
+    .modal-header h2 {
       margin: 0;
 
       font-size: 11px;
     }
 
-    .close {
-      width: 27px;
-      height: 27px;
+    .close-button {
+      width: 26px;
+      height: 26px;
 
-      border: 1px solid var(--line);
-      border-radius: 6px;
+      border: 1px solid var(--border);
+      border-radius: 5px;
 
-      background: var(--surface2);
+      background: transparent;
       color: var(--muted);
+
+      font-size: 15px;
+      line-height: 1;
     }
 
-    .close:hover {
+    .close-button:hover {
+      background: var(--panel-2);
       color: var(--text);
     }
 
     .profile-content {
-      padding: 15px;
+      padding: 14px;
     }
 
-    .profile-photo {
-      width: 50px;
-      height: 50px;
+    .profile-image {
+      width: 46px;
+      height: 46px;
 
-      margin-bottom: 12px;
+      display: block;
+
+      margin-bottom: 9px;
 
       border-radius: 50%;
 
       object-fit: cover;
-
-      background: var(--surface2);
     }
 
-    .profile-role {
-      margin-bottom: 14px;
+    .role-label {
+      display: inline-block;
 
-      color: var(--accent-hover);
+      margin-bottom: 13px;
+
+      color: var(--orange);
 
       font-size: 8px;
       font-weight: 700;
@@ -949,132 +1000,125 @@
 
       gap: 6px;
 
-      margin-top: 13px;
+      margin-top: 12px;
     }
 
-
-    /* =====================================================
+    /* ================================
        MOBILE
-    ===================================================== */
+    ================================= */
 
-    @media (max-width: 700px) {
+    @media (max-width: 600px) {
 
       .topbar {
-        height: 60px;
+        height: 55px;
 
-        padding: 0 12px;
+        padding: 0 10px;
       }
 
-      .brand-mark {
-        width: 38px;
-        height: 38px;
+      .brand-logo {
+        width: 34px;
+        height: 34px;
 
-        flex-basis: 38px;
+        flex-basis: 34px;
       }
 
-      .brand-name {
-        font-size: 11px;
+      .brand-text {
+        font-size: 10px;
       }
 
       .top-button {
         display: none;
       }
 
+      .profile-button {
+        width: 29px;
+        height: 29px;
+      }
+
       .container {
-        width: calc(100% - 20px);
+        width: calc(100% - 16px);
 
-        padding: 11px 0 30px;
+        padding-top: 9px;
       }
 
-      .utility-bar {
-        min-height: 43px;
+      .drive-card {
+        padding: 10px;
       }
 
-      .tabs {
-        margin-bottom: 9px;
-      }
-
-      .tab {
-        padding: 0 10px;
-
+      .drive-title {
         font-size: 8px;
       }
 
-      .panel-head {
-        padding: 13px;
-      }
-
-      .form {
-        padding: 13px;
-      }
-
-      .textarea {
-        min-height: 165px;
-      }
-
-      .spotify {
-        height: 180px;
-      }
-
-      .spotify-head {
-        height: 32px;
-      }
-
-    }
-
-
-    @media (max-width: 400px) {
-
-      .brand-name {
-        font-size: 10px;
-      }
-
-      .profile-button {
-        width: 30px;
-        height: 30px;
-      }
-
-      .drive-connect {
-        padding: 0 9px;
-
+      .drive-state {
         font-size: 7px;
       }
 
-      .drive-status {
+      .drive-button {
         font-size: 7px;
-      }
-
-      .tab {
         padding: 0 8px;
       }
 
+      .tabs {
+        height: 40px;
+      }
+
+      .tab {
+        font-size: 7px;
+      }
+
+      .panel-title h2 {
+        font-size: 12px;
+      }
+
+      .panel-title p {
+        font-size: 7px;
+      }
+
+      .textarea {
+        min-height: 170px;
+      }
+
+      .spotify {
+        height: 152px;
+      }
+
     }
 
+    @media (max-width: 360px) {
+
+      .brand-text {
+        font-size: 9px;
+      }
+
+      .drive-button {
+        padding: 0 7px;
+      }
+
+      .tab {
+        font-size: 6.5px;
+      }
+
+    }
   </style>
 </head>
 
-
 <body>
 
-
-  <!-- =====================================================
+  <!-- =========================================
        LOADING
-  ====================================================== -->
+  ========================================== -->
 
   <div
     id="loadingScreen"
     class="loading-screen"
   >
-
     <div class="loading-box">
 
       <div class="loading-logo">
-
         <img
           src="https://files.catbox.moe/brdrmx.png"
           alt="Rojak DriveK1t"
         >
-
       </div>
 
       <div
@@ -1085,13 +1129,12 @@
       </div>
 
     </div>
-
   </div>
 
 
-  <!-- =====================================================
+  <!-- =========================================
        LOGIN
-  ====================================================== -->
+  ========================================== -->
 
   <section
     id="loginScreen"
@@ -1101,24 +1144,19 @@
     <div class="login-box">
 
       <div class="login-logo">
-
         <img
           src="https://files.catbox.moe/brdrmx.png"
           alt="Rojak DriveK1t"
         >
-
       </div>
-
 
       <h1>
         Rojak DriveK1t
       </h1>
 
-
       <p>
-        Simpan dan kelola file TXT langsung ke Google Drive.
+        Small tools for Google Drive.
       </p>
-
 
       <button
         id="loginButton"
@@ -1127,7 +1165,6 @@
       >
         Continue with Google
       </button>
-
 
       <div
         id="loginError"
@@ -1139,15 +1176,14 @@
   </section>
 
 
-  <!-- =====================================================
+  <!-- =========================================
        APP
-  ====================================================== -->
+  ========================================== -->
 
   <div
     id="app"
     class="app"
   >
-
 
     <!-- HEADER -->
 
@@ -1155,17 +1191,15 @@
 
       <div class="brand">
 
-        <div class="brand-mark">
-
+        <div class="brand-logo">
           <img
             src="https://files.catbox.moe/brdrmx.png"
             alt="Rojak DriveK1t"
           >
-
         </div>
 
-        <div class="brand-name">
-          Rojak DriveK1t
+        <div class="brand-text">
+          Rojak <span>DriveK1t</span>
         </div>
 
       </div>
@@ -1179,9 +1213,8 @@
           type="button"
           style="display:none;"
         >
-          Admin
+          Admin Panel
         </button>
-
 
         <button
           id="logoutButton"
@@ -1191,20 +1224,17 @@
           Logout
         </button>
 
-
         <button
           id="profileButton"
           class="profile-button"
           type="button"
           title="Profile"
         >
-
           <img
             id="topAvatar"
             src="https://www.gravatar.com/avatar/?d=mp"
             alt="Profile"
           >
-
         </button>
 
       </div>
@@ -1216,34 +1246,41 @@
 
     <main class="container">
 
+      <!-- GOOGLE DRIVE -->
 
-      <!-- DRIVE STATUS -->
+      <section class="drive-card">
 
-      <div class="utility-bar">
+        <div class="drive-info">
 
-        <div class="drive-status">
+          <div class="drive-title">
+            Google Drive
+          </div>
 
-          <span
-            id="statusDot"
-            class="status-dot"
-          ></span>
+          <div class="drive-state">
 
-          <span id="driveStatus">
-            Drive belum terhubung
-          </span>
+            <span
+              id="driveDot"
+              class="drive-dot"
+            ></span>
+
+            <span id="driveStatus">
+              Belum terhubung
+            </span>
+
+          </div>
 
         </div>
 
 
         <button
           id="connectDriveButton"
-          class="drive-connect"
+          class="drive-button"
           type="button"
         >
           Connect Drive
         </button>
 
-      </div>
+      </section>
 
 
       <!-- TABS -->
@@ -1258,7 +1295,6 @@
           Create
         </button>
 
-
         <button
           class="tab"
           data-tab="recent"
@@ -1266,7 +1302,6 @@
         >
           Recent Files
         </button>
-
 
         <button
           class="tab"
@@ -1286,34 +1321,37 @@
         class="panel active"
       >
 
-        <div class="panel-head">
+        <div class="panel-header">
 
-          <h2>
-            Create TXT
-          </h2>
+          <div class="panel-title">
 
-          <p>
-            Masukkan nama dan isi file.
-          </p>
+            <h2>
+              New text file
+            </h2>
+
+            <p>
+              Buat file TXT baru dan simpan langsung ke Google Drive.
+            </p>
+
+          </div>
 
         </div>
 
 
         <div class="form">
 
-
           <div class="field">
 
             <label for="fileName">
-              NAMA FILE
+              File name
             </label>
 
             <input
               id="fileName"
               class="input"
               type="text"
-              placeholder="contoh: rumus_excel"
               autocomplete="off"
+              placeholder="contoh: catatan-harian"
             >
 
           </div>
@@ -1322,13 +1360,13 @@
           <div class="field">
 
             <label for="fileContent">
-              ISI FILE
+              Content
             </label>
 
             <textarea
               id="fileContent"
               class="textarea"
-              placeholder="Tempel rumus atau teks di sini..."
+              placeholder="Tulis isi file di sini..."
             ></textarea>
 
           </div>
@@ -1338,16 +1376,15 @@
 
             <button
               id="createButton"
-              class="primary"
+              class="create-button"
               type="button"
             >
-              Simpan ke Drive
+              Create .txt file
             </button>
-
 
             <button
               id="clearButton"
-              class="secondary"
+              class="clear-button"
               type="button"
             >
               Clear
@@ -1366,29 +1403,42 @@
       </section>
 
 
-      <!-- RECENT FILES -->
+      <!-- RECENT -->
 
       <section
         id="recentPanel"
         class="panel"
       >
 
-        <div class="panel-head">
+        <div class="panel-header">
 
-          <h2>
-            Recent Files
-          </h2>
+          <div class="panel-title">
 
-          <p>
-            File terbaru dari Google Drive.
-          </p>
+            <h2>
+              Recent Files
+            </h2>
+
+            <p>
+              File terbaru yang dapat diakses oleh DriveK1t.
+            </p>
+
+          </div>
+
+
+          <button
+            id="refreshFilesButton"
+            class="refresh-button"
+            type="button"
+          >
+            Refresh
+          </button>
 
         </div>
 
 
         <div
           id="filesList"
-          class="files-list"
+          class="files"
         >
 
           <div class="empty">
@@ -1407,23 +1457,22 @@
         class="panel"
       >
 
-        <div class="drive-panel">
+        <div class="open-drive">
 
           <h3>
             Google Drive
           </h3>
 
           <p>
-            Buka Google Drive untuk melihat semua file kamu.
+            Buka Google Drive untuk melihat dan mengelola file.
           </p>
-
 
           <button
             id="openDriveButton"
-            class="primary"
+            class="open-drive-button"
             type="button"
           >
-            Buka Google Drive
+            Open Google Drive
           </button>
 
         </div>
@@ -1433,12 +1482,11 @@
 
       <!-- SPOTIFY -->
 
-      <div class="spotify-panel">
+      <section class="spotify-section">
 
-        <div class="spotify-head">
+        <div class="spotify-title">
           MY PLAYLIST - KING ROJAK
         </div>
-
 
         <iframe
           class="spotify"
@@ -1448,17 +1496,21 @@
           loading="lazy"
         ></iframe>
 
-      </div>
+      </section>
 
+
+      <div class="footer">
+        Rojak DriveK1t
+      </div>
 
     </main>
 
   </div>
 
 
-  <!-- =====================================================
+  <!-- =========================================
        PROFILE MODAL
-  ====================================================== -->
+  ========================================== -->
 
   <div
     id="profileModal"
@@ -1467,17 +1519,15 @@
 
     <div class="modal-box">
 
-
-      <div class="modal-head">
+      <div class="modal-header">
 
         <h2>
           Profile
         </h2>
 
-
         <button
           id="closeProfile"
-          class="close"
+          class="close-button"
           type="button"
         >
           ×
@@ -1488,10 +1538,9 @@
 
       <div class="profile-content">
 
-
         <img
           id="profileAvatar"
-          class="profile-photo"
+          class="profile-image"
           src="https://www.gravatar.com/avatar/?d=mp"
           alt="Profile"
         >
@@ -1499,7 +1548,7 @@
 
         <div
           id="profileRole"
-          class="profile-role"
+          class="role-label"
         >
           MEMBER
         </div>
@@ -1508,7 +1557,7 @@
         <div class="field">
 
           <label for="profileName">
-            NAMA
+            Name
           </label>
 
           <input
@@ -1523,7 +1572,7 @@
         <div class="field">
 
           <label for="profileEmail">
-            EMAIL
+            Email
           </label>
 
           <input
@@ -1540,19 +1589,18 @@
 
           <button
             id="saveProfile"
-            class="primary"
+            class="create-button"
             type="button"
           >
-            Simpan
+            Save
           </button>
-
 
           <button
             id="closeProfile2"
-            class="secondary"
+            class="clear-button"
             type="button"
           >
-            Tutup
+            Close
           </button>
 
         </div>
@@ -1570,27 +1618,35 @@
   </div>
 
 
-  <!-- =====================================================
+  <!-- =========================================
        GOOGLE API INITIALIZER
-       HARUS BERADA SEBELUM GOOGLE SCRIPT
-  ====================================================== -->
+       PENTING:
+       script ini harus sebelum API Google
+  ========================================== -->
 
   <script>
 
-    window.gapiInited = false;
-    window.gisInited = false;
-    window.tokenClient = null;
+    window.RDK_GOOGLE = {
+
+      gapiInited: false,
+
+      gisInited: false,
+
+      tokenClient: null
+
+    };
 
 
     window.gapiLoaded = function () {
 
       console.log(
-        "Google API script loaded"
+        "Google API loaded"
       );
 
 
       if (
-        typeof window.gapi === "undefined"
+        typeof window.gapi ===
+        "undefined"
       ) {
 
         console.error(
@@ -1611,17 +1667,20 @@
             await window.gapi.client.init({
 
               discoveryDocs: [
+
                 "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
+
               ]
 
             });
 
 
-            window.gapiInited = true;
+            window.RDK_GOOGLE.gapiInited =
+              true;
 
 
             console.log(
-              "Google API siap."
+              "Google Drive API siap."
             );
 
 
@@ -1648,7 +1707,7 @@
 
 
       if (
-        typeof window.google === "undefined" ||
+        !window.google ||
         !window.google.accounts ||
         !window.google.accounts.oauth2
       ) {
@@ -1662,7 +1721,7 @@
       }
 
 
-      window.tokenClient =
+      window.RDK_GOOGLE.tokenClient =
         window.google.accounts.oauth2.initTokenClient({
 
           client_id:
@@ -1676,7 +1735,8 @@
         });
 
 
-      window.gisInited = true;
+      window.RDK_GOOGLE.gisInited =
+        true;
 
 
       console.log(
@@ -1696,7 +1756,7 @@
   ></script>
 
 
-  <!-- GOOGLE IDENTITY SERVICES -->
+  <!-- GOOGLE IDENTITY -->
 
   <script
     src="https://accounts.google.com/gsi/client"
@@ -1704,16 +1764,15 @@
   ></script>
 
 
-  <!-- =====================================================
-       MAIN JAVASCRIPT
-  ====================================================== -->
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================== -->
 
   <script type="module">
 
-
-    /* =====================================================
+    /* =========================================
        FIREBASE
-    ===================================================== */
+    ========================================== */
 
     import {
       auth,
@@ -1740,9 +1799,9 @@
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    /* =====================================================
-       GLOBAL
-    ===================================================== */
+    /* =========================================
+       VARIABLES
+    ========================================== */
 
     const $ = id =>
       document.getElementById(id);
@@ -1755,9 +1814,13 @@
     let currentRole = "member";
 
 
-    /* =====================================================
+    const googleState =
+      window.RDK_GOOGLE;
+
+
+    /* =========================================
        SCREEN
-    ===================================================== */
+    ========================================== */
 
     function showLogin() {
 
@@ -1787,7 +1850,11 @@
     }
 
 
-    function showLoginError(message) {
+    /* =========================================
+       LOGIN ERROR
+    ========================================== */
+
+    function loginError(message) {
 
       $("loginError").textContent =
         message;
@@ -1795,11 +1862,11 @@
     }
 
 
-    /* =====================================================
-       STATUS
-    ===================================================== */
+    /* =========================================
+       CREATE STATUS
+    ========================================== */
 
-    function status(
+    function setStatus(
       message,
       type = ""
     ) {
@@ -1813,7 +1880,11 @@
     }
 
 
-    function driveStatus(
+    /* =========================================
+       DRIVE STATUS
+    ========================================== */
+
+    function setDriveStatus(
       text,
       type = ""
     ) {
@@ -1821,15 +1892,15 @@
       $("driveStatus").textContent =
         text;
 
-      $("statusDot").className =
-        "status-dot " + type;
+      $("driveDot").className =
+        "drive-dot " + type;
 
     }
 
 
-    /* =====================================================
-       FIREBASE PROFILE
-    ===================================================== */
+    /* =========================================
+       PROFILE
+    ========================================== */
 
     async function ensureProfile(user) {
 
@@ -1841,11 +1912,11 @@
         );
 
 
-      const snap =
+      const snapshot =
         await getDoc(ref);
 
 
-      if (!snap.exists()) {
+      if (!snapshot.exists()) {
 
         await setDoc(
           ref,
@@ -1885,7 +1956,7 @@
 
 
       const data =
-        snap.data();
+        snapshot.data();
 
 
       return data.role === "admin"
@@ -1946,15 +2017,15 @@
     }
 
 
-    /* =====================================================
+    /* =========================================
        GOOGLE LOGIN
-    ===================================================== */
+    ========================================== */
 
     async function loginGoogle() {
 
       try {
 
-        showLoginError("");
+        loginError("");
 
 
         $("loginButton").disabled =
@@ -2023,13 +2094,13 @@
           "auth/unauthorized-domain"
         ) {
 
-          showLoginError(
-            "Domain website belum diizinkan di Firebase."
+          loginError(
+            "Domain website belum diizinkan di Firebase Authorized domains."
           );
 
         } else {
 
-          showLoginError(
+          loginError(
             "Login gagal: " +
             (
               error.code ||
@@ -2058,9 +2129,9 @@
       loginGoogle;
 
 
-    /* =====================================================
+    /* =========================================
        AUTH STATE
-    ===================================================== */
+    ========================================== */
 
     onAuthStateChanged(
       auth,
@@ -2108,90 +2179,120 @@
     } catch (error) {
 
       console.error(
-        "Redirect error:",
+        "Redirect result:",
         error
       );
 
     }
 
 
-    /* =====================================================
-       CONNECT GOOGLE DRIVE
-    ===================================================== */
+    /* =========================================
+       WAIT GOOGLE
+    ========================================== */
 
-    function connectDrive() {
+    async function waitForGoogle(
+      timeout = 10000
+    ) {
+
+      const start =
+        Date.now();
+
+
+      while (
+        Date.now() - start <
+        timeout
+      ) {
+
+        if (
+          googleState.gapiInited &&
+          googleState.gisInited &&
+          googleState.tokenClient
+        ) {
+
+          return true;
+
+        }
+
+
+        await new Promise(
+          resolve =>
+            setTimeout(
+              resolve,
+              200
+            )
+        );
+
+      }
+
+
+      return false;
+
+    }
+
+
+    /* =========================================
+       CONNECT DRIVE
+    ========================================== */
+
+    async function connectDrive() {
+
+      const button =
+        $("connectDriveButton");
+
+
+      button.disabled =
+        true;
+
+
+      button.textContent =
+        "Loading...";
+
+
+      setDriveStatus(
+        "Menghubungkan...",
+        "loading"
+      );
+
+
+      const ready =
+        await waitForGoogle();
+
+
+      if (!ready) {
+
+        button.disabled =
+          false;
+
+
+        button.textContent =
+          "Connect Drive";
+
+
+        setDriveStatus(
+          "Google belum siap",
+          "error"
+        );
+
+
+        setStatus(
+          "Google Drive gagal dimuat. Coba refresh halaman.",
+          "error"
+        );
+
+
+        return false;
+
+      }
+
 
       return new Promise(
         resolve => {
 
-          console.log(
-            "Connect Drive clicked"
-          );
-
-
-          if (
-            !window.gapiInited ||
-            !window.gisInited ||
-            !window.tokenClient
-          ) {
-
-            driveStatus(
-              "Google belum siap",
-              "error"
-            );
-
-
-            status(
-              "Google Drive masih dimuat. Tunggu sebentar lalu coba lagi.",
-              "error"
-            );
-
-
-            console.error(
-              "Google Drive belum siap:",
-              {
-                gapiInited:
-                  window.gapiInited,
-
-                gisInited:
-                  window.gisInited,
-
-                tokenClient:
-                  !!window.tokenClient
-              }
-            );
-
-
-            resolve(false);
-
-            return;
-
-          }
-
-
-          const button =
-            $("connectDriveButton");
-
-
-          button.disabled =
-            true;
-
-
-          button.textContent =
-            "Connecting...";
-
-
-          driveStatus(
-            "Menghubungkan...",
-            "loading"
-          );
-
-
-          window.tokenClient.callback =
+          googleState.tokenClient.callback =
             response => {
 
               console.log(
-                "Google OAuth response:",
+                "Drive OAuth:",
                 response
               );
 
@@ -2205,10 +2306,6 @@
                 !response.access_token
               ) {
 
-                accessToken =
-                  null;
-
-
                 button.textContent =
                   "Connect Drive";
 
@@ -2218,13 +2315,17 @@
                 );
 
 
-                driveStatus(
-                  "Drive belum terhubung",
+                accessToken =
+                  null;
+
+
+                setDriveStatus(
+                  "Belum terhubung",
                   "error"
                 );
 
 
-                status(
+                setStatus(
                   "Izin Google Drive tidak diberikan.",
                   "error"
                 );
@@ -2250,7 +2351,7 @@
 
 
               button.textContent =
-                "Drive Connected";
+                "Connected";
 
 
               button.classList.add(
@@ -2258,13 +2359,13 @@
               );
 
 
-              driveStatus(
-                "Drive terhubung",
+              setDriveStatus(
+                "Connected",
                 "connected"
               );
 
 
-              status(
+              setStatus(
                 "Google Drive berhasil terhubung.",
                 "success"
               );
@@ -2277,7 +2378,7 @@
 
           try {
 
-            window.tokenClient.requestAccessToken({
+            googleState.tokenClient.requestAccessToken({
 
               prompt:
                 "consent"
@@ -2287,7 +2388,6 @@
           } catch (error) {
 
             console.error(
-              "OAuth error:",
               error
             );
 
@@ -2300,14 +2400,14 @@
               "Connect Drive";
 
 
-            driveStatus(
-              "Drive belum terhubung",
+            setDriveStatus(
+              "Belum terhubung",
               "error"
             );
 
 
-            status(
-              "Gagal membuka Google OAuth.",
+            setStatus(
+              "Gagal membuka Google Drive.",
               "error"
             );
 
@@ -2338,9 +2438,9 @@
       };
 
 
-    /* =====================================================
+    /* =========================================
        CREATE TXT
-    ===================================================== */
+    ========================================== */
 
     async function createTXT() {
 
@@ -2357,8 +2457,8 @@
 
       if (!name) {
 
-        status(
-          "Nama file belum diisi.",
+        setStatus(
+          "File name belum diisi.",
           "error"
         );
 
@@ -2371,8 +2471,8 @@
 
       if (!content.trim()) {
 
-        status(
-          "Isi file belum diisi.",
+        setStatus(
+          "Content belum diisi.",
           "error"
         );
 
@@ -2452,7 +2552,7 @@
           true;
 
 
-        status(
+        setStatus(
           "Menyimpan file..."
         );
 
@@ -2510,14 +2610,14 @@
             "Connect Drive";
 
 
-          driveStatus(
-            "Drive belum terhubung",
+          setDriveStatus(
+            "Belum terhubung",
             "error"
           );
 
 
-          status(
-            "Sesi Drive sudah habis. Hubungkan kembali.",
+          setStatus(
+            "Sesi Google Drive habis. Hubungkan kembali.",
             "error"
           );
 
@@ -2549,8 +2649,8 @@
         await response.json();
 
 
-        status(
-          "File berhasil disimpan ke Google Drive.",
+        setStatus(
+          "File berhasil dibuat dan disimpan ke Google Drive.",
           "success"
         );
 
@@ -2573,7 +2673,7 @@
         );
 
 
-        status(
+        setStatus(
           "Gagal membuat file: " +
           error.message,
           "error"
@@ -2593,9 +2693,9 @@
       createTXT;
 
 
-    /* =====================================================
+    /* =========================================
        CLEAR
-    ===================================================== */
+    ========================================== */
 
     $("clearButton").onclick =
       () => {
@@ -2606,24 +2706,25 @@
         $("fileContent").value =
           "";
 
-        status("");
+        setStatus("");
 
       };
 
 
-    /* =====================================================
+    /* =========================================
        RECENT FILES
-    ===================================================== */
+    ========================================== */
 
     async function loadRecentFiles() {
 
       if (!accessToken) {
 
         $("filesList").innerHTML =
+
           `
-          <div class="empty">
-            Hubungkan Google Drive terlebih dahulu.
-          </div>
+            <div class="empty">
+              Hubungkan Google Drive terlebih dahulu.
+            </div>
           `;
 
         return;
@@ -2632,6 +2733,15 @@
 
 
       try {
+
+        $("filesList").innerHTML =
+
+          `
+            <div class="empty">
+              Memuat file...
+            </div>
+          `;
+
 
         const response =
           await window.gapi.client.drive.files.list({
@@ -2659,10 +2769,11 @@
         if (!files.length) {
 
           $("filesList").innerHTML =
+
             `
-            <div class="empty">
-              Belum ada file.
-            </div>
+              <div class="empty">
+                Belum ada file.
+              </div>
             `;
 
           return;
@@ -2696,18 +2807,17 @@
                       </div>
 
                       <div class="file-date">
-                        ${escapeHTML(date)}
+                        Modified ${escapeHTML(date)}
                       </div>
 
                     </div>
 
-
                     <button
-                      class="file-open"
+                      class="open-file"
                       type="button"
-                      data-open-file="${escapeHTML(file.id)}"
+                      data-file-id="${escapeHTML(file.id)}"
                     >
-                      Buka
+                      Open
                     </button>
 
                   </div>
@@ -2721,7 +2831,7 @@
 
         document
           .querySelectorAll(
-            "[data-open-file]"
+            "[data-file-id]"
           )
           .forEach(
             button => {
@@ -2729,8 +2839,8 @@
               button.onclick =
                 () => {
 
-                  openDriveFile(
-                    button.dataset.openFile
+                  openFile(
+                    button.dataset.fileId
                   );
 
                 };
@@ -2747,10 +2857,11 @@
 
 
         $("filesList").innerHTML =
+
           `
-          <div class="empty">
-            Gagal memuat file.
-          </div>
+            <div class="empty">
+              Gagal memuat file.
+            </div>
           `;
 
       }
@@ -2758,11 +2869,23 @@
     }
 
 
-    /* =====================================================
-       OPEN DRIVE FILE
-    ===================================================== */
+    /* =========================================
+       REFRESH
+    ========================================== */
 
-    async function openDriveFile(
+    $("refreshFilesButton").onclick =
+      async () => {
+
+        await loadRecentFiles();
+
+      };
+
+
+    /* =========================================
+       OPEN FILE
+    ========================================== */
+
+    async function openFile(
       fileId
     ) {
 
@@ -2814,9 +2937,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================================
        OPEN GOOGLE DRIVE
-    ===================================================== */
+    ========================================== */
 
     $("openDriveButton").onclick =
       async () => {
@@ -2844,9 +2967,9 @@
       };
 
 
-    /* =====================================================
-       PROFILE
-    ===================================================== */
+    /* =========================================
+       PROFILE MODAL
+    ========================================== */
 
     function openProfile() {
 
@@ -2957,9 +3080,9 @@
       };
 
 
-    /* =====================================================
+    /* =========================================
        ADMIN
-    ===================================================== */
+    ========================================== */
 
     $("adminButton").onclick =
       () => {
@@ -2970,9 +3093,9 @@
       };
 
 
-    /* =====================================================
+    /* =========================================
        LOGOUT
-    ===================================================== */
+    ========================================== */
 
     $("logoutButton").onclick =
       async () => {
@@ -3030,8 +3153,8 @@
             "Connect Drive";
 
 
-          driveStatus(
-            "Drive belum terhubung"
+          setDriveStatus(
+            "Belum terhubung"
           );
 
 
@@ -3051,9 +3174,9 @@
       };
 
 
-    /* =====================================================
+    /* =========================================
        TABS
-    ===================================================== */
+    ========================================== */
 
     document
       .querySelectorAll(".tab")
@@ -3099,14 +3222,18 @@
                 tab.dataset.tab;
 
 
-              $(name + "Panel")
+              $(
+                name +
+                "Panel"
+              )
                 .classList.add(
                   "active"
                 );
 
 
               if (
-                name === "recent"
+                name ===
+                "recent"
               ) {
 
                 await loadRecentFiles();
@@ -3120,16 +3247,17 @@
       );
 
 
-    /* =====================================================
-       ESC CLOSE MODAL
-    ===================================================== */
+    /* =========================================
+       CLOSE MODAL
+    ========================================== */
 
     document.addEventListener(
       "keydown",
       event => {
 
         if (
-          event.key === "Escape"
+          event.key ===
+          "Escape"
         ) {
 
           closeProfile();
@@ -3140,9 +3268,9 @@
     );
 
 
-    /* =====================================================
+    /* =========================================
        CTRL + ENTER
-    ===================================================== */
+    ========================================== */
 
     $("fileContent")
       .addEventListener(
@@ -3151,7 +3279,8 @@
 
           if (
             event.ctrlKey &&
-            event.key === "Enter"
+            event.key ===
+            "Enter"
           ) {
 
             event.preventDefault();
@@ -3164,11 +3293,13 @@
       );
 
 
-    /* =====================================================
+    /* =========================================
        ESCAPE HTML
-    ===================================================== */
+    ========================================== */
 
-    function escapeHTML(value) {
+    function escapeHTML(
+      value
+    ) {
 
       return String(value)
 
@@ -3198,7 +3329,6 @@
         );
 
     }
-
 
   </script>
 
