@@ -12,263 +12,621 @@
   <title>Rojak DriveKit - Admin</title>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
 
   <style>
 
     :root {
-      --bg:#09090a;
-      --surface:#111113;
-      --surface2:#18181b;
-      --surface3:#1e1e22;
-      --line:rgba(255,255,255,.08);
-      --text:#f5f5f3;
-      --muted:#9999a1;
-      --accent:#df5a38;
-      --accent2:#ff7955;
-      --green:#70d68a;
-      --red:#ed7569;
+      --bg:#0b0b0c;
+      --surface:#111112;
+      --surface2:#171718;
+      --surface3:#1d1d1f;
+
+      --line:#29292b;
+      --line2:#38383b;
+
+      --text:#e7e7e9;
+      --muted:#8b8b91;
+
+      --accent:#c94f32;
+      --accent-hover:#db5d3d;
+
+      --green:#67b87a;
+      --red:#d8665c;
     }
+
 
     * {
       box-sizing:border-box;
     }
 
+
+    html {
+      background:var(--bg);
+    }
+
+
     body {
       margin:0;
       min-height:100vh;
 
-      background:
-        radial-gradient(
-          circle at 80% -10%,
-          rgba(223,90,56,.13),
-          transparent 30%
-        ),
-        var(--bg);
+      background:var(--bg);
 
       color:var(--text);
 
-      font-family:Inter,system-ui,sans-serif;
+      font-family:
+        Inter,
+        system-ui,
+        -apple-system,
+        BlinkMacSystemFont,
+        "Segoe UI",
+        sans-serif;
     }
+
 
     button,
     select {
       font:inherit;
     }
 
+
     button {
       cursor:pointer;
     }
 
+
+    /* =========================
+       TOPBAR
+    ========================= */
+
     .topbar {
-      height:76px;
+      height:56px;
 
       display:flex;
       align-items:center;
       justify-content:space-between;
 
-      padding:0 28px;
+      padding:0 22px;
 
       border-bottom:1px solid var(--line);
 
-      background:rgba(9,9,10,.8);
-      backdrop-filter:blur(20px);
+      background:var(--surface);
     }
+
 
     .brand {
       display:flex;
       align-items:center;
-      gap:12px;
 
-      font-weight:800;
+      gap:9px;
+
+      font-size:11px;
+      font-weight:700;
     }
 
-    .icon {
-      width:40px;
-      height:40px;
+
+    .brand-mark {
+      width:26px;
+      height:26px;
 
       display:grid;
       place-items:center;
 
-      border-radius:12px;
+      border:1px solid var(--line2);
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent),
-          var(--accent2)
-        );
-
-      font-weight:900;
-    }
-
-    .back {
-      border:1px solid var(--line);
+      border-radius:6px;
 
       background:var(--surface2);
-      color:var(--text);
 
-      padding:9px 13px;
+      color:var(--accent-hover);
 
-      border-radius:10px;
-    }
-
-    .container {
-      width:min(1100px,calc(100% - 30px));
-
-      margin:auto;
-
-      padding:35px 0 80px;
-    }
-
-    h1 {
-      margin:0;
-      font-size:42px;
-      letter-spacing:-2px;
-    }
-
-    .sub {
-      margin:8px 0 25px;
-
-      color:var(--muted);
-      font-size:13px;
-    }
-
-    .stats {
-      display:grid;
-      grid-template-columns:repeat(3,1fr);
-      gap:12px;
-
-      margin-bottom:20px;
-    }
-
-    .stat {
-      padding:20px;
-
-      border:1px solid var(--line);
-      border-radius:17px;
-
-      background:var(--surface);
-    }
-
-    .stat-label {
-      color:var(--muted);
-      font-size:12px;
-    }
-
-    .stat-value {
-      margin-top:8px;
-
-      font-size:28px;
+      font-size:11px;
       font-weight:800;
     }
 
-    .card {
+
+    .back {
+      height:31px;
+
+      padding:0 10px;
+
+      border:1px solid var(--line);
+
+      border-radius:6px;
+
+      background:var(--surface2);
+
+      color:var(--muted);
+
+      font-size:9px;
+      font-weight:600;
+    }
+
+
+    .back:hover {
+      border-color:var(--line2);
+
+      color:var(--text);
+
+      background:var(--surface3);
+    }
+
+
+    /* =========================
+       MAIN
+    ========================= */
+
+    .container {
+      width:min(
+        1040px,
+        calc(100% - 32px)
+      );
+
+      margin:auto;
+
+      padding:38px 0 60px;
+    }
+
+
+    .page-head {
+      margin-bottom:22px;
+    }
+
+
+    .page-head h1 {
+      margin:0;
+
+      font-size:26px;
+      font-weight:700;
+
+      letter-spacing:-.8px;
+    }
+
+
+    .page-head p {
+      margin:6px 0 0;
+
+      color:var(--muted);
+
+      font-size:10px;
+      line-height:1.5;
+    }
+
+
+    /* =========================
+       SUMMARY
+    ========================= */
+
+    .summary {
+      display:flex;
+      align-items:center;
+
+      gap:18px;
+
+      padding:11px 0;
+
+      border-top:1px solid var(--line);
+      border-bottom:1px solid var(--line);
+
+      color:var(--muted);
+
+      font-size:9px;
+    }
+
+
+    .summary-item {
+      display:flex;
+      align-items:center;
+
+      gap:5px;
+    }
+
+
+    .summary-value {
+      color:var(--text);
+
+      font-size:10px;
+      font-weight:700;
+    }
+
+
+    .summary-divider {
+      width:1px;
+      height:12px;
+
+      background:var(--line2);
+    }
+
+
+    /* =========================
+       USERS HEADER
+    ========================= */
+
+    .users-section {
+      margin-top:27px;
+    }
+
+
+    .section-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      margin-bottom:9px;
+    }
+
+
+    .section-title {
+      margin:0;
+
+      font-size:12px;
+      font-weight:700;
+    }
+
+
+    .section-info {
+      color:var(--muted);
+
+      font-size:8px;
+    }
+
+
+    /* =========================
+       TABLE
+    ========================= */
+
+    .user-table {
       overflow:hidden;
 
       border:1px solid var(--line);
-      border-radius:18px;
+
+      border-radius:8px;
 
       background:var(--surface);
     }
 
-    .table-wrap {
-      overflow-x:auto;
-    }
 
-    table {
-      width:100%;
-      border-collapse:collapse;
-    }
+    .user-table-head {
+      display:grid;
 
-    th,
-    td {
-      padding:15px;
+      grid-template-columns:
+        minmax(260px,1fr)
+        120px
+        210px;
+
+      align-items:center;
+
+      min-height:36px;
+
+      padding:0 12px;
 
       border-bottom:1px solid var(--line);
 
-      text-align:left;
-
-      font-size:12px;
-    }
-
-    th {
       color:var(--muted);
-      font-size:11px;
+
+      font-size:8px;
+      font-weight:700;
+
+      letter-spacing:.3px;
     }
 
-    tr:last-child td {
+
+    .user-row {
+      display:grid;
+
+      grid-template-columns:
+        minmax(260px,1fr)
+        120px
+        210px;
+
+      align-items:center;
+
+      min-height:66px;
+
+      padding:8px 12px;
+
+      border-bottom:1px solid var(--line);
+    }
+
+
+    .user-row:last-child {
       border-bottom:0;
     }
 
-    .user {
-      display:flex;
-      align-items:center;
-      gap:10px;
+
+    .user-row:hover {
+      background:#131314;
     }
 
+
+    /* =========================
+       USER
+    ========================= */
+
+    .user-main {
+      display:flex;
+      align-items:center;
+
+      gap:10px;
+
+      min-width:0;
+    }
+
+
     .avatar {
-      width:35px;
-      height:35px;
+      width:34px;
+      height:34px;
+
+      flex:0 0 auto;
 
       border-radius:50%;
 
       object-fit:cover;
 
-      background:var(--surface2);
+      background:var(--surface3);
     }
+
+
+    .user-details {
+      min-width:0;
+    }
+
 
     .name {
+      overflow:hidden;
+
+      color:var(--text);
+
+      font-size:10px;
       font-weight:700;
+
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
+
     .email {
+      overflow:hidden;
+
       margin-top:3px;
 
       color:var(--muted);
-      font-size:10px;
+
+      font-size:8px;
+
+      text-overflow:ellipsis;
+      white-space:nowrap;
     }
 
-    select {
-      padding:8px 10px;
+
+    /* =========================
+       ROLE
+    ========================= */
+
+    .role-text {
+      font-size:9px;
+      font-weight:700;
+
+      color:var(--muted);
+    }
+
+
+    .role-text.admin {
+      color:var(--accent-hover);
+    }
+
+
+    .role-action {
+      display:flex;
+      align-items:center;
+
+      gap:5px;
+    }
+
+
+    .role-select {
+      width:96px;
+      height:30px;
+
+      padding:0 7px;
 
       border:1px solid var(--line);
 
-      border-radius:9px;
-
-      background:var(--surface2);
-      color:var(--text);
+      border-radius:6px;
 
       outline:none;
+
+      background:var(--surface2);
+
+      color:var(--text);
+
+      font-size:9px;
     }
 
+
+    .role-select:hover {
+      border-color:var(--line2);
+    }
+
+
+    .role-select:focus {
+      border-color:var(--accent);
+    }
+
+
+    .save-role {
+      height:30px;
+
+      padding:0 9px;
+
+      border:1px solid var(--line);
+
+      border-radius:6px;
+
+      background:var(--surface2);
+
+      color:var(--text);
+
+      font-size:8px;
+      font-weight:700;
+    }
+
+
+    .save-role:hover {
+      border-color:var(--accent);
+
+      color:var(--accent-hover);
+    }
+
+
+    .save-role:disabled {
+      opacity:.4;
+
+      cursor:default;
+    }
+
+
+    /* =========================
+       UID
+    ========================= */
+
+    .uid {
+      overflow:hidden;
+
+      color:#6f6f75;
+
+      font-family:
+        ui-monospace,
+        SFMono-Regular,
+        Menlo,
+        Monaco,
+        Consolas,
+        monospace;
+
+      font-size:8px;
+
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+
+    /* =========================
+       SELF
+    ========================= */
+
+    .self-role {
+      color:var(--accent-hover);
+
+      font-size:8px;
+      font-weight:700;
+    }
+
+
+    /* =========================
+       MESSAGE
+    ========================= */
+
     .message {
-      padding:25px;
+      padding:40px 15px;
 
       text-align:center;
 
       color:var(--muted);
-      font-size:13px;
+
+      font-size:9px;
     }
+
 
     .error {
       color:var(--red);
     }
 
-    @media(max-width:650px) {
+
+    /* =========================
+       MOBILE
+    ========================= */
+
+    @media(max-width:700px) {
 
       .topbar {
-        padding:0 15px;
+        height:52px;
+
+        padding:0 12px;
       }
 
-      .stats {
-        grid-template-columns:1fr;
+
+      .brand {
+        font-size:10px;
       }
 
-      h1 {
-        font-size:35px;
+
+      .brand-mark {
+        width:24px;
+        height:24px;
+      }
+
+
+      .container {
+        width:calc(100% - 20px);
+
+        padding:28px 0 45px;
+      }
+
+
+      .page-head h1 {
+        font-size:23px;
+      }
+
+
+      .summary {
+        flex-wrap:wrap;
+
+        gap:8px 14px;
+      }
+
+
+      .summary-divider {
+        display:none;
+      }
+
+
+      .user-table-head {
+        display:none;
+      }
+
+
+      .user-row {
+        display:block;
+
+        min-height:auto;
+
+        padding:13px;
+      }
+
+
+      .user-main {
+        margin-bottom:12px;
+      }
+
+
+      .role-action {
+        padding-left:44px;
+      }
+
+
+      .role-select {
+        flex:1;
+
+        width:auto;
+      }
+
+
+      .uid {
+        margin-top:9px;
+
+        padding-left:44px;
       }
 
     }
@@ -277,145 +635,194 @@
 
 </head>
 
+
 <body>
+
+
+  <!-- =========================
+       TOPBAR
+  ========================== -->
 
   <header class="topbar">
 
     <div class="brand">
 
-      <div class="icon">
+      <div class="brand-mark">
         R
       </div>
 
-      Rojak DriveKit Admin
+      <span>
+        Rojak DriveKit · Admin
+      </span>
 
     </div>
+
 
     <button
       id="backButton"
       class="back"
     >
-      ← Back
+      ← Kembali
     </button>
 
   </header>
 
 
+
+  <!-- =========================
+       MAIN
+  ========================== -->
+
   <main class="container">
 
-    <h1>
-      Admin Dashboard
-    </h1>
 
-    <div class="sub">
-      Kelola akun Member dan Admin Rojak DriveKit.
+    <div class="page-head">
+
+      <h1>
+        Users
+      </h1>
+
+      <p>
+        Kelola akses pengguna Rojak DriveKit.
+      </p>
+
     </div>
 
 
-    <div class="stats">
 
-      <div class="stat">
+    <!-- SUMMARY -->
 
-        <div class="stat-label">
-          Total Users
-        </div>
+    <div class="summary">
 
-        <div
+      <div class="summary-item">
+
+        <span>
+          Users
+        </span>
+
+        <span
           id="totalUsers"
-          class="stat-value"
+          class="summary-value"
         >
           0
-        </div>
+        </span>
 
       </div>
 
 
-      <div class="stat">
+      <div class="summary-divider"></div>
 
-        <div class="stat-label">
+
+      <div class="summary-item">
+
+        <span>
           Admin
-        </div>
+        </span>
 
-        <div
+        <span
           id="totalAdmins"
-          class="stat-value"
+          class="summary-value"
         >
           0
-        </div>
+        </span>
 
       </div>
 
 
-      <div class="stat">
+      <div class="summary-divider"></div>
 
-        <div class="stat-label">
+
+      <div class="summary-item">
+
+        <span>
           Member
+        </span>
+
+        <span
+          id="totalMembers"
+          class="summary-value"
+        >
+          0
+        </span>
+
+      </div>
+
+    </div>
+
+
+
+    <!-- USERS -->
+
+    <section class="users-section">
+
+      <div class="section-head">
+
+        <h2 class="section-title">
+          Daftar pengguna
+        </h2>
+
+        <span class="section-info">
+          Role dapat diubah oleh Admin
+        </span>
+
+      </div>
+
+
+      <div class="user-table">
+
+
+        <!-- TABLE HEADER -->
+
+        <div class="user-table-head">
+
+          <div>
+            USER
+          </div>
+
+          <div>
+            ROLE
+          </div>
+
+          <div>
+            UID
+          </div>
+
         </div>
+
+
+        <!-- LOADING -->
 
         <div
-          id="totalMembers"
-          class="stat-value"
+          id="message"
+          class="message"
         >
-          0
+          Memuat pengguna...
         </div>
 
-      </div>
 
-    </div>
+        <!-- USERS -->
 
+        <div
+          id="usersTable"
+          style="display:none;"
+        ></div>
 
-    <div class="card">
-
-      <div
-        id="message"
-        class="message"
-      >
-        Memuat pengguna...
-      </div>
-
-
-      <div
-        id="tableWrap"
-        class="table-wrap"
-        style="display:none;"
-      >
-
-        <table>
-
-          <thead>
-
-            <tr>
-
-              <th>
-                USER
-              </th>
-
-              <th>
-                ROLE
-              </th>
-
-              <th>
-                UID
-              </th>
-
-            </tr>
-
-          </thead>
-
-          <tbody
-            id="usersTable"
-          ></tbody>
-
-        </table>
 
       </div>
 
-    </div>
+    </section>
+
 
   </main>
 
 
+
+  <!-- =========================
+       JAVASCRIPT
+  ========================== -->
+
   <script type="module">
+
 
     import {
       auth,
@@ -442,23 +849,55 @@
       id => document.getElementById(id);
 
 
+
+    /* =========================
+       ESCAPE HTML
+    ========================== */
+
     function escapeHTML(value) {
 
       return String(value)
-        .replaceAll("&","&amp;")
-        .replaceAll("<","&lt;")
-        .replaceAll(">","&gt;")
-        .replaceAll('"',"&quot;")
-        .replaceAll("'","&#039;");
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
 
     }
 
+
+
+    /* =========================
+       ADMIN CHECK
+    ========================== */
 
     async function loadAdmin() {
 
       onAuthStateChanged(
         auth,
+
         async user => {
+
 
           if (!user) {
 
@@ -470,7 +909,9 @@
           }
 
 
+
           try {
+
 
             const currentRef =
               doc(
@@ -479,10 +920,12 @@
                 user.uid
               );
 
+
             const currentSnap =
               await getDoc(
                 currentRef
               );
+
 
 
             if (
@@ -491,6 +934,7 @@
             ) {
 
               $("message").innerHTML =
+
                 `<span class="error">
                   Kamu tidak memiliki akses Admin.
                 </span>`;
@@ -500,15 +944,20 @@
             }
 
 
+
             await loadUsers(
               user.uid
             );
 
+
           } catch (error) {
+
 
             console.error(error);
 
+
             $("message").innerHTML =
+
               `<span class="error">
                 Gagal memuat Admin Dashboard.
               </span>`;
@@ -521,9 +970,15 @@
     }
 
 
+
+    /* =========================
+       LOAD USERS
+    ========================== */
+
     async function loadUsers(
       currentUid
     ) {
+
 
       const snapshot =
         await getDocs(
@@ -534,44 +989,57 @@
         );
 
 
+
       const users =
         snapshot.docs.map(
           item => ({
+
             id:item.id,
+
             ...item.data()
+
           })
         );
 
 
+
       let admins = 0;
+
       let members = 0;
 
 
-      users.forEach(user => {
 
-        if (
-          user.role === "admin"
-        ) {
+      users.forEach(
+        user => {
 
-          admins++;
+          if (
+            user.role === "admin"
+          ) {
 
-        } else {
+            admins++;
 
-          members++;
+          } else {
+
+            members++;
+
+          }
 
         }
+      );
 
-      });
 
 
       $("totalUsers").textContent =
         users.length;
 
+
       $("totalAdmins").textContent =
         admins;
 
+
       $("totalMembers").textContent =
         members;
+
 
 
       if (!users.length) {
@@ -579,186 +1047,270 @@
         $("message").textContent =
           "Belum ada user.";
 
+        $("message").style.display =
+          "block";
+
+        $("usersTable").style.display =
+          "none";
+
         return;
 
       }
 
 
+
       $("message").style.display =
         "none";
 
-      $("tableWrap").style.display =
+
+      $("usersTable").style.display =
         "block";
 
 
+
       $("usersTable").innerHTML =
-        users.map(user => {
-
-          const photo =
-            user.photoURL ||
-            "https://www.gravatar.com/avatar/?d=mp";
 
 
-          const isSelf =
-            user.id === currentUid;
+        users.map(
+          user => {
 
 
-          return `
+            const photo =
+              user.photoURL ||
 
-            <tr>
+              "https://www.gravatar.com/avatar/?d=mp";
 
-              <td>
 
-                <div class="user">
+
+            const isSelf =
+              user.id === currentUid;
+
+
+
+            return `
+
+              <div class="user-row">
+
+
+                <!-- USER -->
+
+                <div class="user-main">
+
 
                   <img
+
                     class="avatar"
+
                     src="${escapeHTML(photo)}"
+
                     alt=""
+
                   >
 
-                  <div>
+
+                  <div class="user-details">
+
 
                     <div class="name">
+
                       ${escapeHTML(
                         user.name ||
                         "User"
                       )}
+
                     </div>
 
+
                     <div class="email">
+
                       ${escapeHTML(
                         user.email ||
                         "-"
                       )}
+
                     </div>
+
 
                   </div>
 
+
                 </div>
 
-              </td>
 
 
-              <td>
+                <!-- ROLE -->
 
-                ${
-                  isSelf
+                <div>
 
-                  ?
 
-                  `<select disabled>
-                    <option selected>
-                      ADMIN (YOU)
-                    </option>
-                  </select>`
+                  ${
+                    isSelf
 
-                  :
+                    ?
 
-                  `<select
-                    class="roleSelect"
-                    data-uid="${escapeHTML(user.id)}"
-                  >
+                    `<div class="self-role">
+                      ADMIN · YOU
+                    </div>`
 
-                    <option
-                      value="member"
-                      ${
-                        user.role === "member"
-                        ? "selected"
-                        : ""
-                      }
+                    :
+
+                    `<select
+                      class="role-select roleSelect"
+                      data-uid="${escapeHTML(user.id)}"
                     >
-                      Member
-                    </option>
 
-                    <option
-                      value="admin"
-                      ${
-                        user.role === "admin"
-                        ? "selected"
-                        : ""
-                      }
-                    >
-                      Admin
-                    </option>
-
-                  </select>`
-                }
-
-              </td>
+                      <option
+                        value="member"
+                        ${
+                          user.role === "member"
+                          ? "selected"
+                          : ""
+                        }
+                      >
+                        Member
+                      </option>
 
 
-              <td>
-                ${escapeHTML(user.id)}
-              </td>
+                      <option
+                        value="admin"
+                        ${
+                          user.role === "admin"
+                          ? "selected"
+                          : ""
+                        }
+                      >
+                        Admin
+                      </option>
 
-            </tr>
+                    </select>`
 
-          `;
+                  }
 
-        }).join("");
 
+                </div>
+
+
+
+                <!-- UID -->
+
+                <div class="uid">
+
+                  ${escapeHTML(
+                    user.id
+                  )}
+
+                </div>
+
+
+              </div>
+
+            `;
+
+          }
+
+        ).join("");
+
+
+
+      /* =========================
+         ROLE CHANGE
+      ========================== */
 
       document
         .querySelectorAll(".roleSelect")
-        .forEach(select => {
-
-          select.addEventListener(
-            "change",
-            async event => {
-
-              const uid =
-                event.target.dataset.uid;
-
-              const newRole =
-                event.target.value;
+        .forEach(
+          select => {
 
 
-              try {
+            select.addEventListener(
+              "change",
 
-                await updateDoc(
-                  doc(
-                    db,
-                    "users",
-                    uid
-                  ),
-                  {
-                    role:newRole,
-                    updatedAt:
-                      serverTimestamp()
-                  }
-                );
+              async event => {
 
 
-                await loadUsers(
-                  currentUid
-                );
+                const uid =
+                  event.target.dataset.uid;
 
-              } catch (error) {
 
-                console.error(
-                  error
-                );
+                const newRole =
+                  event.target.value;
 
-                alert(
-                  "Gagal mengubah role: " +
-                  (
-                    error.code ||
-                    error.message
-                  )
-                );
+
+
+                try {
+
+
+                  event.target.disabled =
+                    true;
+
+
+
+                  await updateDoc(
+
+                    doc(
+                      db,
+                      "users",
+                      uid
+                    ),
+
+                    {
+
+                      role:newRole,
+
+                      updatedAt:
+                        serverTimestamp()
+
+                    }
+
+                  );
+
+
+
+                  await loadUsers(
+                    currentUid
+                  );
+
+
+                } catch (error) {
+
+
+                  console.error(
+                    error
+                  );
+
+
+                  alert(
+                    "Gagal mengubah role: " +
+
+                    (
+                      error.code ||
+                      error.message
+                    )
+                  );
+
+
+                  event.target.disabled =
+                    false;
+
+                }
 
               }
 
-            }
-          );
+            );
 
-        });
+          }
+        );
 
     }
 
 
+
+    /* =========================
+       BACK
+    ========================== */
+
     $("backButton").onclick =
+
       () => {
 
         window.location.href =
@@ -767,10 +1319,16 @@
       };
 
 
+
+    /* =========================
+       START
+    ========================== */
+
     loadAdmin();
+
 
   </script>
 
-</body>
 
+</body>
 </html>
