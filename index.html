@@ -25,7 +25,7 @@
       --green: #70d68a;
       --red: #ed7569;
 
-      --shadow: 0 24px 80px rgba(0,0,0,.45);
+      --shadow: 0 20px 60px rgba(0,0,0,.35);
     }
 
     * {
@@ -49,19 +49,7 @@
         sans-serif;
 
       color: var(--text);
-
-      background:
-        radial-gradient(
-          circle at 10% 0%,
-          rgba(223,90,56,.14),
-          transparent 30%
-        ),
-        radial-gradient(
-          circle at 90% 10%,
-          rgba(255,121,85,.06),
-          transparent 28%
-        ),
-        var(--bg);
+      background: var(--bg);
     }
 
     button,
@@ -78,6 +66,7 @@
       display: none !important;
     }
 
+
     /* =========================
        LOADING
     ========================= */
@@ -93,27 +82,27 @@
     }
 
     .loading-card {
-      width: min(420px, 100%);
+      width: min(380px, 100%);
 
-      padding: 35px;
+      padding: 30px;
 
       text-align: center;
 
       border: 1px solid var(--line);
-      border-radius: 24px;
+      border-radius: 18px;
 
-      background: rgba(17,17,19,.9);
+      background: var(--surface);
 
       box-shadow: var(--shadow);
     }
 
     .spinner {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
 
-      margin: 0 auto 18px;
+      margin: 0 auto 16px;
 
-      border: 3px solid rgba(255,255,255,.1);
+      border: 3px solid rgba(255,255,255,.08);
       border-top-color: var(--accent2);
 
       border-radius: 50%;
@@ -126,6 +115,7 @@
         transform: rotate(360deg);
       }
     }
+
 
     /* =========================
        LOGIN
@@ -142,7 +132,7 @@
     }
 
     .login-shell {
-      width: min(1050px, 100%);
+      width: min(980px, 100%);
 
       display: grid;
       grid-template-columns: 1.15fr .85fr;
@@ -150,55 +140,35 @@
       overflow: hidden;
 
       border: 1px solid var(--line);
-      border-radius: 30px;
+      border-radius: 22px;
 
-      background: rgba(17,17,19,.9);
+      background: var(--surface);
 
       box-shadow: var(--shadow);
     }
 
     .login-left {
-      position: relative;
-
-      min-height: 570px;
+      min-height: 520px;
 
       display: flex;
       flex-direction: column;
       justify-content: space-between;
 
-      padding: 48px;
-
-      overflow: hidden;
-    }
-
-    .login-left::before {
-      content: "";
-
-      position: absolute;
-
-      width: 450px;
-      height: 450px;
-
-      right: -180px;
-      top: -180px;
-
-      border-radius: 50%;
+      padding: 40px;
 
       background:
         radial-gradient(
-          circle,
-          rgba(255,121,85,.18),
-          transparent 65%
+          circle at 90% 0%,
+          rgba(223,90,56,.12),
+          transparent 35%
         );
     }
 
     .brand {
-      position: relative;
-      z-index: 1;
-
       display: flex;
       align-items: center;
-      gap: 12px;
+
+      gap: 11px;
     }
 
     .brand-icon,
@@ -216,57 +186,56 @@
       color: white;
 
       font-weight: 900;
-
-      box-shadow:
-        0 10px 30px rgba(223,90,56,.25);
     }
 
     .brand-icon {
-      width: 44px;
-      height: 44px;
+      width: 42px;
+      height: 42px;
 
-      border-radius: 13px;
+      border-radius: 11px;
     }
 
     .brand-text strong {
       display: block;
-      font-size: 17px;
+
+      font-size: 16px;
     }
 
     .brand-text span {
       color: var(--muted);
-      font-size: 12px;
+
+      font-size: 11px;
     }
 
     .hero {
-      position: relative;
-      z-index: 1;
-
-      max-width: 560px;
+      max-width: 500px;
     }
 
     .hero-badge {
       display: inline-flex;
 
-      padding: 7px 11px;
-      margin-bottom: 18px;
+      padding: 6px 10px;
 
-      border: 1px solid var(--line2);
+      margin-bottom: 15px;
+
+      border: 1px solid var(--line);
       border-radius: 999px;
+
+      background: rgba(255,255,255,.02);
 
       color: #d6d6d9;
 
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .hero h1 {
       margin: 0;
 
-      font-size: clamp(38px, 5vw, 62px);
+      font-size: clamp(34px, 4.5vw, 54px);
 
-      line-height: .98;
+      line-height: 1;
 
-      letter-spacing: -3px;
+      letter-spacing: -2.5px;
     }
 
     .hero h1 span {
@@ -274,45 +243,46 @@
     }
 
     .hero p {
-      margin: 22px 0 0;
+      max-width: 500px;
+
+      margin: 18px 0 0;
 
       color: var(--muted);
 
-      font-size: 15px;
+      font-size: 14px;
+
       line-height: 1.7;
     }
 
     .feature-grid {
-      position: relative;
-      z-index: 1;
-
       display: grid;
       grid-template-columns: repeat(3,1fr);
 
-      gap: 10px;
+      gap: 8px;
     }
 
     .feature {
-      padding: 15px;
+      padding: 12px;
 
       border: 1px solid var(--line);
-      border-radius: 15px;
+      border-radius: 11px;
 
-      background: rgba(255,255,255,.025);
+      background: rgba(255,255,255,.02);
     }
 
     .feature b {
       display: block;
 
-      margin-bottom: 5px;
+      margin-bottom: 4px;
 
-      font-size: 13px;
+      font-size: 11px;
     }
 
     .feature span {
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
+
       line-height: 1.4;
     }
 
@@ -321,39 +291,35 @@
       flex-direction: column;
       justify-content: center;
 
-      padding: 48px;
+      padding: 40px;
 
       border-left: 1px solid var(--line);
 
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,.025),
-          rgba(255,255,255,.01)
-        );
+      background: rgba(255,255,255,.015);
     }
 
     .login-right h2 {
-      margin: 0 0 10px;
+      margin: 0 0 8px;
 
-      font-size: 27px;
+      font-size: 24px;
     }
 
     .login-right > p {
-      margin: 0 0 28px;
+      margin: 0 0 25px;
 
       color: var(--muted);
 
-      font-size: 14px;
+      font-size: 13px;
+
       line-height: 1.6;
     }
 
     .google-btn {
       width: 100%;
-      min-height: 52px;
+      min-height: 50px;
 
       border: 1px solid #ddd;
-      border-radius: 14px;
+      border-radius: 11px;
 
       background: white;
       color: #111;
@@ -364,35 +330,39 @@
     }
 
     .google-btn:hover {
+      filter: brightness(.96);
       transform: translateY(-1px);
-      filter: brightness(.95);
     }
 
     .google-btn:disabled {
       opacity: .6;
+
       cursor: wait;
     }
 
     .login-error {
-      margin-top: 14px;
+      margin-top: 13px;
 
       color: var(--red);
 
-      font-size: 12px;
+      font-size: 11px;
+
       line-height: 1.5;
     }
 
     .security-note {
-      margin-top: 28px;
-      padding-top: 20px;
+      margin-top: 25px;
+      padding-top: 17px;
 
       border-top: 1px solid var(--line);
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
+
       line-height: 1.6;
     }
+
 
     /* =========================
        APP
@@ -403,12 +373,13 @@
     }
 
     .app-shell {
-      width: min(1180px, calc(100% - 32px));
+      width: min(1120px, calc(100% - 32px));
 
       margin: auto;
 
-      padding: 22px 0 120px;
+      padding: 18px 0 110px;
     }
+
 
     /* =========================
        TOPBAR
@@ -416,7 +387,9 @@
 
     .topbar {
       position: sticky;
-      top: 14px;
+
+      top: 12px;
+
       z-index: 20;
 
       display: flex;
@@ -425,84 +398,80 @@
 
       gap: 15px;
 
-      padding: 12px 14px;
+      padding: 10px 12px;
 
       border: 1px solid var(--line);
-      border-radius: 18px;
 
-      background: rgba(17,17,19,.84);
+      border-radius: 14px;
+
+      background: rgba(17,17,19,.94);
 
       backdrop-filter: blur(18px);
 
       box-shadow:
-        0 12px 40px rgba(0,0,0,.22);
-    }
-
-    .topbar-left {
-      display: flex;
-      align-items: center;
+        0 8px 30px rgba(0,0,0,.18);
     }
 
     .topbar-brand {
       display: flex;
       align-items: center;
+
       gap: 10px;
     }
 
     .mini-logo {
-      width: 36px;
-      height: 36px;
+      width: 34px;
+      height: 34px;
 
-      border-radius: 11px;
+      border-radius: 9px;
 
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .topbar-title strong {
       display: block;
 
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .topbar-title span {
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .user-area {
       display: flex;
       align-items: center;
 
-      gap: 8px;
+      gap: 7px;
     }
 
     .profile-trigger {
       display: flex;
       align-items: center;
 
-      gap: 9px;
+      gap: 8px;
 
-      padding: 5px;
+      padding: 4px;
 
       border: 0;
-      border-radius: 13px;
+      border-radius: 11px;
 
       background: transparent;
+
       color: var(--text);
 
       text-align: left;
-
-      transition: .2s;
     }
 
     .profile-trigger:hover {
-      background: rgba(255,255,255,.045);
+      background: rgba(255,255,255,.04);
     }
 
     .avatar {
-      width: 38px;
-      height: 38px;
+      width: 36px;
+      height: 36px;
 
       flex: 0 0 auto;
 
@@ -514,7 +483,7 @@
     }
 
     .user-info {
-      max-width: 190px;
+      max-width: 180px;
     }
 
     .user-info strong {
@@ -525,7 +494,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .user-info > span:not(.role) {
@@ -538,15 +507,15 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .role {
       display: inline-flex !important;
 
-      margin-top: 3px;
+      margin-top: 2px;
 
-      padding: 2px 7px;
+      padding: 2px 6px;
 
       border-radius: 999px;
 
@@ -554,25 +523,35 @@
 
       color: var(--accent2);
 
-      font-size: 9px !important;
+      font-size: 8px !important;
+
       font-weight: 800;
     }
 
     .top-actions {
       display: flex;
-      gap: 7px;
+
+      gap: 6px;
     }
+
+
+    /* =========================
+       BUTTON
+    ========================= */
 
     .btn {
       border: 1px solid var(--line);
-      border-radius: 11px;
 
-      padding: 10px 13px;
+      border-radius: 9px;
+
+      padding: 9px 12px;
 
       background: var(--surface2);
+
       color: var(--text);
 
-      font-size: 12px;
+      font-size: 11px;
+
       font-weight: 700;
 
       transition: .2s;
@@ -586,7 +565,9 @@
 
     .btn:disabled {
       opacity: .55;
+
       cursor: wait;
+
       transform: none;
     }
 
@@ -611,29 +592,31 @@
       color: #9be8ae;
     }
 
+
     /* =========================
-       HEADER
+       DASHBOARD
     ========================= */
 
     .dashboard-head {
-      padding: 55px 8px 25px;
+      padding: 38px 2px 20px;
     }
 
     .dashboard-head h1 {
       margin: 0;
 
-      font-size: clamp(30px,4vw,48px);
+      font-size: 34px;
 
-      letter-spacing: -2px;
+      letter-spacing: -1.5px;
     }
 
     .dashboard-head p {
-      margin: 12px 0 0;
+      margin: 7px 0 0;
 
       color: var(--muted);
 
-      font-size: 14px;
+      font-size: 13px;
     }
+
 
     /* =========================
        DRIVE STATUS
@@ -646,11 +629,13 @@
 
       gap: 15px;
 
-      margin-bottom: 20px;
-      padding: 17px;
+      margin-bottom: 14px;
+
+      padding: 14px 16px;
 
       border: 1px solid var(--line);
-      border-radius: 18px;
+
+      border-radius: 14px;
 
       background: var(--surface);
     }
@@ -659,42 +644,42 @@
       display: flex;
       align-items: center;
 
-      gap: 12px;
+      gap: 11px;
     }
 
     .drive-icon {
-      width: 40px;
-      height: 40px;
+      width: 36px;
+      height: 36px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 12px;
+      border-radius: 9px;
 
       background: rgba(112,214,138,.08);
 
-      font-size: 18px;
+      font-size: 16px;
     }
 
     .drive-status strong {
       display: block;
 
-      font-size: 13px;
+      font-size: 12px;
     }
 
     .drive-status span {
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .status-dot {
       display: inline-block;
 
-      width: 7px;
-      height: 7px;
+      width: 6px;
+      height: 6px;
 
-      margin-right: 6px;
+      margin-right: 5px;
 
       border-radius: 50%;
 
@@ -705,8 +690,9 @@
       background: var(--green);
 
       box-shadow:
-        0 0 12px rgba(112,214,138,.5);
+        0 0 10px rgba(112,214,138,.5);
     }
+
 
     /* =========================
        TABS
@@ -714,34 +700,41 @@
 
     .tabs {
       display: grid;
+
       grid-template-columns: repeat(3,1fr);
 
-      gap: 5px;
+      gap: 4px;
 
-      padding: 5px;
-      margin-bottom: 18px;
+      padding: 4px;
+
+      margin-bottom: 10px;
 
       border: 1px solid var(--line);
-      border-radius: 14px;
+
+      border-radius: 11px;
 
       background: var(--surface);
     }
 
     .tab {
       border: 0;
-      border-radius: 10px;
 
-      padding: 11px;
+      border-radius: 8px;
+
+      padding: 10px;
 
       background: transparent;
+
       color: var(--muted);
 
-      font-size: 12px;
+      font-size: 11px;
+
       font-weight: 700;
     }
 
     .tab.active {
       background: var(--surface3);
+
       color: var(--text);
     }
 
@@ -753,22 +746,19 @@
       display: block;
     }
 
+
     /* =========================
        CARD
     ========================= */
 
     .card {
-      padding: 22px;
+      padding: 20px;
 
       border: 1px solid var(--line);
-      border-radius: 20px;
 
-      background:
-        linear-gradient(
-          180deg,
-          rgba(255,255,255,.025),
-          rgba(255,255,255,.01)
-        );
+      border-radius: 15px;
+
+      background: var(--surface);
     }
 
     .card-head {
@@ -778,35 +768,41 @@
 
       gap: 15px;
 
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .card-head h2 {
       margin: 0;
 
-      font-size: 17px;
+      font-size: 16px;
     }
 
     .card-head p {
-      margin: 6px 0 0;
+      margin: 5px 0 0;
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
+
+    /* =========================
+       FORM
+    ========================= */
+
     .field {
-      margin-bottom: 15px;
+      margin-bottom: 14px;
     }
 
     .field label {
       display: block;
 
-      margin-bottom: 8px;
+      margin-bottom: 7px;
 
       color: #d7d7da;
 
-      font-size: 11px;
+      font-size: 10px;
+
       font-weight: 700;
     }
 
@@ -815,26 +811,28 @@
       width: 100%;
 
       border: 1px solid var(--line);
-      border-radius: 13px;
+
+      border-radius: 10px;
 
       outline: none;
 
-      background: var(--surface);
+      background: #0e0e10;
+
       color: var(--text);
 
       transition: .2s;
     }
 
     .input {
-      height: 48px;
+      height: 46px;
 
-      padding: 0 14px;
+      padding: 0 13px;
     }
 
     .textarea {
-      min-height: 260px;
+      min-height: 230px;
 
-      padding: 14px;
+      padding: 13px;
 
       resize: vertical;
 
@@ -853,26 +851,26 @@
       border-color: rgba(255,121,85,.55);
 
       box-shadow:
-        0 0 0 3px rgba(223,90,56,.08);
+        0 0 0 3px rgba(223,90,56,.07);
     }
 
     .form-actions {
       display: flex;
       flex-wrap: wrap;
 
-      gap: 8px;
+      gap: 7px;
 
-      margin-top: 14px;
+      margin-top: 12px;
     }
 
     .status-message {
-      min-height: 20px;
+      min-height: 18px;
 
-      margin-top: 13px;
+      margin-top: 12px;
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .status-message.success {
@@ -883,47 +881,15 @@
       color: var(--red);
     }
 
-    .tips {
-      display: grid;
-      grid-template-columns: repeat(3,1fr);
-
-      gap: 9px;
-
-      margin-top: 18px;
-    }
-
-    .tip {
-      padding: 14px;
-
-      border: 1px solid var(--line);
-      border-radius: 14px;
-
-      background: rgba(255,255,255,.018);
-    }
-
-    .tip strong {
-      display: block;
-
-      margin-bottom: 5px;
-
-      font-size: 11px;
-    }
-
-    .tip span {
-      color: var(--muted);
-
-      font-size: 10px;
-
-      line-height: 1.5;
-    }
 
     /* =========================
-       FILES
+       FILE LIST
     ========================= */
 
     .file-list {
       display: grid;
-      gap: 8px;
+
+      gap: 7px;
     }
 
     .file-item {
@@ -933,12 +899,13 @@
 
       gap: 15px;
 
-      padding: 14px;
+      padding: 12px;
 
       border: 1px solid var(--line);
-      border-radius: 14px;
 
-      background: rgba(255,255,255,.018);
+      border-radius: 11px;
+
+      background: #0e0e10;
     }
 
     .file-left {
@@ -947,25 +914,26 @@
       display: flex;
       align-items: center;
 
-      gap: 11px;
+      gap: 10px;
     }
 
     .file-icon {
-      width: 38px;
-      height: 38px;
+      width: 34px;
+      height: 34px;
 
       flex: 0 0 auto;
 
       display: grid;
       place-items: center;
 
-      border-radius: 10px;
+      border-radius: 8px;
 
       background: rgba(223,90,56,.1);
 
       color: var(--accent2);
 
-      font-size: 11px;
+      font-size: 9px;
+
       font-weight: 900;
     }
 
@@ -975,7 +943,8 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      font-size: 12px;
+      font-size: 11px;
+
       font-weight: 700;
     }
 
@@ -984,122 +953,72 @@
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .empty {
-      padding: 35px 15px;
+      padding: 32px 15px;
 
       text-align: center;
 
       color: var(--muted);
 
-      font-size: 12px;
+      font-size: 11px;
     }
 
+
     /* =========================
-       DRIVE
+       OPEN DRIVE
     ========================= */
 
     .drive-open-card {
-      min-height: 280px;
+      min-height: 230px;
 
       display: flex;
+
       flex-direction: column;
+
       align-items: center;
+
       justify-content: center;
 
       text-align: center;
     }
 
     .drive-big-icon {
-      width: 64px;
-      height: 64px;
+      width: 58px;
+      height: 58px;
 
       display: grid;
       place-items: center;
 
-      margin-bottom: 18px;
+      margin-bottom: 16px;
 
-      border-radius: 20px;
+      border-radius: 17px;
 
       background: rgba(112,214,138,.08);
 
-      font-size: 25px;
+      font-size: 23px;
     }
 
     .drive-open-card h2 {
-      margin: 0 0 8px;
+      margin: 0 0 7px;
 
-      font-size: 20px;
+      font-size: 19px;
     }
 
     .drive-open-card p {
-      max-width: 450px;
+      max-width: 430px;
 
-      margin: 0 0 20px;
+      margin: 0 0 18px;
 
       color: var(--muted);
 
-      font-size: 12px;
+      font-size: 11px;
+
       line-height: 1.6;
     }
 
-    /* =========================
-       WORKFLOW
-    ========================= */
-
-    .workflow {
-      margin-top: 18px;
-    }
-
-    .workflow h2 {
-      margin: 0 0 13px;
-
-      font-size: 16px;
-    }
-
-    .steps {
-      display: grid;
-      grid-template-columns: repeat(5,1fr);
-
-      gap: 8px;
-    }
-
-    .step {
-      padding: 15px;
-
-      border: 1px solid var(--line);
-      border-radius: 14px;
-
-      background: var(--surface);
-    }
-
-    .step-number {
-      color: var(--accent2);
-
-      font-size: 10px;
-      font-weight: 900;
-    }
-
-    .step strong {
-      display: block;
-
-      margin-top: 8px;
-
-      font-size: 11px;
-    }
-
-    .step span:last-child {
-      display: block;
-
-      margin-top: 5px;
-
-      color: var(--muted);
-
-      font-size: 9px;
-      line-height: 1.5;
-    }
 
     /* =========================
        PROFILE MODAL
@@ -1107,19 +1026,22 @@
 
     .profile-overlay {
       position: fixed;
+
       inset: 0;
 
       z-index: 100;
 
       display: flex;
+
       align-items: center;
+
       justify-content: center;
 
       padding: 20px;
 
       background: rgba(0,0,0,.72);
 
-      backdrop-filter: blur(12px);
+      backdrop-filter: blur(10px);
     }
 
     .profile-modal {
@@ -1129,10 +1051,11 @@
 
       overflow-y: auto;
 
-      padding: 24px;
+      padding: 22px;
 
       border: 1px solid var(--line2);
-      border-radius: 24px;
+
+      border-radius: 18px;
 
       background: #111113;
 
@@ -1145,59 +1068,65 @@
     @keyframes modalIn {
       from {
         opacity: 0;
-        transform: translateY(10px) scale(.98);
+
+        transform:
+          translateY(10px)
+          scale(.98);
       }
 
       to {
         opacity: 1;
+
         transform: none;
       }
     }
 
     .profile-header {
       display: flex;
+
       align-items: center;
+
       justify-content: space-between;
 
-      margin-bottom: 22px;
+      margin-bottom: 20px;
     }
 
     .profile-header h2 {
       margin: 0;
 
-      font-size: 19px;
+      font-size: 18px;
     }
 
     .profile-close {
-      width: 34px;
-      height: 34px;
+      width: 33px;
+      height: 33px;
 
       border: 1px solid var(--line);
-      border-radius: 10px;
+
+      border-radius: 9px;
 
       background: var(--surface2);
+
       color: var(--muted);
 
-      font-size: 20px;
-
-      cursor: pointer;
+      font-size: 19px;
     }
 
     .profile-main {
       text-align: center;
 
-      padding-bottom: 20px;
+      padding-bottom: 18px;
 
       border-bottom: 1px solid var(--line);
     }
 
     .profile-avatar {
-      width: 82px;
-      height: 82px;
+      width: 78px;
+      height: 78px;
 
       display: block;
 
-      margin: 0 auto 12px;
+      margin: 0 auto 11px;
 
       border-radius: 50%;
 
@@ -1211,7 +1140,7 @@
     .profile-main strong {
       display: block;
 
-      font-size: 16px;
+      font-size: 15px;
     }
 
     .profile-main span:not(.role-large) {
@@ -1221,15 +1150,15 @@
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .role-large {
       display: inline-flex !important;
 
-      margin-top: 8px !important;
+      margin-top: 7px !important;
 
-      padding: 5px 10px;
+      padding: 5px 9px;
 
       border-radius: 999px;
 
@@ -1237,84 +1166,90 @@
 
       color: var(--accent2) !important;
 
-      font-size: 10px !important;
+      font-size: 9px !important;
+
       font-weight: 800;
     }
 
     .profile-field {
-      margin-top: 16px;
+      margin-top: 15px;
     }
 
     .profile-field label {
       display: block;
 
-      margin-bottom: 7px;
+      margin-bottom: 6px;
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
+
       font-weight: 700;
     }
 
     .profile-input {
       width: 100%;
-      height: 45px;
+      height: 44px;
 
-      padding: 0 13px;
+      padding: 0 12px;
 
       border: 1px solid var(--line);
-      border-radius: 12px;
+
+      border-radius: 10px;
 
       outline: none;
 
       background: var(--surface);
+
       color: var(--text);
 
-      font-size: 12px;
+      font-size: 11px;
     }
 
     .profile-input:focus {
       border-color: rgba(255,121,85,.55);
 
       box-shadow:
-        0 0 0 3px rgba(223,90,56,.08);
+        0 0 0 3px rgba(223,90,56,.07);
     }
 
     .profile-readonly {
       width: 100%;
-      min-height: 45px;
+      min-height: 44px;
 
       display: flex;
+
       align-items: center;
 
-      padding: 0 13px;
+      padding: 0 12px;
 
       border: 1px solid var(--line);
-      border-radius: 12px;
+
+      border-radius: 10px;
 
       background: rgba(255,255,255,.025);
 
       color: #cfcfd3;
 
-      font-size: 12px;
+      font-size: 11px;
 
       word-break: break-word;
     }
 
     .profile-hint {
-      margin-top: 6px;
+      margin-top: 5px;
 
       color: var(--muted);
 
-      font-size: 9px;
+      font-size: 8px;
     }
 
     .profile-actions {
       display: flex;
 
-      gap: 8px;
+      gap: 7px;
 
-      margin-top: 22px;
+      margin-top: 20px;
     }
 
     .profile-actions .btn {
@@ -1322,13 +1257,13 @@
     }
 
     .profile-status {
-      min-height: 18px;
+      min-height: 17px;
 
-      margin-top: 10px;
+      margin-top: 9px;
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .profile-status.success {
@@ -1339,6 +1274,7 @@
       color: var(--red);
     }
 
+
     /* =========================
        SPOTIFY
     ========================= */
@@ -1346,32 +1282,34 @@
     .spotify-box {
       position: fixed;
 
-      right: 18px;
-      bottom: 18px;
+      right: 16px;
+      bottom: 16px;
 
       z-index: 30;
 
-      width: 320px;
+      width: 300px;
 
       overflow: hidden;
 
       border: 1px solid var(--line);
-      border-radius: 16px;
+
+      border-radius: 12px;
 
       background: var(--surface);
 
       box-shadow:
-        0 18px 60px rgba(0,0,0,.45);
+        0 15px 50px rgba(0,0,0,.4);
     }
 
     .spotify-title {
-      padding: 9px 12px;
+      padding: 8px 11px;
 
       border-bottom: 1px solid var(--line);
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
+
       font-weight: 700;
     }
 
@@ -1383,6 +1321,7 @@
 
       border: 0;
     }
+
 
     /* =========================
        RESPONSIVE
@@ -1400,40 +1339,39 @@
 
       .login-right {
         border-left: 0;
+
         border-top: 1px solid var(--line);
       }
 
       .feature-grid {
         margin-top: 35px;
       }
-
-      .steps {
-        grid-template-columns: repeat(2,1fr);
-      }
     }
+
 
     @media(max-width:620px) {
 
       #loginScreen {
-        padding: 12px;
+        padding: 10px;
       }
 
       .login-left,
       .login-right {
-        padding: 28px 22px;
+        padding: 26px 20px;
       }
 
       .hero h1 {
         letter-spacing: -2px;
       }
 
-      .feature-grid,
-      .tips {
+      .feature-grid {
         grid-template-columns: 1fr;
       }
 
       .app-shell {
-        width: calc(100% - 20px);
+        width: calc(100% - 16px);
+
+        padding-top: 10px;
       }
 
       .topbar {
@@ -1446,20 +1384,26 @@
       }
 
       .top-actions .btn {
-        padding: 9px 10px;
+        padding: 8px 9px;
       }
 
       .dashboard-head {
-        padding-top: 35px;
+        padding-top: 28px;
+      }
+
+      .dashboard-head h1 {
+        font-size: 29px;
       }
 
       .drive-status {
         align-items: flex-start;
+
         flex-direction: column;
       }
 
       .file-item {
         align-items: flex-start;
+
         flex-direction: column;
       }
 
@@ -1467,25 +1411,31 @@
         width: 100%;
       }
 
-      .steps {
-        grid-template-columns: 1fr;
-      }
-
       .spotify-box {
-        right: 10px;
-        bottom: 10px;
+        right: 8px;
+        bottom: 8px;
 
-        width: calc(100% - 20px);
+        width: calc(100% - 16px);
       }
 
       .profile-trigger {
         padding: 3px;
       }
+
+      .card {
+        padding: 16px;
+      }
+
+      .textarea {
+        min-height: 210px;
+      }
     }
   </style>
 </head>
 
+
 <body>
+
 
   <!-- =========================================
        LOADING
@@ -1505,7 +1455,7 @@
         id="loadingText"
         style="
           color:var(--muted);
-          font-size:12px;
+          font-size:11px;
         "
       >
         Menghubungkan layanan...
@@ -1526,6 +1476,7 @@
   >
 
     <div class="login-shell">
+
 
       <div class="login-left">
 
@@ -1553,19 +1504,18 @@
         <div class="hero">
 
           <div class="hero-badge">
-            Secure Workspace
+            Rojak DriveKit
           </div>
 
           <h1>
-            File tugas.
+            Simpan file tugas
             <br>
-            <span>Lebih simpel.</span>
+            <span>lebih cepat.</span>
           </h1>
 
           <p>
-            Buat file TXT dari rumus atau teks tugas,
-            simpan langsung ke Google Drive,
-            lalu buka kembali dari perangkat sekolah.
+            Buat file TXT dan simpan langsung ke Google Drive.
+            Cocok untuk menyimpan rumus, catatan, dan file tugas.
           </p>
 
         </div>
@@ -1574,24 +1524,41 @@
         <div class="feature-grid">
 
           <div class="feature">
-            <b>01 · TXT</b>
+
+            <b>
+              TXT
+            </b>
+
             <span>
               Buat file teks dengan cepat.
             </span>
+
           </div>
 
+
           <div class="feature">
-            <b>02 · DRIVE</b>
+
+            <b>
+              DRIVE
+            </b>
+
             <span>
               Simpan langsung ke Google Drive.
             </span>
+
           </div>
 
+
           <div class="feature">
-            <b>03 · PROFILE</b>
+
+            <b>
+              PROFILE
+            </b>
+
             <span>
-              Kelola nama dan lihat role akun.
+              Kelola nama dan role akun.
             </span>
+
           </div>
 
         </div>
@@ -1606,9 +1573,9 @@
         </h2>
 
         <p>
-          Login menggunakan akun Google untuk
-          mengakses workspace.
+          Gunakan akun Google untuk melanjutkan.
         </p>
+
 
         <button
           id="loginButton"
@@ -1617,15 +1584,16 @@
           Continue with Google
         </button>
 
+
         <div
           id="loginError"
           class="login-error"
         ></div>
 
+
         <div class="security-note">
-          Login akun dan izin Google Drive dipisahkan.
-          Setelah masuk, hubungkan Google Drive untuk
-          membuat file TXT.
+          DriveKit membutuhkan izin Google Drive
+          saat kamu ingin membuat atau membuka file.
         </div>
 
       </div>
@@ -1651,25 +1619,21 @@
 
       <header class="topbar">
 
-        <div class="topbar-left">
+        <div class="topbar-brand">
 
-          <div class="topbar-brand">
+          <div class="mini-logo">
+            RD
+          </div>
 
-            <div class="mini-logo">
-              RD
-            </div>
+          <div class="topbar-title">
 
-            <div class="topbar-title">
+            <strong>
+              Rojak DriveKit
+            </strong>
 
-              <strong>
-                Rojak DriveKit
-              </strong>
-
-              <span>
-                Google Drive Utility
-              </span>
-
-            </div>
+            <span>
+              Google Drive Utility
+            </span>
 
           </div>
 
@@ -1678,7 +1642,8 @@
 
         <div class="user-area">
 
-          <!-- PROFILE BUTTON -->
+
+          <!-- PROFILE -->
 
           <button
             id="profileButton"
@@ -1747,7 +1712,7 @@
         </h1>
 
         <p>
-          Buat, simpan, dan buka file tugas dari satu tempat.
+          Buat dan simpan file tugas dari satu tempat.
         </p>
 
       </section>
@@ -1906,146 +1871,6 @@
             id="statusMessage"
             class="status-message"
           ></div>
-
-
-          <div class="tips">
-
-            <div class="tip">
-
-              <strong>
-                Nama file
-              </strong>
-
-              <span>
-                Ekstensi .txt ditambahkan otomatis.
-              </span>
-
-            </div>
-
-            <div class="tip">
-
-              <strong>
-                Shortcut
-              </strong>
-
-              <span>
-                Gunakan Ctrl + Enter untuk membuat file.
-              </span>
-
-            </div>
-
-            <div class="tip">
-
-              <strong>
-                Drive
-              </strong>
-
-              <span>
-                Pastikan Google Drive sudah terhubung.
-              </span>
-
-            </div>
-
-          </div>
-
-        </div>
-
-
-        <!-- WORKFLOW -->
-
-        <div class="workflow">
-
-          <h2>
-            Workflow
-          </h2>
-
-          <div class="steps">
-
-            <div class="step">
-
-              <span class="step-number">
-                01
-              </span>
-
-              <strong>
-                Guru kirim tugas
-              </strong>
-
-              <span>
-                Terima soal atau rumus Excel.
-              </span>
-
-            </div>
-
-
-            <div class="step">
-
-              <span class="step-number">
-                02
-              </span>
-
-              <strong>
-                ChatGPT
-              </strong>
-
-              <span>
-                Cari dan salin rumus.
-              </span>
-
-            </div>
-
-
-            <div class="step">
-
-              <span class="step-number">
-                03
-              </span>
-
-              <strong>
-                DriveKit
-              </strong>
-
-              <span>
-                Tempel ke file TXT.
-              </span>
-
-            </div>
-
-
-            <div class="step">
-
-              <span class="step-number">
-                04
-              </span>
-
-              <strong>
-                Google Drive
-              </strong>
-
-              <span>
-                File tersimpan online.
-              </span>
-
-            </div>
-
-
-            <div class="step">
-
-              <span class="step-number">
-                05
-              </span>
-
-              <strong>
-                Excel sekolah
-              </strong>
-
-              <span>
-                Copy dan paste rumus.
-              </span>
-
-            </div>
-
-          </div>
 
         </div>
 
@@ -2519,7 +2344,7 @@
 
     /* =========================================
        SCREEN
-    ========================================= */
+    ========================================== */
 
     function showLogin() {
 
@@ -2873,7 +2698,7 @@
 
 
     /* =========================================
-       REDIRECT LOGIN RESULT
+       REDIRECT LOGIN
     ========================================= */
 
     try {
@@ -3728,6 +3553,7 @@
                   openDriveFile(
                     button.dataset.openFile
                   );
+
                 }
               );
 
@@ -3807,6 +3633,7 @@
             "/view",
             "_blank"
           );
+
         }
 
 
@@ -3973,7 +3800,9 @@
         ) {
 
           closeProfile();
+
         }
+
       }
     );
 
@@ -4001,6 +3830,7 @@
           "";
 
         status("");
+
       }
     );
 
@@ -4019,6 +3849,7 @@
           "https://drive.google.com/drive/my-drive",
           "_blank"
         );
+
       }
     );
 
@@ -4029,6 +3860,7 @@
 
         window.location.href =
           "./admin.html";
+
       }
     );
 
@@ -4054,6 +3886,7 @@
                     item.classList.remove(
                       "active"
                     );
+
                   }
                 );
 
@@ -4068,6 +3901,7 @@
                     panel.classList.remove(
                       "active"
                     );
+
                   }
                 );
 
@@ -4095,6 +3929,7 @@
               ) {
 
                 loadRecentFiles();
+
               }
 
             }
@@ -4120,7 +3955,9 @@
           event.preventDefault();
 
           createTxtFile();
+
         }
+
       }
     );
 
@@ -4141,7 +3978,9 @@
         ) {
 
           closeProfile();
+
         }
+
       }
     );
 
@@ -4170,6 +4009,7 @@
             ) {
 
               gapiLoaded();
+
             }
 
 
@@ -4180,6 +4020,7 @@
             ) {
 
               gisLoaded();
+
             }
 
 
@@ -4196,6 +4037,7 @@
               console.log(
                 "Google Drive OAuth siap digunakan."
               );
+
             }
 
 
@@ -4211,6 +4053,7 @@
               console.error(
                 "Google API timeout."
               );
+
             }
 
           },
