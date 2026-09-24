@@ -8,24 +8,24 @@
 
   <style>
     :root {
-      --bg: #09090a;
-      --surface: #111113;
-      --surface2: #18181b;
-      --surface3: #1e1e22;
+      --bg: #0b0b0c;
+      --surface: #111112;
+      --surface2: #171718;
+      --surface3: #1d1d1f;
 
-      --line: rgba(255,255,255,.08);
-      --line2: rgba(255,255,255,.14);
+      --line: #29292b;
+      --line2: #38383b;
 
-      --text: #f5f5f3;
-      --muted: #9999a1;
+      --text: #e7e7e9;
+      --muted: #8b8b91;
 
-      --accent: #df5a38;
-      --accent2: #ff7955;
+      --accent: #c94f32;
+      --accent-hover: #db5d3d;
 
-      --green: #70d68a;
-      --red: #ed7569;
+      --green: #67b87a;
+      --red: #d8665c;
 
-      --shadow: 0 20px 60px rgba(0,0,0,.35);
+      --radius: 9px;
     }
 
     * {
@@ -40,6 +40,9 @@
       margin: 0;
       min-height: 100vh;
 
+      background: var(--bg);
+      color: var(--text);
+
       font-family:
         Inter,
         system-ui,
@@ -47,9 +50,6 @@
         BlinkMacSystemFont,
         "Segoe UI",
         sans-serif;
-
-      color: var(--text);
-      background: var(--bg);
     }
 
     button,
@@ -67,9 +67,9 @@
     }
 
 
-    /* =========================
+    /* ========================================
        LOADING
-    ========================= */
+    ======================================== */
 
     #loadingScreen {
       min-height: 100vh;
@@ -82,28 +82,26 @@
     }
 
     .loading-card {
-      width: min(380px, 100%);
+      width: min(360px, 100%);
 
-      padding: 30px;
-
-      text-align: center;
+      padding: 28px;
 
       border: 1px solid var(--line);
-      border-radius: 18px;
+      border-radius: 10px;
 
       background: var(--surface);
 
-      box-shadow: var(--shadow);
+      text-align: center;
     }
 
     .spinner {
-      width: 32px;
-      height: 32px;
+      width: 28px;
+      height: 28px;
 
-      margin: 0 auto 16px;
+      margin: 0 auto 15px;
 
-      border: 3px solid rgba(255,255,255,.08);
-      border-top-color: var(--accent2);
+      border: 2px solid var(--line2);
+      border-top-color: var(--accent);
 
       border-radius: 50%;
 
@@ -117,9 +115,9 @@
     }
 
 
-    /* =========================
+    /* ========================================
        LOGIN
-    ========================= */
+    ======================================== */
 
     #loginScreen {
       min-height: 100vh;
@@ -132,23 +130,21 @@
     }
 
     .login-shell {
-      width: min(980px, 100%);
+      width: min(880px, 100%);
 
       display: grid;
-      grid-template-columns: 1.15fr .85fr;
+      grid-template-columns: 1fr 360px;
+
+      border: 1px solid var(--line);
+      border-radius: 12px;
 
       overflow: hidden;
 
-      border: 1px solid var(--line);
-      border-radius: 22px;
-
       background: var(--surface);
-
-      box-shadow: var(--shadow);
     }
 
     .login-left {
-      min-height: 520px;
+      min-height: 500px;
 
       display: flex;
       flex-direction: column;
@@ -156,134 +152,128 @@
 
       padding: 40px;
 
-      background:
-        radial-gradient(
-          circle at 90% 0%,
-          rgba(223,90,56,.12),
-          transparent 35%
-        );
+      border-right: 1px solid var(--line);
     }
 
     .brand {
       display: flex;
       align-items: center;
 
-      gap: 11px;
-    }
-
-    .brand-icon,
-    .mini-logo {
-      display: grid;
-      place-items: center;
-
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent2),
-          var(--accent)
-        );
-
-      color: white;
-
-      font-weight: 900;
+      gap: 10px;
     }
 
     .brand-icon {
-      width: 42px;
-      height: 42px;
+      width: 38px;
+      height: 38px;
 
-      border-radius: 11px;
+      display: grid;
+      place-items: center;
+
+      border-radius: 8px;
+
+      background: var(--accent);
+
+      color: #fff;
+
+      font-size: 12px;
+      font-weight: 800;
     }
 
     .brand-text strong {
       display: block;
 
-      font-size: 16px;
+      font-size: 14px;
+      font-weight: 700;
     }
 
     .brand-text span {
+      display: block;
+
+      margin-top: 2px;
+
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .hero {
       max-width: 500px;
     }
 
-    .hero-badge {
-      display: inline-flex;
+    .hero-label {
+      margin-bottom: 14px;
 
-      padding: 6px 10px;
-
-      margin-bottom: 15px;
-
-      border: 1px solid var(--line);
-      border-radius: 999px;
-
-      background: rgba(255,255,255,.02);
-
-      color: #d6d6d9;
+      color: var(--accent-hover);
 
       font-size: 11px;
+      font-weight: 700;
+      letter-spacing: .3px;
     }
 
     .hero h1 {
       margin: 0;
 
-      font-size: clamp(34px, 4.5vw, 54px);
+      font-size: clamp(34px, 5vw, 52px);
 
-      line-height: 1;
+      line-height: 1.02;
 
-      letter-spacing: -2.5px;
+      letter-spacing: -2px;
+
+      font-weight: 700;
     }
 
     .hero h1 span {
-      color: var(--accent2);
+      color: #a9a9ad;
     }
 
     .hero p {
-      max-width: 500px;
+      max-width: 480px;
 
       margin: 18px 0 0;
 
       color: var(--muted);
 
-      font-size: 14px;
+      font-size: 13px;
 
       line-height: 1.7;
     }
 
-    .feature-grid {
+    .feature-list {
       display: grid;
-      grid-template-columns: repeat(3,1fr);
+      grid-template-columns: repeat(3, 1fr);
 
-      gap: 8px;
+      border-top: 1px solid var(--line);
     }
 
     .feature {
-      padding: 12px;
+      padding: 14px 12px 0;
 
-      border: 1px solid var(--line);
-      border-radius: 11px;
+      border-right: 1px solid var(--line);
+    }
 
-      background: rgba(255,255,255,.02);
+    .feature:first-child {
+      padding-left: 0;
+    }
+
+    .feature:last-child {
+      border-right: 0;
     }
 
     .feature b {
       display: block;
 
-      margin-bottom: 4px;
+      margin-bottom: 5px;
 
-      font-size: 11px;
+      font-size: 10px;
+      font-weight: 700;
     }
 
     .feature span {
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
 
-      line-height: 1.4;
+      line-height: 1.5;
     }
 
     .login-right {
@@ -291,106 +281,104 @@
       flex-direction: column;
       justify-content: center;
 
-      padding: 40px;
-
-      border-left: 1px solid var(--line);
-
-      background: rgba(255,255,255,.015);
+      padding: 38px;
     }
 
     .login-right h2 {
-      margin: 0 0 8px;
+      margin: 0 0 7px;
 
-      font-size: 24px;
+      font-size: 20px;
+      font-weight: 700;
     }
 
     .login-right > p {
-      margin: 0 0 25px;
+      margin: 0 0 22px;
 
       color: var(--muted);
 
-      font-size: 13px;
+      font-size: 12px;
 
       line-height: 1.6;
     }
 
     .google-btn {
       width: 100%;
-      min-height: 50px;
+      height: 46px;
 
-      border: 1px solid #ddd;
-      border-radius: 11px;
+      border: 1px solid var(--line2);
+      border-radius: 8px;
 
-      background: white;
-      color: #111;
+      background: #e9e9e9;
+      color: #151515;
 
+      font-size: 12px;
       font-weight: 700;
 
-      transition: .2s;
+      transition: .15s;
     }
 
     .google-btn:hover {
-      filter: brightness(.96);
-      transform: translateY(-1px);
+      background: #fff;
     }
 
     .google-btn:disabled {
-      opacity: .6;
-
+      opacity: .55;
       cursor: wait;
     }
 
     .login-error {
-      margin-top: 13px;
+      min-height: 18px;
+
+      margin-top: 12px;
 
       color: var(--red);
 
-      font-size: 11px;
+      font-size: 10px;
 
       line-height: 1.5;
     }
 
     .security-note {
-      margin-top: 25px;
-      padding-top: 17px;
+      margin-top: 20px;
+      padding-top: 15px;
 
       border-top: 1px solid var(--line);
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
 
       line-height: 1.6;
     }
 
 
-    /* =========================
+    /* ========================================
        APP
-    ========================= */
+    ======================================== */
 
     #app {
       min-height: 100vh;
     }
 
     .app-shell {
-      width: min(1120px, calc(100% - 32px));
+      width: min(1080px, calc(100% - 32px));
 
       margin: auto;
 
-      padding: 18px 0 110px;
+      padding: 16px 0 100px;
     }
 
 
-    /* =========================
+    /* ========================================
        TOPBAR
-    ========================= */
+    ======================================== */
 
     .topbar {
       position: sticky;
-
-      top: 12px;
-
+      top: 10px;
       z-index: 20;
+
+      min-height: 52px;
 
       display: flex;
       align-items: center;
@@ -398,53 +386,62 @@
 
       gap: 15px;
 
-      padding: 10px 12px;
+      padding: 8px 10px;
 
       border: 1px solid var(--line);
+      border-radius: 9px;
 
-      border-radius: 14px;
+      background: rgba(17,17,18,.96);
 
-      background: rgba(17,17,19,.94);
-
-      backdrop-filter: blur(18px);
-
-      box-shadow:
-        0 8px 30px rgba(0,0,0,.18);
+      backdrop-filter: blur(10px);
     }
 
     .topbar-brand {
       display: flex;
       align-items: center;
 
-      gap: 10px;
+      gap: 9px;
     }
 
     .mini-logo {
-      width: 34px;
-      height: 34px;
+      width: 32px;
+      height: 32px;
 
-      border-radius: 9px;
+      display: grid;
+      place-items: center;
 
-      font-size: 12px;
+      border-radius: 7px;
+
+      background: var(--accent);
+
+      color: #fff;
+
+      font-size: 10px;
+      font-weight: 800;
     }
 
     .topbar-title strong {
       display: block;
 
-      font-size: 12px;
+      font-size: 11px;
+      font-weight: 700;
     }
 
     .topbar-title span {
+      display: block;
+
+      margin-top: 1px;
+
       color: var(--muted);
 
-      font-size: 9px;
+      font-size: 8px;
     }
 
     .user-area {
       display: flex;
       align-items: center;
 
-      gap: 7px;
+      gap: 5px;
     }
 
     .profile-trigger {
@@ -453,10 +450,10 @@
 
       gap: 8px;
 
-      padding: 4px;
+      padding: 3px;
 
       border: 0;
-      border-radius: 11px;
+      border-radius: 7px;
 
       background: transparent;
 
@@ -466,14 +463,12 @@
     }
 
     .profile-trigger:hover {
-      background: rgba(255,255,255,.04);
+      background: var(--surface2);
     }
 
     .avatar {
-      width: 36px;
-      height: 36px;
-
-      flex: 0 0 auto;
+      width: 31px;
+      height: 31px;
 
       object-fit: cover;
 
@@ -483,7 +478,7 @@
     }
 
     .user-info {
-      max-width: 180px;
+      max-width: 170px;
     }
 
     .user-info strong {
@@ -494,7 +489,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .user-info > span:not(.role) {
@@ -507,7 +502,7 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      font-size: 9px;
+      font-size: 8px;
     }
 
     .role {
@@ -515,98 +510,98 @@
 
       margin-top: 2px;
 
-      padding: 2px 6px;
+      padding: 1px 5px;
 
-      border-radius: 999px;
+      border-radius: 3px;
 
-      background: rgba(223,90,56,.12);
+      background: rgba(201,79,50,.12);
 
-      color: var(--accent2);
+      color: var(--accent-hover);
 
-      font-size: 8px !important;
-
+      font-size: 7px !important;
       font-weight: 800;
     }
 
     .top-actions {
       display: flex;
-
-      gap: 6px;
+      gap: 5px;
     }
 
 
-    /* =========================
-       BUTTON
-    ========================= */
+    /* ========================================
+       BUTTONS
+    ======================================== */
 
     .btn {
+      height: 34px;
+
       border: 1px solid var(--line);
 
-      border-radius: 9px;
+      border-radius: 7px;
 
-      padding: 9px 12px;
+      padding: 0 11px;
 
       background: var(--surface2);
 
       color: var(--text);
 
-      font-size: 11px;
-
+      font-size: 10px;
       font-weight: 700;
 
-      transition: .2s;
+      transition: .15s;
     }
 
     .btn:hover {
       border-color: var(--line2);
 
-      transform: translateY(-1px);
+      background: var(--surface3);
     }
 
     .btn:disabled {
-      opacity: .55;
+      opacity: .5;
 
       cursor: wait;
-
-      transform: none;
     }
 
     .btn.primary {
-      border-color: transparent;
+      border-color: var(--accent);
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent2),
-          var(--accent)
-        );
+      background: var(--accent);
 
-      color: white;
+      color: #fff;
+    }
+
+    .btn.primary:hover {
+      border-color: var(--accent-hover);
+
+      background: var(--accent-hover);
     }
 
     .btn.danger {
-      color: #ffaaa0;
+      color: #df8178;
     }
 
     .btn.drive {
-      color: #9be8ae;
+      color: #78c689;
     }
 
 
-    /* =========================
-       DASHBOARD
-    ========================= */
+    /* ========================================
+       PAGE HEADER
+    ======================================== */
 
     .dashboard-head {
-      padding: 38px 2px 20px;
+      padding: 38px 2px 18px;
     }
 
     .dashboard-head h1 {
       margin: 0;
 
-      font-size: 34px;
+      font-size: 30px;
 
-      letter-spacing: -1.5px;
+      line-height: 1.1;
+
+      letter-spacing: -1px;
     }
 
     .dashboard-head p {
@@ -614,13 +609,13 @@
 
       color: var(--muted);
 
-      font-size: 13px;
+      font-size: 11px;
     }
 
 
-    /* =========================
+    /* ========================================
        DRIVE STATUS
-    ========================= */
+    ======================================== */
 
     .drive-status {
       display: flex;
@@ -629,13 +624,12 @@
 
       gap: 15px;
 
-      margin-bottom: 14px;
+      margin-bottom: 10px;
 
-      padding: 14px 16px;
+      padding: 11px 12px;
 
       border: 1px solid var(--line);
-
-      border-radius: 14px;
+      border-radius: 8px;
 
       background: var(--surface);
     }
@@ -644,33 +638,35 @@
       display: flex;
       align-items: center;
 
-      gap: 11px;
+      gap: 10px;
     }
 
     .drive-icon {
-      width: 36px;
-      height: 36px;
+      width: 31px;
+      height: 31px;
 
       display: grid;
       place-items: center;
 
-      border-radius: 9px;
+      border: 1px solid var(--line);
 
-      background: rgba(112,214,138,.08);
+      border-radius: 7px;
 
-      font-size: 16px;
+      background: var(--surface2);
+
+      font-size: 13px;
     }
 
     .drive-status strong {
       display: block;
 
-      font-size: 12px;
+      font-size: 10px;
     }
 
     .drive-status span {
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 8px;
     }
 
     .status-dot {
@@ -688,48 +684,48 @@
 
     .status-dot.connected {
       background: var(--green);
-
-      box-shadow:
-        0 0 10px rgba(112,214,138,.5);
     }
 
 
-    /* =========================
+    /* ========================================
        TABS
-    ========================= */
+    ======================================== */
 
     .tabs {
-      display: grid;
+      display: flex;
 
-      grid-template-columns: repeat(3,1fr);
+      gap: 2px;
 
-      gap: 4px;
-
-      padding: 4px;
+      padding: 3px;
 
       margin-bottom: 10px;
 
       border: 1px solid var(--line);
-
-      border-radius: 11px;
+      border-radius: 8px;
 
       background: var(--surface);
     }
 
     .tab {
+      flex: 0 0 auto;
+
+      min-width: 110px;
+
+      height: 31px;
+
       border: 0;
-
-      border-radius: 8px;
-
-      padding: 10px;
+      border-radius: 5px;
 
       background: transparent;
 
       color: var(--muted);
 
-      font-size: 11px;
-
+      font-size: 10px;
       font-weight: 700;
+    }
+
+    .tab:hover {
+      color: var(--text);
     }
 
     .tab.active {
@@ -747,16 +743,15 @@
     }
 
 
-    /* =========================
+    /* ========================================
        CARD
-    ========================= */
+    ======================================== */
 
     .card {
-      padding: 20px;
+      padding: 18px;
 
       border: 1px solid var(--line);
-
-      border-radius: 15px;
+      border-radius: 9px;
 
       background: var(--surface);
     }
@@ -768,41 +763,41 @@
 
       gap: 15px;
 
-      margin-bottom: 18px;
+      margin-bottom: 17px;
     }
 
     .card-head h2 {
       margin: 0;
 
-      font-size: 16px;
+      font-size: 13px;
+      font-weight: 700;
     }
 
     .card-head p {
-      margin: 5px 0 0;
+      margin: 4px 0 0;
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
 
-    /* =========================
+    /* ========================================
        FORM
-    ========================= */
+    ======================================== */
 
     .field {
-      margin-bottom: 14px;
+      margin-bottom: 13px;
     }
 
     .field label {
       display: block;
 
-      margin-bottom: 7px;
+      margin-bottom: 6px;
 
-      color: #d7d7da;
+      color: #c7c7ca;
 
-      font-size: 10px;
-
+      font-size: 9px;
       font-weight: 700;
     }
 
@@ -812,65 +807,64 @@
 
       border: 1px solid var(--line);
 
-      border-radius: 10px;
+      border-radius: 7px;
 
       outline: none;
 
-      background: #0e0e10;
+      background: #0d0d0e;
 
       color: var(--text);
 
-      transition: .2s;
+      transition: border-color .15s;
     }
 
     .input {
-      height: 46px;
+      height: 40px;
 
-      padding: 0 13px;
+      padding: 0 11px;
+
+      font-size: 11px;
     }
 
     .textarea {
-      min-height: 230px;
+      min-height: 240px;
 
-      padding: 13px;
+      padding: 11px;
 
       resize: vertical;
 
       font-family:
         "SFMono-Regular",
         Consolas,
+        "Liberation Mono",
         monospace;
 
-      font-size: 12px;
+      font-size: 11px;
 
       line-height: 1.6;
     }
 
     .input:focus,
     .textarea:focus {
-      border-color: rgba(255,121,85,.55);
-
-      box-shadow:
-        0 0 0 3px rgba(223,90,56,.07);
+      border-color: #55555a;
     }
 
     .form-actions {
       display: flex;
-      flex-wrap: wrap;
 
-      gap: 7px;
+      gap: 6px;
 
-      margin-top: 12px;
+      margin-top: 10px;
     }
 
     .status-message {
-      min-height: 18px;
+      min-height: 17px;
 
-      margin-top: 12px;
+      margin-top: 10px;
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .status-message.success {
@@ -882,14 +876,14 @@
     }
 
 
-    /* =========================
+    /* ========================================
        FILE LIST
-    ========================= */
+    ======================================== */
 
     .file-list {
       display: grid;
 
-      gap: 7px;
+      gap: 5px;
     }
 
     .file-item {
@@ -897,15 +891,14 @@
       align-items: center;
       justify-content: space-between;
 
-      gap: 15px;
+      gap: 12px;
 
-      padding: 12px;
+      padding: 9px;
 
       border: 1px solid var(--line);
+      border-radius: 7px;
 
-      border-radius: 11px;
-
-      background: #0e0e10;
+      background: #0d0d0e;
     }
 
     .file-left {
@@ -914,27 +907,28 @@
       display: flex;
       align-items: center;
 
-      gap: 10px;
+      gap: 9px;
     }
 
     .file-icon {
-      width: 34px;
-      height: 34px;
+      width: 30px;
+      height: 30px;
 
       flex: 0 0 auto;
 
       display: grid;
       place-items: center;
 
-      border-radius: 8px;
+      border: 1px solid var(--line);
 
-      background: rgba(223,90,56,.1);
+      border-radius: 6px;
 
-      color: var(--accent2);
+      background: var(--surface2);
 
-      font-size: 9px;
+      color: var(--accent-hover);
 
-      font-weight: 900;
+      font-size: 8px;
+      font-weight: 800;
     }
 
     .file-name {
@@ -943,86 +937,85 @@
       text-overflow: ellipsis;
       white-space: nowrap;
 
-      font-size: 11px;
-
+      font-size: 10px;
       font-weight: 700;
     }
 
     .file-date {
-      margin-top: 3px;
+      margin-top: 2px;
 
       color: var(--muted);
 
-      font-size: 9px;
+      font-size: 8px;
     }
 
     .empty {
-      padding: 32px 15px;
+      padding: 30px 15px;
 
       text-align: center;
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
 
-    /* =========================
+    /* ========================================
        OPEN DRIVE
-    ========================= */
+    ======================================== */
 
     .drive-open-card {
       min-height: 230px;
 
       display: flex;
-
       flex-direction: column;
 
       align-items: center;
-
       justify-content: center;
 
       text-align: center;
     }
 
     .drive-big-icon {
-      width: 58px;
-      height: 58px;
+      width: 50px;
+      height: 50px;
 
       display: grid;
       place-items: center;
 
-      margin-bottom: 16px;
+      margin-bottom: 14px;
 
-      border-radius: 17px;
+      border: 1px solid var(--line);
 
-      background: rgba(112,214,138,.08);
+      border-radius: 9px;
 
-      font-size: 23px;
+      background: var(--surface2);
+
+      font-size: 20px;
     }
 
     .drive-open-card h2 {
-      margin: 0 0 7px;
+      margin: 0 0 6px;
 
-      font-size: 19px;
+      font-size: 16px;
     }
 
     .drive-open-card p {
-      max-width: 430px;
+      max-width: 420px;
 
-      margin: 0 0 18px;
+      margin: 0 0 16px;
 
       color: var(--muted);
 
-      font-size: 11px;
+      font-size: 10px;
 
       line-height: 1.6;
     }
 
 
-    /* =========================
-       PROFILE MODAL
-    ========================= */
+    /* ========================================
+       PROFILE
+    ======================================== */
 
     .profile-overlay {
       position: fixed;
@@ -1032,224 +1025,187 @@
       z-index: 100;
 
       display: flex;
-
       align-items: center;
-
       justify-content: center;
 
-      padding: 20px;
+      padding: 15px;
 
-      background: rgba(0,0,0,.72);
-
-      backdrop-filter: blur(10px);
+      background: rgba(0,0,0,.75);
     }
 
     .profile-modal {
-      width: min(430px,100%);
+      width: min(410px,100%);
 
       max-height: 90vh;
 
       overflow-y: auto;
 
-      padding: 22px;
+      padding: 20px;
 
       border: 1px solid var(--line2);
+      border-radius: 10px;
 
-      border-radius: 18px;
-
-      background: #111113;
-
-      box-shadow:
-        0 30px 100px rgba(0,0,0,.6);
-
-      animation: modalIn .18s ease;
-    }
-
-    @keyframes modalIn {
-      from {
-        opacity: 0;
-
-        transform:
-          translateY(10px)
-          scale(.98);
-      }
-
-      to {
-        opacity: 1;
-
-        transform: none;
-      }
+      background: var(--surface);
     }
 
     .profile-header {
       display: flex;
-
       align-items: center;
-
       justify-content: space-between;
 
-      margin-bottom: 20px;
+      margin-bottom: 18px;
     }
 
     .profile-header h2 {
       margin: 0;
 
-      font-size: 18px;
+      font-size: 15px;
     }
 
     .profile-close {
-      width: 33px;
-      height: 33px;
+      width: 30px;
+      height: 30px;
 
       border: 1px solid var(--line);
-
-      border-radius: 9px;
+      border-radius: 6px;
 
       background: var(--surface2);
 
       color: var(--muted);
 
-      font-size: 19px;
+      font-size: 17px;
     }
 
     .profile-main {
-      text-align: center;
-
-      padding-bottom: 18px;
+      padding-bottom: 17px;
 
       border-bottom: 1px solid var(--line);
+
+      text-align: center;
     }
 
     .profile-avatar {
-      width: 78px;
-      height: 78px;
+      width: 70px;
+      height: 70px;
 
       display: block;
 
-      margin: 0 auto 11px;
+      margin: 0 auto 10px;
+
+      border: 1px solid var(--line);
 
       border-radius: 50%;
 
       object-fit: cover;
 
       background: var(--surface3);
-
-      border: 2px solid rgba(255,255,255,.08);
     }
 
     .profile-main strong {
       display: block;
 
-      font-size: 15px;
+      font-size: 13px;
     }
 
     .profile-main span:not(.role-large) {
       display: block;
 
-      margin-top: 4px;
+      margin-top: 3px;
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .role-large {
       display: inline-flex !important;
 
-      margin-top: 7px !important;
+      margin-top: 6px !important;
 
-      padding: 5px 9px;
+      padding: 4px 7px;
 
-      border-radius: 999px;
+      border-radius: 4px;
 
-      background: rgba(223,90,56,.12);
+      background: rgba(201,79,50,.12);
 
-      color: var(--accent2) !important;
+      color: var(--accent-hover) !important;
 
-      font-size: 9px !important;
-
+      font-size: 8px !important;
       font-weight: 800;
     }
 
     .profile-field {
-      margin-top: 15px;
+      margin-top: 13px;
     }
 
     .profile-field label {
       display: block;
 
-      margin-bottom: 6px;
+      margin-bottom: 5px;
 
       color: var(--muted);
 
-      font-size: 9px;
-
+      font-size: 8px;
       font-weight: 700;
     }
 
     .profile-input {
       width: 100%;
-      height: 44px;
+      height: 39px;
 
-      padding: 0 12px;
+      padding: 0 10px;
 
       border: 1px solid var(--line);
-
-      border-radius: 10px;
+      border-radius: 7px;
 
       outline: none;
 
-      background: var(--surface);
+      background: #0d0d0e;
 
       color: var(--text);
 
-      font-size: 11px;
+      font-size: 10px;
     }
 
     .profile-input:focus {
-      border-color: rgba(255,121,85,.55);
-
-      box-shadow:
-        0 0 0 3px rgba(223,90,56,.07);
+      border-color: #55555a;
     }
 
     .profile-readonly {
       width: 100%;
-      min-height: 44px;
+      min-height: 39px;
 
       display: flex;
-
       align-items: center;
 
-      padding: 0 12px;
+      padding: 0 10px;
 
       border: 1px solid var(--line);
+      border-radius: 7px;
 
-      border-radius: 10px;
+      background: var(--surface2);
 
-      background: rgba(255,255,255,.025);
+      color: #c7c7ca;
 
-      color: #cfcfd3;
-
-      font-size: 11px;
+      font-size: 10px;
 
       word-break: break-word;
     }
 
     .profile-hint {
-      margin-top: 5px;
+      margin-top: 4px;
 
       color: var(--muted);
 
-      font-size: 8px;
+      font-size: 7px;
     }
 
     .profile-actions {
       display: flex;
 
-      gap: 7px;
+      gap: 6px;
 
-      margin-top: 20px;
+      margin-top: 18px;
     }
 
     .profile-actions .btn {
@@ -1257,13 +1213,13 @@
     }
 
     .profile-status {
-      min-height: 17px;
+      min-height: 15px;
 
-      margin-top: 9px;
+      margin-top: 8px;
 
       color: var(--muted);
 
-      font-size: 10px;
+      font-size: 9px;
     }
 
     .profile-status.success {
@@ -1275,41 +1231,36 @@
     }
 
 
-    /* =========================
+    /* ========================================
        SPOTIFY
-    ========================= */
+    ======================================== */
 
     .spotify-box {
       position: fixed;
 
-      right: 16px;
-      bottom: 16px;
+      right: 14px;
+      bottom: 14px;
 
       z-index: 30;
 
-      width: 300px;
+      width: 280px;
 
       overflow: hidden;
 
       border: 1px solid var(--line);
-
-      border-radius: 12px;
+      border-radius: 8px;
 
       background: var(--surface);
-
-      box-shadow:
-        0 15px 50px rgba(0,0,0,.4);
     }
 
     .spotify-title {
-      padding: 8px 11px;
+      padding: 7px 9px;
 
       border-bottom: 1px solid var(--line);
 
       color: var(--muted);
 
-      font-size: 9px;
-
+      font-size: 8px;
       font-weight: 700;
     }
 
@@ -1317,17 +1268,17 @@
       display: block;
 
       width: 100%;
-      height: 80px;
+      height: 76px;
 
       border: 0;
     }
 
 
-    /* =========================
+    /* ========================================
        RESPONSIVE
-    ========================= */
+    ======================================== */
 
-    @media(max-width:850px) {
+    @media (max-width: 800px) {
 
       .login-shell {
         grid-template-columns: 1fr;
@@ -1335,21 +1286,19 @@
 
       .login-left {
         min-height: auto;
+
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
       }
 
-      .login-right {
-        border-left: 0;
-
-        border-top: 1px solid var(--line);
-      }
-
-      .feature-grid {
+      .feature-list {
         margin-top: 35px;
       }
+
     }
 
 
-    @media(max-width:620px) {
+    @media (max-width: 600px) {
 
       #loginScreen {
         padding: 10px;
@@ -1357,25 +1306,32 @@
 
       .login-left,
       .login-right {
-        padding: 26px 20px;
+        padding: 25px 20px;
       }
 
       .hero h1 {
-        letter-spacing: -2px;
+        font-size: 34px;
       }
 
-      .feature-grid {
+      .feature-list {
         grid-template-columns: 1fr;
+      }
+
+      .feature {
+        padding: 10px 0;
+
+        border-right: 0;
+        border-bottom: 1px solid var(--line);
+      }
+
+      .feature:last-child {
+        border-bottom: 0;
       }
 
       .app-shell {
         width: calc(100% - 16px);
 
-        padding-top: 10px;
-      }
-
-      .topbar {
-        align-items: flex-start;
+        padding-top: 9px;
       }
 
       .topbar-title,
@@ -1384,21 +1340,29 @@
       }
 
       .top-actions .btn {
-        padding: 8px 9px;
+        padding: 0 8px;
       }
 
       .dashboard-head {
-        padding-top: 28px;
+        padding-top: 27px;
       }
 
       .dashboard-head h1 {
-        font-size: 29px;
+        font-size: 27px;
       }
 
       .drive-status {
         align-items: flex-start;
 
         flex-direction: column;
+      }
+
+      .tabs {
+        overflow-x: auto;
+      }
+
+      .tab {
+        min-width: 100px;
       }
 
       .file-item {
@@ -1418,17 +1382,6 @@
         width: calc(100% - 16px);
       }
 
-      .profile-trigger {
-        padding: 3px;
-      }
-
-      .card {
-        padding: 16px;
-      }
-
-      .textarea {
-        min-height: 210px;
-      }
     }
   </style>
 </head>
@@ -1455,7 +1408,7 @@
         id="loadingText"
         style="
           color:var(--muted);
-          font-size:11px;
+          font-size:10px;
         "
       >
         Menghubungkan layanan...
@@ -1503,25 +1456,25 @@
 
         <div class="hero">
 
-          <div class="hero-badge">
-            Rojak DriveKit
+          <div class="hero-label">
+            ROJAK DRIVEKIT
           </div>
 
           <h1>
-            Simpan file tugas
+            File tugas.
             <br>
-            <span>lebih cepat.</span>
+            <span>Lebih simpel.</span>
           </h1>
 
           <p>
-            Buat file TXT dan simpan langsung ke Google Drive.
-            Cocok untuk menyimpan rumus, catatan, dan file tugas.
+            Buat file TXT dari rumus atau catatan,
+            lalu simpan langsung ke Google Drive.
           </p>
 
         </div>
 
 
-        <div class="feature-grid">
+        <div class="feature-list">
 
           <div class="feature">
 
@@ -1543,7 +1496,7 @@
             </b>
 
             <span>
-              Simpan langsung ke Google Drive.
+              Simpan file ke Google Drive.
             </span>
 
           </div>
@@ -1556,7 +1509,7 @@
             </b>
 
             <span>
-              Kelola nama dan role akun.
+              Kelola informasi akun.
             </span>
 
           </div>
@@ -1642,9 +1595,6 @@
 
         <div class="user-area">
 
-
-          <!-- PROFILE -->
-
           <button
             id="profileButton"
             class="profile-trigger"
@@ -1703,7 +1653,7 @@
       </header>
 
 
-      <!-- HEADER -->
+      <!-- PAGE HEADER -->
 
       <section class="dashboard-head">
 
@@ -2016,8 +1966,6 @@
         </div>
 
 
-        <!-- NAMA -->
-
         <div class="profile-field">
 
           <label for="profileNameInput">
@@ -2039,8 +1987,6 @@
         </div>
 
 
-        <!-- EMAIL -->
-
         <div class="profile-field">
 
           <label>
@@ -2060,8 +2006,6 @@
 
         </div>
 
-
-        <!-- ROLE -->
 
         <div class="profile-field">
 
@@ -2148,10 +2092,6 @@
 
   <script type="module">
 
-    /* =========================================
-       FIREBASE
-    ========================================= */
-
     import {
       auth,
       db
@@ -2177,9 +2117,9 @@
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    /* =========================================
-       GOOGLE DRIVE
-    ========================================= */
+    /* ========================================
+       GOOGLE DRIVE CONFIG
+    ======================================== */
 
     const CLIENT_ID =
       "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com";
@@ -2193,9 +2133,9 @@
       "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
 
 
-    /* =========================================
+    /* ========================================
        STATE
-    ========================================= */
+    ======================================== */
 
     let tokenClient = null;
 
@@ -2210,17 +2150,17 @@
     let currentRole = "member";
 
 
-    /* =========================================
+    /* ========================================
        HELPER
-    ========================================= */
+    ======================================== */
 
     const $ = id =>
       document.getElementById(id);
 
 
-    /* =========================================
+    /* ========================================
        ELEMENTS
-    ========================================= */
+    ======================================== */
 
     const loadingScreen =
       $("loadingScreen");
@@ -2252,7 +2192,6 @@
 
     const userRole =
       $("userRole");
-
 
     const adminButton =
       $("adminButton");
@@ -2288,7 +2227,6 @@
 
     const profileDisplayRole =
       $("profileDisplayRole");
-
 
     const profileNameInput =
       $("profileNameInput");
@@ -2331,7 +2269,6 @@
     const statusMessage =
       $("statusMessage");
 
-
     const refreshFilesButton =
       $("refreshFilesButton");
 
@@ -2342,9 +2279,9 @@
       $("openDriveButton");
 
 
-    /* =========================================
+    /* ========================================
        SCREEN
-    ========================================== */
+    ======================================== */
 
     function showLogin() {
 
@@ -2400,9 +2337,9 @@
     }
 
 
-    /* =========================================
-       FIREBASE PROFILE
-    ========================================= */
+    /* ========================================
+       PROFILE FIRESTORE
+    ======================================== */
 
     async function ensureProfile(
       user
@@ -2425,7 +2362,6 @@
         await setDoc(
           ref,
           {
-
             uid:
               user.uid,
 
@@ -2449,7 +2385,6 @@
 
             updatedAt:
               serverTimestamp()
-
           }
         );
 
@@ -2500,16 +2435,9 @@
             : "MEMBER";
 
 
-        if (user.photoURL) {
-
-          userAvatar.src =
-            user.photoURL;
-
-        } else {
-
-          userAvatar.src =
-            "https://www.gravatar.com/avatar/?d=mp";
-        }
+        userAvatar.src =
+          user.photoURL ||
+          "https://www.gravatar.com/avatar/?d=mp";
 
 
         if (
@@ -2553,9 +2481,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        GOOGLE LOGIN
-    ========================================= */
+    ======================================== */
 
     async function loginGoogle() {
 
@@ -2597,7 +2525,6 @@
         if (
           error.code ===
             "auth/popup-closed-by-user" ||
-
           error.code ===
             "auth/popup-blocked"
         ) {
@@ -2670,9 +2597,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        AUTH STATE
-    ========================================= */
+    ======================================== */
 
     onAuthStateChanged(
       auth,
@@ -2697,10 +2624,6 @@
     );
 
 
-    /* =========================================
-       REDIRECT LOGIN
-    ========================================= */
-
     try {
 
       await getRedirectResult(
@@ -2714,6 +2637,7 @@
         error
       );
 
+
       showLoginError(
         "Login redirect gagal: " +
         (
@@ -2724,9 +2648,9 @@
     }
 
 
-    /* =========================================
-       PROFILE
-    ========================================= */
+    /* ========================================
+       PROFILE MODAL
+    ======================================== */
 
     function openProfile() {
 
@@ -2795,9 +2719,7 @@
 
       setTimeout(
         () => {
-
           profileNameInput.focus();
-
         },
         100
       );
@@ -2850,7 +2772,6 @@
       saveProfileButton.disabled =
         true;
 
-
       saveProfileButton.textContent =
         "Menyimpan...";
 
@@ -2868,13 +2789,11 @@
         await updateDoc(
           ref,
           {
-
             name:
               newName,
 
             updatedAt:
               serverTimestamp()
-
           }
         );
 
@@ -2920,16 +2839,15 @@
         saveProfileButton.disabled =
           false;
 
-
         saveProfileButton.textContent =
           "Simpan Perubahan";
       }
     }
 
 
-    /* =========================================
-       GAPI
-    ========================================= */
+    /* ========================================
+       GOOGLE API
+    ======================================== */
 
     function gapiLoaded() {
 
@@ -2958,11 +2876,9 @@
       try {
 
         await gapi.client.init({
-
           discoveryDocs: [
             DISCOVERY_DOC
           ]
-
         });
 
 
@@ -2985,18 +2901,16 @@
     }
 
 
-    /* =========================================
-       GIS
-    ========================================= */
+    /* ========================================
+       GOOGLE IDENTITY SERVICES
+    ======================================== */
 
     function gisLoaded() {
 
       if (
         typeof google ===
           "undefined" ||
-
         !google.accounts ||
-
         !google.accounts.oauth2
       ) {
 
@@ -3032,9 +2946,9 @@
     }
 
 
-    /* =========================================
-       DRIVE CONNECT
-    ========================================= */
+    /* ========================================
+       CONNECT DRIVE
+    ======================================== */
 
     function connectDrive() {
 
@@ -3060,12 +2974,6 @@
 
           tokenClient.callback =
             response => {
-
-              console.log(
-                "Drive OAuth response:",
-                response
-              );
-
 
               if (
                 response.error ||
@@ -3118,7 +3026,8 @@
 
 
           tokenClient.requestAccessToken({
-            prompt: "consent"
+            prompt:
+              "consent"
           });
 
         }
@@ -3176,9 +3085,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        CREATE TXT
-    ========================================= */
+    ======================================== */
 
     async function createTxtFile() {
 
@@ -3218,7 +3127,6 @@
 
       createButton.disabled =
         true;
-
 
       createButton.textContent =
         "Menyiapkan...";
@@ -3308,13 +3216,10 @@
           await fetch(
 
             "https://www.googleapis.com/upload/drive/v3/files" +
-
             "?uploadType=multipart" +
-
             "&fields=id,name,mimeType,modifiedTime,webViewLink",
 
             {
-
               method:
                 "POST",
 
@@ -3344,7 +3249,6 @@
           accessToken =
             null;
 
-
           setDriveDisconnected();
 
 
@@ -3354,9 +3258,7 @@
         }
 
 
-        if (
-          !response.ok
-        ) {
+        if (!response.ok) {
 
           const errorText =
             await response.text();
@@ -3414,16 +3316,15 @@
         createButton.disabled =
           false;
 
-
         createButton.textContent =
           "Buat .TXT";
       }
     }
 
 
-    /* =========================================
+    /* ========================================
        RECENT FILES
-    ========================================= */
+    ======================================== */
 
     async function loadRecentFiles() {
 
@@ -3590,9 +3491,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        OPEN DRIVE FILE
-    ========================================= */
+    ======================================== */
 
     async function openDriveFile(
       fileId
@@ -3633,7 +3534,6 @@
             "/view",
             "_blank"
           );
-
         }
 
 
@@ -3652,9 +3552,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        ESCAPE HTML
-    ========================================= */
+    ======================================== */
 
     function escapeHtml(
       value
@@ -3689,9 +3589,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        LOGOUT
-    ========================================= */
+    ======================================== */
 
     async function logout() {
 
@@ -3725,7 +3625,7 @@
 
         if (
           typeof gapi !==
-          "undefined" &&
+            "undefined" &&
           gapi.client
         ) {
 
@@ -3750,9 +3650,9 @@
     }
 
 
-    /* =========================================
+    /* ========================================
        EVENTS
-    ========================================= */
+    ======================================== */
 
     loginButton.addEventListener(
       "click",
@@ -3865,9 +3765,9 @@
     );
 
 
-    /* =========================================
+    /* ========================================
        TABS
-    ========================================= */
+    ======================================== */
 
     document
       .querySelectorAll(".tab")
@@ -3939,9 +3839,9 @@
       );
 
 
-    /* =========================================
+    /* ========================================
        CTRL + ENTER
-    ========================================= */
+    ======================================== */
 
     fileContent.addEventListener(
       "keydown",
@@ -3962,9 +3862,9 @@
     );
 
 
-    /* =========================================
-       ESC PROFILE
-    ========================================= */
+    /* ========================================
+       ESC
+    ======================================== */
 
     document.addEventListener(
       "keydown",
@@ -3985,9 +3885,9 @@
     );
 
 
-    /* =========================================
+    /* ========================================
        GOOGLE API LOADER
-    ========================================= */
+    ======================================== */
 
     function waitForGoogleAPIs() {
 
@@ -4004,7 +3904,7 @@
 
             if (
               typeof gapi !==
-              "undefined" &&
+                "undefined" &&
               !gapiInited
             ) {
 
@@ -4015,7 +3915,7 @@
 
             if (
               typeof google !==
-              "undefined" &&
+                "undefined" &&
               !gisInited
             ) {
 
@@ -4053,7 +3953,6 @@
               console.error(
                 "Google API timeout."
               );
-
             }
 
           },
