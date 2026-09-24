@@ -1,3984 +1,3476 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
-  <title>Rojak DriveK1t</title>
-
-  <link
-    rel="icon"
-    type="image/png"
-    href="https://files.catbox.moe/brdrmx.png"
-  >
-
-  <style>
-    :root {
-      --bg: #0d0e0b;
-      --panel: #151614;
-      --panel-2: #191a18;
-      --input: #0b0c0a;
-
-      --border: #292a27;
-      --border-soft: #222320;
-
-      --text: #eeeeea;
-      --muted: #8b8c86;
-      --muted-2: #676861;
-
-      --orange: #e45632;
-      --orange-hover: #f0643f;
-
-      --green: #69b879;
-      --red: #d9655c;
-    }
-
-    * {
-      box-sizing: border-box;
-    }
-
-    html,
-    body {
-      margin: 0;
-      padding: 0;
-      min-height: 100%;
-      background: var(--bg);
-      color: var(--text);
-    }
-
-    body {
-      font-family:
-        Inter,
-        system-ui,
-        -apple-system,
-        BlinkMacSystemFont,
-        "Segoe UI",
-        sans-serif;
-    }
-
-    button,
-    input,
-    textarea,
-    select {
-      font: inherit;
-    }
-
-    button {
-      cursor: pointer;
-    }
-
-    /* ================================
-       LOADING
-    ================================= */
-
-    .loading-screen {
-      display: none !important;
-      position: fixed;
-      inset: 0;
-      z-index: 9999;
-
-      display: flex;
-      align-items: center;
-      justify-content: center;
-
-      background: var(--bg);
-    }
-
-    .loading-box {
-      text-align: center;
-    }
-
-    .loading-logo {
-      width: 46px;
-      height: 46px;
-
-      margin: 0 auto 10px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 7px;
-
-      background: var(--panel);
-    }
-
-    .loading-logo img {
-      width: 100%;
-      height: 100%;
-
-      display: block;
-
-      object-fit: cover;
-    }
-
-    .loading-text {
-      color: var(--muted);
-      font-size: 9px;
-    }
-
-    /* ================================
-       LOGIN
-    ================================= */
-
-    .login-screen {
-      min-height: 100vh;
-
-      display: flex;
-
-      align-items: center;
-      justify-content: center;
-
-      padding: 20px;
-    }
-
-    .login-box {
-      width: min(360px, 100%);
-
-      padding: 25px;
-
-      border: 1px solid var(--border);
-      border-radius: 7px;
-
-      background: var(--panel);
-    }
-
-    .login-logo {
-      width: 45px;
-      height: 45px;
-
-      margin-bottom: 15px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 7px;
-    }
-
-    .login-logo img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-    }
-
-    .login-box h1 {
-      margin: 0;
-
-      font-size: 19px;
-      font-weight: 700;
-      letter-spacing: -.5px;
-    }
-
-    .login-box p {
-      margin: 6px 0 18px;
-
-      color: var(--muted);
-
-      font-size: 9px;
-      line-height: 1.5;
-    }
-
-    .google-login {
-      width: 100%;
-      height: 38px;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: var(--panel-2);
-      color: var(--text);
-
-      font-size: 9px;
-      font-weight: 600;
-    }
-
-    .google-login:hover {
-      background: #1e1f1c;
-    }
-
-    .google-login:disabled {
-      opacity: .5;
-      cursor: wait;
-    }
-
-    .login-error {
-      min-height: 15px;
-
-      margin-top: 9px;
-
-      color: var(--red);
-
-      font-size: 8px;
-      line-height: 1.4;
-    }
-
-    /* ================================
-       APP
-    ================================= */
-
-    .app {
-      display: none;
-      min-height: 100vh;
-    }
-
-    /* ================================
-       HEADER
-    ================================= */
-
-    .topbar {
-      height: 58px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 16px;
-
-      border-bottom: 1px solid var(--border);
-
-      background: #10110f;
-    }
-
-    .brand {
-      display: flex;
-      align-items: center;
-
-      gap: 9px;
-
-      min-width: 0;
-    }
-
-    .brand-logo {
-      width: 35px;
-      height: 35px;
-
-      flex: 0 0 35px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 6px;
-
-      background: var(--panel);
-    }
-
-    .brand-logo img {
-      width: 100%;
-      height: 100%;
-
-      display: block;
-
-      object-fit: cover;
-    }
-
-    .brand-text {
-      font-size: 11px;
-      font-weight: 700;
-      letter-spacing: -.2px;
-    }
-
-    .brand-text span {
-      color: var(--orange);
-    }
-
-    .top-actions {
-      display: flex;
-      align-items: center;
-
-      gap: 5px;
-    }
-
-    .top-button {
-      height: 29px;
-
-      padding: 0 9px;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: transparent;
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .top-button:hover {
-      background: var(--panel-2);
-      color: var(--text);
-    }
-
-    .profile-button {
-      width: 30px;
-      height: 30px;
-
-      padding: 0;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 50%;
-
-      background: var(--panel);
-    }
-
-    .profile-button img {
-      width: 100%;
-      height: 100%;
-
-      display: block;
-
-      object-fit: cover;
-    }
-
-    /* ================================
-       MAIN
-    ================================= */
-
-    .container {
-      width: min(850px, calc(100% - 20px));
-
-      margin: 0 auto;
-
-      padding: 16px 0 28px;
-    }
-
-    /* ================================
-       DRIVE
-    ================================= */
-
-    .drive-card {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 12px;
-
-      padding: 12px 13px;
-
-      border: 1px solid var(--border);
-      border-radius: 6px;
-
-      background: var(--panel);
-    }
-
-    .drive-info {
-      min-width: 0;
-    }
-
-    .drive-title {
-      margin-bottom: 4px;
-
-      color: var(--text);
-
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .drive-state {
-      display: flex;
-      align-items: center;
-
-      gap: 5px;
-
-      color: var(--muted);
-
-      font-size: 8px;
-    }
-
-    .drive-dot {
-      width: 5px;
-      height: 5px;
-
-      border-radius: 50%;
-
-      background: #555;
-    }
-
-    .drive-dot.connected {
-      background: var(--green);
-    }
-
-    .drive-dot.loading {
-      background: var(--orange);
-      animation: blink 1s infinite;
-    }
-
-    .drive-dot.error {
-      background: var(--red);
-    }
-
-    @keyframes blink {
-      0%,
-      100% {
-        opacity: .35;
-      }
-
-      50% {
-        opacity: 1;
-      }
-    }
-
-    .drive-button {
-      height: 29px;
-
-      flex: 0 0 auto;
-
-      padding: 0 10px;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: transparent;
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .drive-button:hover {
-      background: var(--panel-2);
-      color: var(--text);
-    }
-
-    .drive-button.connected {
-      color: var(--green);
-
-      border-color: rgba(105, 184, 121, .3);
-    }
-
-    .drive-button:disabled {
-      opacity: .5;
-      cursor: wait;
-    }
-
-    /* ================================
-       TABS
-    ================================= */
-
-    .tabs {
-      height: 42px;
-
-      display: grid;
-      grid-template-columns: repeat(3, 1fr);
-
-      margin-top: 8px;
-
-      border: 1px solid var(--border);
-      border-radius: 6px;
-
-      background: var(--panel);
-    }
-
-    .tab {
-      height: 100%;
-
-      border: 0;
-
-      background: transparent;
-
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .tab:first-child {
-      border-radius: 5px 0 0 5px;
-    }
-
-    .tab:last-child {
-      border-radius: 0 5px 5px 0;
-    }
-
-    .tab:hover {
-      color: var(--text);
-    }
-
-    .tab.active {
-      margin: 4px;
-
-      height: calc(100% - 8px);
-
-      border-radius: 4px;
-
-      background: #242521;
-
-      color: var(--text);
-    }
-
-    /* ================================
-       PANELS
-    ================================= */
-
-    .panel {
-      display: none;
-
-      margin-top: 8px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 6px;
-
-      background: var(--panel);
-    }
-
-    .panel.active {
-      display: block;
-    }
-
-    .panel-header {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 14px 14px 12px;
-
-      border-bottom: 1px solid var(--border);
-    }
-
-    .panel-title h2 {
-      margin: 0;
-
-      font-size: 13px;
-      font-weight: 700;
-
-      letter-spacing: -.2px;
-    }
-
-    .panel-title p {
-      margin: 4px 0 0;
-
-      color: var(--muted);
-
-      font-size: 8px;
-      line-height: 1.4;
-    }
-
-    .refresh-button {
-      height: 28px;
-
-      padding: 0 9px;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: transparent;
-      color: var(--muted);
-
-      font-size: 8px;
-    }
-
-    .refresh-button:hover {
-      background: var(--panel-2);
-      color: var(--text);
-    }
-
-    /* ================================
-       FORM
-    ================================= */
-
-    .form {
-      padding: 14px;
-    }
-
-    .field {
-      margin-bottom: 12px;
-    }
-
-    .field label {
-      display: block;
-
-      margin-bottom: 6px;
-
-      color: #b4b5af;
-
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .input,
-    .textarea {
-      width: 100%;
-
-      outline: none;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: var(--input);
-      color: var(--text);
-
-      font-size: 9px;
-    }
-
-    .input {
-      height: 39px;
-
-      padding: 0 10px;
-    }
-
-    .textarea {
-      min-height: 175px;
-
-      padding: 10px;
-
-      resize: vertical;
-
-      line-height: 1.5;
-    }
-
-    .input::placeholder,
-    .textarea::placeholder {
-      color: #595a55;
-    }
-
-    .input:focus,
-    .textarea:focus {
-      border-color: #3b3c38;
-    }
-
-    .form-actions {
-      display: flex;
-
-      gap: 6px;
-
-      margin-top: 4px;
-    }
-
-    .create-button {
-      height: 37px;
-
-      flex: 1;
-
-      border: 1px solid var(--orange);
-      border-radius: 5px;
-
-      background: var(--orange);
-      color: white;
-
-      font-size: 9px;
-      font-weight: 700;
-    }
-
-    .create-button:hover {
-      background: var(--orange-hover);
-      border-color: var(--orange-hover);
-    }
-
-    .create-button:disabled {
-      opacity: .5;
-      cursor: wait;
-    }
-
-    .clear-button {
-      height: 37px;
-
-      padding: 0 14px;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: transparent;
-      color: var(--muted);
-
-      font-size: 9px;
-      font-weight: 600;
-    }
-
-    .clear-button:hover {
-      background: var(--panel-2);
-      color: var(--text);
-    }
-
-    .status {
-      min-height: 14px;
-
-      margin-top: 8px;
-
-      font-size: 8px;
-    }
-
-    .status.success {
-      color: var(--green);
-    }
-
-    .status.error {
-      color: var(--red);
-    }
-
-    /* ================================
-       RECENT FILES
-    ================================= */
-
-    .files {
-      padding: 9px;
-    }
-
-    .file-row {
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      gap: 10px;
-
-      min-height: 58px;
-
-      padding: 9px 10px;
-
-      margin-bottom: 5px;
-
-      border: 1px solid var(--border-soft);
-      border-radius: 5px;
-
-      background: #11120f;
-    }
-
-    .file-row:last-child {
-      margin-bottom: 0;
-    }
-
-    .file-row:hover {
-      border-color: var(--border);
-      background: #151613;
-    }
-
-    .file-info {
-      min-width: 0;
-    }
-
-    .file-name {
-      overflow: hidden;
-
-      color: var(--text);
-
-      font-size: 9px;
-      font-weight: 700;
-
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .file-date {
-      margin-top: 3px;
-
-      color: var(--muted);
-
-      font-size: 7px;
-    }
-
-    .open-file {
-      height: 28px;
-
-      flex: 0 0 auto;
-
-      padding: 0 9px;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: transparent;
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .open-file:hover {
-      background: var(--panel-2);
-      color: var(--text);
-    }
-
-    .empty {
-      padding: 30px 15px;
-
-      text-align: center;
-
-      color: var(--muted);
-
-      font-size: 8px;
-    }
-
-    /* ================================
-       OPEN DRIVE
-    ================================= */
-
-    .open-drive {
-      padding: 25px 15px;
-
-      text-align: center;
-    }
-
-    .open-drive h3 {
-      margin: 0;
-
-      font-size: 12px;
-    }
-
-    .open-drive p {
-      margin: 5px 0 14px;
-
-      color: var(--muted);
-
-      font-size: 8px;
-    }
-
-    .open-drive-button {
-      height: 35px;
-
-      padding: 0 13px;
-
-      border: 1px solid var(--orange);
-      border-radius: 5px;
-
-      background: var(--orange);
-      color: white;
-
-      font-size: 8px;
-      font-weight: 700;
-    }
-
-    .open-drive-button:hover {
-      background: var(--orange-hover);
-    }
-
-
-    /* ================================
-       LOCAL MUSIC PLAYER
-    ================================= */
-    .music-section {
-      position: fixed;
-      right: 16px;
-      bottom: 16px;
-      z-index: 1200;
-      width: 250px;
-      overflow: hidden;
-      border: 1px solid var(--border);
-      border-radius: 10px;
-      background: rgba(15,16,14,.96);
-      box-shadow: 0 8px 28px rgba(0,0,0,.35);
-      backdrop-filter: blur(10px);
-    }
-    .music-header {
-      display:flex;
-      align-items:center;
-      gap:8px;
-      padding:7px 8px;
-      border-bottom:1px solid var(--border-soft);
-    }
-    .music-title {
-      min-width:0;
-      flex:1;
-      overflow:hidden;
-      color:var(--muted);
-      font-size:7px;
-      font-weight:700;
-      text-overflow:ellipsis;
-      white-space:nowrap;
-    }
-    .music-refresh,.music-collapse {
-      width:24px;height:24px;padding:0;
-      border:1px solid var(--border);
-      border-radius:6px;
-      background:transparent;
-      color:var(--muted);
-      font-size:8px;
-    }
-    .music-refresh:hover,.music-collapse:hover { color:var(--text);background:var(--panel-2); }
-    .music-body { padding:8px; }
-    .music-now { display:flex;align-items:center;gap:8px;min-width:0; }
-    .music-icon {
-      width:34px;height:34px;flex:0 0 34px;
-      display:grid;place-items:center;
-      border:1px solid var(--border);
-      border-radius:50%;
-      color:var(--orange);
-      font-size:13px;
-      background:#151613;
-      cursor:pointer;
-    }
-    .music-name { min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-size:8px;font-weight:700; }
-    .music-sub { margin-top:2px;color:var(--muted);font-size:6px; }
-    .music-seek { display:grid;grid-template-columns:25px 1fr 25px;align-items:center;gap:5px;margin-top:7px;color:var(--muted);font-size:6px; }
-    .music-seek input,.music-volume input { width:100%;accent-color:var(--orange); }
-    .music-controls { display:flex;justify-content:center;align-items:center;gap:5px;margin-top:7px; }
-    .music-btn { width:25px;height:25px;padding:0;border:1px solid var(--border);border-radius:50%;background:transparent;color:var(--muted);font-size:8px;font-weight:700; }
-    .music-btn:hover { background:var(--panel-2);color:var(--text); }
-    .music-main { border-color:var(--orange);background:var(--orange);color:#fff; }
-    .music-options { display:flex;align-items:center;gap:6px;margin-top:7px; }
-    .music-volume { display:flex;align-items:center;gap:4px;flex:1;color:var(--muted);font-size:6px; }
-    .music-toggle { padding:5px 6px;border:1px solid var(--border);border-radius:5px;background:transparent;color:var(--muted);font-size:6px; }
-    .music-toggle.active { border-color:var(--orange);color:var(--orange); }
-    .music-list { max-height:105px;overflow:auto;margin-top:7px;border-top:1px solid var(--border); }
-    .music-item { display:flex;align-items:center;gap:7px;min-height:29px;border-bottom:1px solid var(--border-soft);cursor:pointer;padding:4px 2px; }
-    .music-item:hover,.music-item.active { background:#151613; }
-    .music-item.active .music-item-name { color:var(--orange); }
-    .music-item-num { width:15px;text-align:center;color:var(--muted);font-size:6px; }
-    .music-item-name { min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;color:var(--text);font-size:7px; }
-    .music-empty { padding:9px 3px;color:var(--muted);font-size:7px;line-height:1.4; }
-    .music-section.collapsed { width:42px;height:42px;border-radius:50%; }
-    .music-section.collapsed .music-header { display:none; }
-    .music-section.collapsed .music-body { padding:0; }
-    .music-section.collapsed .music-now { width:42px;height:42px;justify-content:center; }
-    .music-section.collapsed .music-icon { width:42px;height:42px;border:0;background:transparent;font-size:15px; }
-    .music-section.collapsed .music-name,
-    .music-section.collapsed .music-sub,
-    .music-section.collapsed .music-seek,
-    .music-section.collapsed .music-controls,
-    .music-section.collapsed .music-options,
-    .music-section.collapsed .music-list { display:none; }
-    @media (max-width:600px) {
-      .music-section { right:10px;bottom:10px;width:235px; }
-      .music-section.collapsed { width:42px; }
-    }
-    /* ================================
-       SPOTIFY
-    ================================= */
-
-    .spotify-section {
-      margin-top: 8px;
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 6px;
-
-      background: var(--panel);
-    }
-
-    .spotify-title {
-      padding: 9px 12px;
-
-      border-bottom: 1px solid var(--border);
-
-      color: var(--muted);
-
-      font-size: 8px;
-      font-weight: 600;
-    }
-
-    .spotify {
-      display: block;
-
-      width: 100%;
-      height: 152px;
-
-      border: 0;
-    }
-
-    /* ================================
-       FOOTER
-    ================================= */
-
-    .footer {
-      padding: 12px 0 0;
-
-      text-align: center;
-
-      color: #50514c;
-
-      font-size: 7px;
-    }
-
-    /* ================================
-       PROFILE MODAL
-    ================================= */
-
-    .modal {
-      position: fixed;
-      inset: 0;
-      z-index: 5000;
-
-      display: none;
-
-      align-items: center;
-      justify-content: center;
-
-      padding: 16px;
-
-      background: rgba(0, 0, 0, .72);
-    }
-
-    .modal.open {
-      display: flex;
-    }
-
-    .modal-box {
-      width: min(360px, 100%);
-
-      overflow: hidden;
-
-      border: 1px solid var(--border);
-      border-radius: 6px;
-
-      background: var(--panel);
-
-      box-shadow:
-        0 12px 35px rgba(0, 0, 0, .35);
-    }
-
-    .modal-header {
-      height: 45px;
-
-      display: flex;
-      align-items: center;
-      justify-content: space-between;
-
-      padding: 0 12px;
-
-      border-bottom: 1px solid var(--border);
-    }
-
-    .modal-header h2 {
-      margin: 0;
-
-      font-size: 11px;
-      font-weight: 700;
-    }
-
-    .close-button {
-      width: 26px;
-      height: 26px;
-
-      display: grid;
-      place-items: center;
-
-      padding: 0;
-
-      border: 1px solid var(--border);
-      border-radius: 5px;
-
-      background: transparent;
-      color: var(--muted);
-
-      font-size: 15px;
-      line-height: 1;
-    }
-
-    .close-button:hover {
-      background: var(--panel-2);
-      color: var(--text);
-    }
-
-    /* PROFILE CONTENT */
-
-    .profile-content {
-      padding: 14px;
-    }
-
-    .profile-user {
-      display: flex;
-      align-items: center;
-
-      gap: 10px;
-
-      padding-bottom: 13px;
-
-      border-bottom: 1px solid var(--border);
-    }
-
-    .profile-image {
-      width: 43px;
-      height: 43px;
-
-      flex: 0 0 43px;
-
-      display: block;
-
-      border: 1px solid var(--border);
-      border-radius: 50%;
-
-      object-fit: cover;
-
-      background: var(--panel-2);
-    }
-
-    .profile-user-info {
-      min-width: 0;
-    }
-
-    .profile-user-name {
-      overflow: hidden;
-
-      color: var(--text);
-
-      font-size: 10px;
-      font-weight: 700;
-
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .profile-user-email {
-      overflow: hidden;
-
-      margin-top: 3px;
-
-      color: var(--muted);
-
-      font-size: 8px;
-
-      text-overflow: ellipsis;
-      white-space: nowrap;
-    }
-
-    .role-label {
-      display: inline-flex;
-      align-items: center;
-
-      height: 20px;
-
-      margin-top: 7px;
-      padding: 0 7px;
-
-      border: 1px solid rgba(228, 86, 50, .25);
-      border-radius: 4px;
-
-      background: rgba(228, 86, 50, .06);
-
-      color: var(--orange);
-
-      font-size: 7px;
-      font-weight: 700;
-    }
-
-    .profile-form {
-      padding-top: 13px;
-    }
-
-    .profile-form .field {
-      margin-bottom: 10px;
-    }
-
-    .profile-form .field:last-child {
-      margin-bottom: 0;
-    }
-
-    .profile-actions {
-      display: grid;
-
-      grid-template-columns: 1fr auto;
-
-      gap: 6px;
-
-      margin-top: 13px;
-    }
-
-    .profile-actions .create-button {
-      height: 34px;
-    }
-
-    .profile-actions .clear-button {
-      height: 34px;
-
-      padding: 0 13px;
-    }
-
-    #profileStatus {
-      min-height: 13px;
-
-      margin-top: 7px;
-    }
-
-    /* ================================
-       MOBILE
-    ================================= */
-
-    @media (max-width: 600px) {
-
-      .topbar {
-        height: 55px;
-        padding: 0 10px;
-      }
-
-      .brand-logo {
-        width: 34px;
-        height: 34px;
-
-        flex-basis: 34px;
-      }
-
-      .brand-text {
-        font-size: 10px;
-      }
-
-      .top-button {
-        display: none;
-      }
-
-      .profile-button {
-        width: 29px;
-        height: 29px;
-      }
-
-      .container {
-        width: calc(100% - 16px);
-
-        padding-top: 9px;
-      }
-
-      .drive-card {
-        padding: 10px;
-      }
-
-      .drive-title {
-        font-size: 8px;
-      }
-
-      .drive-state {
-        font-size: 7px;
-      }
-
-      .drive-button {
-        font-size: 7px;
-
-        padding: 0 8px;
-      }
-
-      .tabs {
-        height: 40px;
-      }
-
-      .tab {
-        font-size: 7px;
-      }
-
-      .panel-title h2 {
-        font-size: 12px;
-      }
-
-      .panel-title p {
-        font-size: 7px;
-      }
-
-      .textarea {
-        min-height: 170px;
-      }
-
-      .spotify {
-        height: 152px;
-      }
-
-    }
-
-    @media (max-width: 360px) {
-
-      .brand-text {
-        font-size: 9px;
-      }
-
-      .drive-button {
-        padding: 0 7px;
-      }
-
-      .tab {
-        font-size: 6.5px;
-      }
-
-    }
-  </style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1.0">
+<title>Rojak DriveK1t</title>
+<link rel="icon" type="image/png" href="https://files.catbox.moe/brdrmx.png">
+
+<style>
+:root{
+  --bg:#0d0e0b;
+  --panel:#151614;
+  --panel2:#191a18;
+  --input:#0b0c0a;
+  --border:#292a27;
+  --border-soft:#222320;
+  --text:#eeeeea;
+  --muted:#8b8c86;
+  --orange:#e45632;
+  --orange-hover:#f0643f;
+  --green:#69b879;
+  --red:#d9655c;
+}
+
+*{box-sizing:border-box}
+
+html,body{
+  margin:0;
+  min-height:100%;
+  background:var(--bg);
+  color:var(--text);
+  font-family:Inter,system-ui,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;
+}
+
+button,input,textarea{font:inherit}
+button{cursor:pointer}
+
+/* LOADING */
+.loading-screen{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:9999;
+  align-items:center;
+  justify-content:center;
+  background:var(--bg);
+}
+
+.loading-box{text-align:center}
+
+.loading-logo{
+  width:46px;
+  height:46px;
+  margin:auto auto 10px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:var(--panel);
+}
+
+.loading-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.loading-text{
+  color:var(--muted);
+  font-size:9px;
+}
+
+/* LOGIN */
+.login-screen{
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+}
+
+.login-box{
+  width:min(360px,100%);
+  padding:25px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:var(--panel);
+}
+
+.login-logo{
+  width:45px;
+  height:45px;
+  margin-bottom:15px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:7px;
+}
+
+.login-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.login-box h1{
+  margin:0;
+  font-size:19px;
+}
+
+.login-box p{
+  margin:6px 0 18px;
+  color:var(--muted);
+  font-size:9px;
+  line-height:1.5;
+}
+
+.google-login{
+  width:100%;
+  height:38px;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:var(--panel2);
+  color:var(--text);
+  font-size:9px;
+  font-weight:600;
+}
+
+.google-login:hover{
+  background:#1e1f1c;
+}
+
+.login-error{
+  min-height:15px;
+  margin-top:9px;
+  color:var(--red);
+  font-size:8px;
+}
+
+/* APP */
+.app{
+  display:none;
+  min-height:100vh;
+}
+
+/* HEADER */
+.topbar{
+  height:58px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:0 16px;
+  border-bottom:1px solid var(--border);
+  background:#10110f;
+}
+
+.brand{
+  display:flex;
+  align-items:center;
+  gap:9px;
+}
+
+.brand-logo{
+  width:35px;
+  height:35px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:6px;
+}
+
+.brand-logo img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.brand-text{
+  font-size:11px;
+  font-weight:700;
+}
+
+.brand-text span{
+  color:var(--orange);
+}
+
+.top-actions{
+  display:flex;
+  align-items:center;
+  gap:5px;
+}
+
+.top-button{
+  height:29px;
+  padding:0 9px;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:transparent;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:600;
+}
+
+.top-button:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.profile-button{
+  width:30px;
+  height:30px;
+  padding:0;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:50%;
+  background:var(--panel);
+}
+
+.profile-button img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+/* MAIN */
+.container{
+  width:min(850px,calc(100% - 20px));
+  margin:auto;
+  padding:16px 0 100px;
+}
+
+/* DRIVE */
+.drive-card{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:12px 13px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--panel);
+}
+
+.drive-title{
+  margin-bottom:4px;
+  font-size:9px;
+  font-weight:700;
+}
+
+.drive-state{
+  display:flex;
+  align-items:center;
+  gap:5px;
+  color:var(--muted);
+  font-size:8px;
+}
+
+.drive-dot{
+  width:5px;
+  height:5px;
+  border-radius:50%;
+  background:#555;
+}
+
+.drive-dot.connected{background:var(--green)}
+.drive-dot.loading{background:var(--orange)}
+.drive-dot.error{background:var(--red)}
+
+.drive-button{
+  height:29px;
+  padding:0 10px;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:transparent;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:600;
+}
+
+.drive-button:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+/* TABS */
+.tabs{
+  height:42px;
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  margin-top:8px;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--panel);
+}
+
+.tab{
+  border:0;
+  background:transparent;
+  color:var(--muted);
+  font-size:8px;
+  font-weight:600;
+}
+
+.tab.active{
+  margin:4px;
+  height:calc(100% - 8px);
+  border-radius:4px;
+  background:#242521;
+  color:var(--text);
+}
+
+/* PANEL */
+.panel{
+  display:none;
+  margin-top:8px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:6px;
+  background:var(--panel);
+}
+
+.panel.active{display:block}
+
+.panel-header{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  padding:14px;
+  border-bottom:1px solid var(--border);
+}
+
+.panel-title h2{
+  margin:0;
+  font-size:13px;
+}
+
+.panel-title p{
+  margin:4px 0 0;
+  color:var(--muted);
+  font-size:8px;
+}
+
+.refresh-button{
+  height:28px;
+  padding:0 9px;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:transparent;
+  color:var(--muted);
+  font-size:8px;
+}
+
+/* FORM */
+.form{padding:14px}
+
+.field{margin-bottom:12px}
+
+.field label{
+  display:block;
+  margin-bottom:6px;
+  color:#b4b5af;
+  font-size:8px;
+  font-weight:600;
+}
+
+.input,.textarea{
+  width:100%;
+  outline:none;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:var(--input);
+  color:var(--text);
+  font-size:9px;
+}
+
+.input{
+  height:39px;
+  padding:0 10px;
+}
+
+.textarea{
+  min-height:175px;
+  padding:10px;
+  resize:vertical;
+  line-height:1.5;
+}
+
+.input:focus,.textarea:focus{
+  border-color:#3b3c38;
+}
+
+.form-actions{
+  display:flex;
+  gap:6px;
+}
+
+.create-button{
+  height:35px;
+  padding:0 14px;
+  border:0;
+  border-radius:5px;
+  background:var(--orange);
+  color:white;
+  font-size:8px;
+  font-weight:700;
+}
+
+.create-button:hover{
+  background:var(--orange-hover);
+}
+
+.status-message{
+  margin-top:10px;
+  color:var(--muted);
+  font-size:8px;
+}
+
+/* FILE LIST */
+.file-list{
+  padding:6px;
+}
+
+.file-item{
+  display:flex;
+  align-items:center;
+  gap:9px;
+  min-height:42px;
+  padding:7px 9px;
+  border-bottom:1px solid var(--border-soft);
+}
+
+.file-item:last-child{
+  border-bottom:0;
+}
+
+.file-name{
+  min-width:0;
+  flex:1;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  white-space:nowrap;
+  font-size:8px;
+}
+
+.file-meta{
+  color:var(--muted);
+  font-size:7px;
+}
+
+.file-open{
+  height:25px;
+  padding:0 8px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:transparent;
+  color:var(--muted);
+  font-size:7px;
+}
+
+/* EMPTY */
+.empty{
+  padding:25px 15px;
+  text-align:center;
+  color:var(--muted);
+  font-size:8px;
+}
+
+/* MODAL */
+.modal{
+  display:none;
+  position:fixed;
+  inset:0;
+  z-index:5000;
+  align-items:center;
+  justify-content:center;
+  padding:20px;
+  background:rgba(0,0,0,.65);
+}
+
+.modal.show{
+  display:flex;
+}
+
+.modal-box{
+  width:min(340px,100%);
+  padding:18px;
+  border:1px solid var(--border);
+  border-radius:7px;
+  background:var(--panel);
+}
+
+.modal-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-bottom:15px;
+}
+
+.modal-head h3{
+  margin:0;
+  font-size:12px;
+}
+
+.modal-close{
+  width:25px;
+  height:25px;
+  border:1px solid var(--border);
+  border-radius:4px;
+  background:transparent;
+  color:var(--muted);
+}
+
+.profile-info{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding-bottom:14px;
+  border-bottom:1px solid var(--border);
+}
+
+.profile-big{
+  width:42px;
+  height:42px;
+  overflow:hidden;
+  border:1px solid var(--border);
+  border-radius:50%;
+}
+
+.profile-big img{
+  width:100%;
+  height:100%;
+  object-fit:cover;
+}
+
+.profile-name{
+  font-size:10px;
+  font-weight:700;
+}
+
+.profile-email{
+  margin-top:3px;
+  color:var(--muted);
+  font-size:7px;
+}
+
+.modal-actions{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  margin-top:14px;
+}
+
+.modal-action{
+  width:100%;
+  height:34px;
+  border:1px solid var(--border);
+  border-radius:5px;
+  background:transparent;
+  color:var(--muted);
+  font-size:8px;
+  text-align:left;
+  padding:0 10px;
+}
+
+.modal-action:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.modal-action.danger{
+  color:var(--red);
+}
+
+/* =========================================
+   LOCAL MUSIC PLAYER
+========================================= */
+
+.music-section{
+  position:fixed;
+  right:16px;
+  bottom:16px;
+  z-index:1200;
+
+  width:315px;
+
+  overflow:hidden;
+
+  border:1px solid var(--border);
+  border-radius:8px;
+
+  background:#121310;
+
+  box-shadow:0 12px 32px rgba(0,0,0,.4);
+}
+
+.music-header{
+  height:48px;
+
+  display:flex;
+  align-items:center;
+
+  padding:0 9px;
+
+  border-bottom:1px solid var(--border);
+}
+
+.music-header-left{
+  min-width:0;
+  flex:1;
+
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+
+.music-header-dot{
+  width:6px;
+  height:6px;
+  flex:0 0 6px;
+
+  border-radius:50%;
+
+  background:var(--orange);
+}
+
+.music-title-wrap{
+  min-width:0;
+}
+
+.music-title{
+  color:#d8d8d2;
+  font-size:8px;
+  font-weight:800;
+  letter-spacing:.5px;
+}
+
+.music-status{
+  margin-top:3px;
+
+  overflow:hidden;
+
+  color:var(--muted);
+  font-size:7px;
+
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.music-header-buttons{
+  display:flex;
+  gap:4px;
+}
+
+.music-refresh,
+.music-collapse{
+  width:27px;
+  height:27px;
+
+  padding:0;
+
+  border:1px solid var(--border);
+  border-radius:5px;
+
+  background:transparent;
+  color:var(--muted);
+
+  font-size:12px;
+}
+
+.music-refresh:hover,
+.music-collapse:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.music-body{
+  padding:11px;
+}
+
+.music-now{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  min-width:0;
+}
+
+.music-icon{
+  width:46px;
+  height:46px;
+  flex:0 0 46px;
+
+  display:grid;
+  place-items:center;
+
+  border:1px solid var(--border);
+  border-radius:6px;
+
+  background:#191a17;
+
+  color:var(--orange);
+
+  font-size:19px;
+  font-weight:600;
+
+  cursor:pointer;
+}
+
+.music-icon.playing{
+  border-color:rgba(228,86,50,.45);
+}
+
+.music-now-info{
+  min-width:0;
+  flex:1;
+}
+
+.music-name{
+  overflow:hidden;
+
+  color:var(--text);
+
+  font-size:10px;
+  font-weight:700;
+
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.music-sub{
+  margin-top:4px;
+
+  overflow:hidden;
+
+  color:var(--muted);
+
+  font-size:7px;
+
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.music-seek{
+  display:grid;
+  grid-template-columns:28px minmax(0,1fr) 28px;
+  align-items:center;
+  gap:7px;
+
+  margin-top:12px;
+
+  color:var(--muted);
+
+  font-size:7px;
+}
+
+.music-seek input,
+.music-volume input{
+  width:100%;
+  height:3px;
+  margin:0;
+
+  appearance:none;
+
+  border-radius:10px;
+
+  background:#30312e;
+
+  accent-color:var(--orange);
+}
+
+.music-seek input::-webkit-slider-thumb,
+.music-volume input::-webkit-slider-thumb{
+  appearance:none;
+
+  width:9px;
+  height:9px;
+
+  border:0;
+  border-radius:50%;
+
+  background:var(--orange);
+}
+
+.music-seek input::-moz-range-thumb,
+.music-volume input::-moz-range-thumb{
+  width:9px;
+  height:9px;
+
+  border:0;
+  border-radius:50%;
+
+  background:var(--orange);
+}
+
+.music-controls{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+
+  gap:7px;
+
+  margin-top:12px;
+}
+
+.music-btn{
+  width:31px;
+  height:31px;
+
+  padding:0;
+
+  display:grid;
+  place-items:center;
+
+  border:1px solid var(--border);
+  border-radius:5px;
+
+  background:transparent;
+  color:var(--muted);
+
+  font-size:12px;
+  font-weight:700;
+}
+
+.music-btn:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.music-main{
+  width:37px;
+  height:37px;
+
+  border-color:var(--orange);
+
+  background:var(--orange);
+
+  color:#fff;
+
+  font-size:12px;
+}
+
+.music-main:hover{
+  background:var(--orange-hover);
+  color:#fff;
+}
+
+.music-options{
+  display:grid;
+  grid-template-columns:minmax(0,1fr) 31px 31px;
+  align-items:center;
+
+  gap:5px;
+
+  margin-top:10px;
+}
+
+.music-volume{
+  display:flex;
+  align-items:center;
+  gap:6px;
+
+  min-width:0;
+
+  color:var(--muted);
+
+  font-size:7px;
+}
+
+.music-volume-icon{
+  flex:0 0 auto;
+  font-size:10px;
+}
+
+.music-toggle{
+  width:31px;
+  height:27px;
+
+  padding:0;
+
+  border:1px solid var(--border);
+  border-radius:5px;
+
+  background:transparent;
+  color:var(--muted);
+
+  font-size:9px;
+}
+
+.music-toggle:hover{
+  background:var(--panel2);
+  color:var(--text);
+}
+
+.music-toggle.active{
+  border-color:rgba(228,86,50,.55);
+  color:var(--orange);
+}
+
+.music-list-head{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+
+  margin-top:12px;
+  padding-bottom:6px;
+
+  border-bottom:1px solid var(--border);
+
+  color:var(--muted);
+
+  font-size:7px;
+  font-weight:700;
+  letter-spacing:.4px;
+}
+
+.music-list-count{
+  color:#62635e;
+}
+
+.music-list{
+  max-height:155px;
+
+  margin-top:2px;
+
+  overflow-y:auto;
+}
+
+.music-list::-webkit-scrollbar{
+  width:4px;
+}
+
+.music-list::-webkit-scrollbar-track{
+  background:transparent;
+}
+
+.music-list::-webkit-scrollbar-thumb{
+  border-radius:10px;
+  background:#343531;
+}
+
+.music-item{
+  min-height:35px;
+
+  display:flex;
+  align-items:center;
+
+  gap:8px;
+
+  padding:5px 4px;
+
+  border-bottom:1px solid var(--border-soft);
+
+  cursor:pointer;
+}
+
+.music-item:last-child{
+  border-bottom:0;
+}
+
+.music-item:hover{
+  background:#191a17;
+}
+
+.music-item.active{
+  background:#191a17;
+}
+
+.music-item-num{
+  width:18px;
+  flex:0 0 18px;
+
+  color:#686963;
+
+  font-size:7px;
+
+  text-align:center;
+}
+
+.music-item.active .music-item-num{
+  color:var(--orange);
+}
+
+.music-item-name{
+  min-width:0;
+  flex:1;
+
+  overflow:hidden;
+
+  color:#c9c9c3;
+
+  font-size:8px;
+
+  text-overflow:ellipsis;
+  white-space:nowrap;
+}
+
+.music-item.active .music-item-name{
+  color:var(--text);
+  font-weight:600;
+}
+
+.music-item-play{
+  width:18px;
+  flex:0 0 18px;
+
+  color:#696a65;
+
+  font-size:9px;
+
+  text-align:center;
+}
+
+.music-item.active .music-item-play{
+  color:var(--orange);
+}
+
+.music-empty{
+  padding:13px 4px;
+
+  color:var(--muted);
+
+  font-size:7px;
+  line-height:1.5;
+}
+
+.music-section.collapsed{
+  width:45px;
+  height:45px;
+
+  border-radius:6px;
+}
+
+.music-section.collapsed .music-header{
+  display:none;
+}
+
+.music-section.collapsed .music-body{
+  padding:0;
+}
+
+.music-section.collapsed .music-now{
+  width:45px;
+  height:45px;
+
+  justify-content:center;
+}
+
+.music-section.collapsed .music-icon{
+  width:45px;
+  height:45px;
+
+  border:0;
+  border-radius:6px;
+
+  background:transparent;
+
+  font-size:17px;
+}
+
+.music-section.collapsed .music-now-info,
+.music-section.collapsed .music-seek,
+.music-section.collapsed .music-controls,
+.music-section.collapsed .music-options,
+.music-section.collapsed .music-list-head,
+.music-section.collapsed .music-list{
+  display:none;
+}
+
+/* MOBILE */
+@media(max-width:600px){
+
+  .topbar{
+    padding:0 10px;
+  }
+
+  .top-button{
+    display:none;
+  }
+
+  .container{
+    width:calc(100% - 14px);
+    padding-top:10px;
+  }
+
+  .music-section{
+    right:10px;
+    bottom:10px;
+    width:min(315px,calc(100vw - 20px));
+  }
+
+  .music-section.collapsed{
+    width:45px;
+  }
+}
+</style>
 </head>
 
 <body>
 
-  <!-- =========================================
-       LOADING
-  ========================================== -->
+<!-- LOADING -->
+<div id="loadingScreen" class="loading-screen">
+  <div class="loading-box">
+    <div class="loading-logo">
+      <img src="https://files.catbox.moe/brdrmx.png" alt="">
+    </div>
+    <div class="loading-text">Memuat Rojak DriveK1t...</div>
+  </div>
+</div>
 
-  <div
-    id="loadingScreen"
-    class="loading-screen"
-  >
+<!-- LOGIN -->
+<section id="loginScreen" class="login-screen">
+  <div class="login-box">
 
-    <div class="loading-box">
+    <div class="login-logo">
+      <img src="https://files.catbox.moe/brdrmx.png" alt="">
+    </div>
 
-      <div class="loading-logo">
+    <h1>Rojak DriveK1t</h1>
 
-        <img
-          src="https://files.catbox.moe/brdrmx.png"
-          alt="Rojak DriveK1t"
-        >
+    <p>
+      Utility sederhana untuk membuat dan mengelola
+      file TXT melalui Google Drive.
+    </p>
 
+    <button id="googleLogin" class="google-login">
+      Masuk dengan Google
+    </button>
+
+    <div id="loginError" class="login-error"></div>
+
+  </div>
+</section>
+
+<!-- APP -->
+<div id="app" class="app">
+
+  <!-- HEADER -->
+  <header class="topbar">
+
+    <div class="brand">
+
+      <div class="brand-logo">
+        <img src="https://files.catbox.moe/brdrmx.png" alt="">
       </div>
 
-      <div
-        id="loadingText"
-        class="loading-text"
-      >
-        Memuat...
+      <div class="brand-text">
+        Rojak <span>DriveK1t</span>
       </div>
 
     </div>
 
-  </div>
+    <div class="top-actions">
 
-
-  <!-- =========================================
-       LOGIN
-  ========================================== -->
-
-  <section
-    id="loginScreen"
-    class="login-screen"
-  >
-
-    <div class="login-box">
-
-      <div class="login-logo">
-
-        <img
-          src="https://files.catbox.moe/brdrmx.png"
-          alt="Rojak DriveK1t"
-        >
-
-      </div>
-
-      <h1>
-        Rojak DriveK1t
-      </h1>
-
-      <p>
-        Small tools for Google Drive.
-      </p>
-
-      <button
-        id="loginButton"
-        class="google-login"
-        type="button"
-      >
-        Continue with Google
+      <button id="adminButton" class="top-button" style="display:none">
+        Admin
       </button>
 
-      <div
-        id="loginError"
-        class="login-error"
-      ></div>
+      <button id="logoutButton" class="top-button">
+        Keluar
+      </button>
+
+      <button id="profileButton" class="profile-button">
+        <img id="profileImage" src="" alt="">
+      </button>
 
     </div>
 
-  </section>
+  </header>
 
+  <main class="container">
 
-  <!-- =========================================
-       APP
-  ========================================== -->
+    <!-- DRIVE -->
+    <section class="drive-card">
 
-  <div
-    id="app"
-    class="app"
-  >
+      <div class="drive-info">
 
-    <!-- HEADER -->
-
-    <header class="topbar">
-
-      <div class="brand">
-
-        <div class="brand-logo">
-
-          <img
-            src="https://files.catbox.moe/brdrmx.png"
-            alt="Rojak DriveK1t"
-          >
-
+        <div class="drive-title">
+          Google Drive
         </div>
 
-        <div class="brand-text">
-          Rojak <span>DriveK1t</span>
+        <div class="drive-state">
+
+          <span id="driveDot" class="drive-dot"></span>
+
+          <span id="driveState">
+            Belum terhubung
+          </span>
+
         </div>
 
       </div>
 
+      <button id="driveConnect" class="drive-button">
+        Hubungkan
+      </button>
 
-      <div class="top-actions">
+    </section>
 
-        <button
-          id="adminButton"
-          class="top-button"
-          type="button"
-          style="display:none;"
-        >
-          Admin Panel
-        </button>
+    <!-- TABS -->
+    <nav class="tabs">
 
-        <button
-          id="logoutButton"
-          class="top-button"
-          type="button"
-        >
-          Logout
-        </button>
-
-        <button
-          id="profileButton"
-          class="profile-button"
-          type="button"
-          title="Profile"
-        >
-
-          <img
-            id="topAvatar"
-            src="https://www.gravatar.com/avatar/?d=mp"
-            alt="Profile"
-          >
-
-        </button>
-
-      </div>
-
-    </header>
-
-
-    <!-- MAIN -->
-
-    <main class="container">
-
-      <!-- GOOGLE DRIVE -->
-
-      <section class="drive-card">
-
-        <div class="drive-info">
-
-          <div class="drive-title">
-            Google Drive
-          </div>
-
-          <div class="drive-state">
-
-            <span
-              id="driveDot"
-              class="drive-dot"
-            ></span>
-
-            <span id="driveStatus">
-              Belum terhubung
-            </span>
-
-          </div>
-
-        </div>
-
-
-        <button
-          id="connectDriveButton"
-          class="drive-button"
-          type="button"
-        >
-          Connect Drive
-        </button>
-
-      </section>
-
-
-      <!-- TABS -->
-
-      <div class="tabs">
-
-        <button
-          class="tab active"
-          data-tab="create"
-          type="button"
-        >
-          Create
-        </button>
-
-        <button
-          class="tab"
-          data-tab="recent"
-          type="button"
-        >
-          Recent Files
-        </button>
-
-        <button
-          class="tab"
-          data-tab="drive"
-          type="button"
-        >
-          Open Drive
-        </button>
-
-      </div>
-
-
-      <!-- CREATE -->
-
-      <section
-        id="createPanel"
-        class="panel active"
+      <button
+        class="tab active"
+        data-tab="create"
       >
+        Create
+      </button>
 
-        <div class="panel-header">
-
-          <div class="panel-title">
-
-            <h2>
-              New text file
-            </h2>
-
-            <p>
-              Buat file TXT baru dan simpan langsung ke Google Drive.
-            </p>
-
-          </div>
-
-        </div>
-
-
-        <div class="form">
-
-          <div class="field">
-
-            <label for="fileName">
-              File name
-            </label>
-
-            <input
-              id="fileName"
-              class="input"
-              type="text"
-              autocomplete="off"
-              placeholder="contoh: catatan-harian"
-            >
-
-          </div>
-
-
-          <div class="field">
-
-            <label for="fileContent">
-              Content
-            </label>
-
-            <textarea
-              id="fileContent"
-              class="textarea"
-              placeholder="Tulis isi file di sini..."
-            ></textarea>
-
-          </div>
-
-
-          <div class="form-actions">
-
-            <button
-              id="createButton"
-              class="create-button"
-              type="button"
-            >
-              Create .txt file
-            </button>
-
-            <button
-              id="clearButton"
-              class="clear-button"
-              type="button"
-            >
-              Clear
-            </button>
-
-          </div>
-
-
-          <div
-            id="createStatus"
-            class="status"
-          ></div>
-
-        </div>
-
-      </section>
-
-
-      <!-- RECENT -->
-
-      <section
-        id="recentPanel"
-        class="panel"
+      <button
+        class="tab"
+        data-tab="recent"
       >
+        Recent Files
+      </button>
 
-        <div class="panel-header">
-
-          <div class="panel-title">
-
-            <h2>
-              Recent Files
-            </h2>
-
-            <p>
-              File terbaru yang dapat diakses oleh DriveK1t.
-            </p>
-
-          </div>
-
-
-          <button
-            id="refreshFilesButton"
-            class="refresh-button"
-            type="button"
-          >
-            Refresh
-          </button>
-
-        </div>
-
-
-        <div
-          id="filesList"
-          class="files"
-        >
-
-          <div class="empty">
-            Hubungkan Google Drive terlebih dahulu.
-          </div>
-
-        </div>
-
-      </section>
-
-
-      <!-- OPEN DRIVE -->
-
-      <section
-        id="drivePanel"
-        class="panel"
+      <button
+        class="tab"
+        data-tab="drive"
       >
+        Open Drive
+      </button>
 
-        <div class="open-drive">
+    </nav>
 
-          <h3>
-            Google Drive
-          </h3>
+    <!-- CREATE -->
+    <section id="createPanel" class="panel active">
+
+      <div class="panel-header">
+
+        <div class="panel-title">
+
+          <h2>Create TXT</h2>
 
           <p>
-            Buka Google Drive untuk melihat dan mengelola file.
+            Buat file .txt langsung ke Google Drive.
           </p>
 
-          <button
-            id="openDriveButton"
-            class="open-drive-button"
-            type="button"
+        </div>
+
+      </div>
+
+      <div class="form">
+
+        <div class="field">
+
+          <label for="fileName">
+            Nama file
+          </label>
+
+          <input
+            id="fileName"
+            class="input"
+            type="text"
+            placeholder="contoh.txt"
           >
-            Open Google Drive
+
+        </div>
+
+        <div class="field">
+
+          <label for="fileContent">
+            Isi file
+          </label>
+
+          <textarea
+            id="fileContent"
+            class="textarea"
+            placeholder="Tulis isi file di sini..."
+          ></textarea>
+
+        </div>
+
+        <div class="form-actions">
+
+          <button
+            id="createFile"
+            class="create-button"
+          >
+            Buat File TXT
           </button>
 
         </div>
 
-      </section>
+        <div
+          id="createStatus"
+          class="status-message"
+        ></div>
 
-
-
-      <!-- LOCAL MUSIC PLAYER -->
-      <section id="musicSection" class="music-section">
-        <div class="music-header">
-          <div class="music-header-left">
-            <span class="music-header-dot"></span>
-            <div class="music-title-wrap">
-              <div class="music-title">LOCAL MUSIC</div>
-              <div id="musicStatus" class="music-status">Player siap</div>
-            </div>
-          </div>
-          <button id="musicRefresh" class="music-refresh" type="button" title="Refresh playlist">↻</button>
-          <button id="musicCollapse" class="music-collapse" type="button" title="Kecilkan player">−</button>
-        </div>
-
-        <div class="music-body">
-          <div class="music-now">
-            <div id="musicIcon" class="music-icon" title="Putar / buka player">♪</div>
-            <div class="music-now-info">
-              <div id="musicName" class="music-name">Belum ada lagu</div>
-              <div id="musicSub" class="music-sub">Upload lagu ke folder music</div>
-            </div>
-          </div>
-
-          <audio id="musicAudio" preload="metadata"></audio>
-
-          <div class="music-seek">
-            <span id="musicCurrent">0:00</span>
-            <input id="musicSeek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Progress lagu">
-            <span id="musicDuration">0:00</span>
-          </div>
-
-          <div class="music-controls">
-            <button id="musicPrev" class="music-btn" type="button" title="Sebelumnya">‹</button>
-            <button id="musicPlay" class="music-btn music-main" type="button" title="Putar">▶</button>
-            <button id="musicNext" class="music-btn" type="button" title="Berikutnya">›</button>
-          </div>
-
-          <div class="music-options">
-            <label class="music-volume" title="Volume">VOL <input id="musicVolume" type="range" min="0" max="1" value="0.8" step="0.01"></label>
-            <button id="musicShuffle" class="music-toggle" type="button">Shuffle: Off</button>
-            <button id="musicLoop" class="music-toggle" type="button">Loop: Off</button>
-          </div>
-
-          <div id="musicList" class="music-list">
-            <div class="music-empty">Memuat playlist...</div>
-          </div>
-        </div>
-      </section>
-
-      <div class="footer">
-        Rojak DriveK1t
       </div>
 
-    </main>
+    </section>
 
-  </div>
+    <!-- RECENT -->
+    <section id="recentPanel" class="panel">
 
+      <div class="panel-header">
 
-  <!-- =========================================
-       PROFILE MODAL
-  ========================================== -->
+        <div class="panel-title">
 
-  <div
-    id="profileModal"
-    class="modal"
-  >
+          <h2>Recent Files</h2>
 
-    <div class="modal-box">
+          <p>
+            File TXT yang terakhir dibuat.
+          </p>
 
-      <div class="modal-header">
-
-        <h2>
-          Profile
-        </h2>
+        </div>
 
         <button
-          id="closeProfile"
-          class="close-button"
-          type="button"
+          id="recentRefresh"
+          class="refresh-button"
         >
-          ×
+          Refresh
         </button>
 
       </div>
 
+      <div id="recentList" class="file-list">
 
-      <div class="profile-content">
+        <div class="empty">
+          Belum ada file.
+        </div>
 
-        <!-- USER INFO -->
+      </div>
 
-        <div class="profile-user">
+    </section>
 
-          <img
-            id="profileAvatar"
-            class="profile-image"
-            src="https://www.gravatar.com/avatar/?d=mp"
-            alt="Profile"
-          >
+    <!-- DRIVE PANEL -->
+    <section id="drivePanel" class="panel">
 
-          <div class="profile-user-info">
+      <div class="panel-header">
 
-            <div
-              id="profileUserName"
-              class="profile-user-name"
-            >
-              User
-            </div>
+        <div class="panel-title">
 
-            <div
-              id="profileUserEmail"
-              class="profile-user-email"
-            >
-              -
-            </div>
+          <h2>Google Drive</h2>
 
-            <div
-              id="profileRole"
-              class="role-label"
-            >
-              MEMBER
-            </div>
-
-          </div>
+          <p>
+            Buka file yang tersimpan di Google Drive.
+          </p>
 
         </div>
 
+        <button
+          id="openDrive"
+          class="refresh-button"
+        >
+          Buka Drive
+        </button>
 
-        <!-- FORM -->
+      </div>
 
-        <div class="profile-form">
+      <div class="empty">
+        Gunakan tombol di atas untuk membuka Google Drive.
+      </div>
 
-          <div class="field">
+    </section>
 
-            <label for="profileName">
-              Name
-            </label>
+  </main>
+</div>
 
-            <input
-              id="profileName"
-              class="input"
-              type="text"
-              autocomplete="name"
-            >
+<!-- PROFILE MODAL -->
+<div id="profileModal" class="modal">
 
-          </div>
+  <div class="modal-box">
 
+    <div class="modal-head">
 
-          <div class="field">
+      <h3>Profile</h3>
 
-            <label for="profileEmail">
-              Email
-            </label>
+      <button
+        id="profileClose"
+        class="modal-close"
+      >
+        ×
+      </button>
 
-            <input
-              id="profileEmail"
-              class="input"
-              type="text"
-              disabled
-            >
+    </div>
 
-          </div>
+    <div class="profile-info">
 
+      <div class="profile-big">
 
-          <div class="profile-actions">
+        <img
+          id="profileModalImage"
+          src=""
+          alt=""
+        >
 
-            <button
-              id="saveProfile"
-              class="create-button"
-              type="button"
-            >
-              Save Changes
-            </button>
+      </div>
 
-            <button
-              id="closeProfile2"
-              class="clear-button"
-              type="button"
-            >
-              Close
-            </button>
+      <div>
 
-          </div>
+        <div
+          id="profileName"
+          class="profile-name"
+        >
+          User
+        </div>
 
-
-          <div
-            id="profileStatus"
-            class="status"
-          ></div>
-
+        <div
+          id="profileEmail"
+          class="profile-email"
+        >
+          -
         </div>
 
       </div>
 
     </div>
 
+    <div class="modal-actions">
+
+      <button
+        id="profileDrive"
+        class="modal-action"
+      >
+        Hubungkan Google Drive
+      </button>
+
+      <button
+        id="profileLogout"
+        class="modal-action danger"
+      >
+        Keluar dari akun
+      </button>
+
+    </div>
+
   </div>
 
+</div>
 
-  <!-- =========================================
-       GOOGLE API INITIALIZER
-  ========================================== -->
+<!-- =========================================
+     MUSIC PLAYER
+========================================= -->
 
-  <script>
+<section
+  id="musicSection"
+  class="music-section"
+>
 
-    window.RDK_GOOGLE = {
+  <div class="music-header">
 
-      gapiInited: false,
-      gisInited: false,
-      tokenClient: null
+    <div class="music-header-left">
+
+      <span class="music-header-dot"></span>
+
+      <div class="music-title-wrap">
+
+        <div class="music-title">
+          LOCAL MUSIC
+        </div>
 
-    };
+        <div
+          id="musicStatus"
+          class="music-status"
+        >
+          Memuat...
+        </div>
+
+      </div>
+
+    </div>
+
+    <div class="music-header-buttons">
+
+      <button
+        id="musicRefresh"
+        class="music-refresh"
+        type="button"
+        title="Refresh playlist"
+      >
+        ↻
+      </button>
+
+      <button
+        id="musicCollapse"
+        class="music-collapse"
+        type="button"
+        title="Kecilkan player"
+      >
+        −
+      </button>
+
+    </div>
+
+  </div>
+
+  <div class="music-body">
+
+    <div class="music-now">
+
+      <div
+        id="musicIcon"
+        class="music-icon"
+        title="Putar / jeda"
+      >
+        ♪
+      </div>
+
+      <div class="music-now-info">
+
+        <div
+          id="musicName"
+          class="music-name"
+        >
+          Belum ada lagu
+        </div>
+
+        <div
+          id="musicSub"
+          class="music-sub"
+        >
+          Upload lagu ke folder music
+        </div>
+
+      </div>
+
+    </div>
+
+    <audio
+      id="musicAudio"
+      preload="metadata"
+    ></audio>
+
+    <div class="music-seek">
+
+      <span id="musicCurrent">
+        0:00
+      </span>
+
+      <input
+        id="musicSeek"
+        type="range"
+        min="0"
+        max="100"
+        value="0"
+        step="0.1"
+      >
+
+      <span
+        id="musicDuration"
+        style="text-align:right"
+      >
+        0:00
+      </span>
+
+    </div>
+
+    <div class="music-controls">
+
+      <button
+        id="musicPrev"
+        class="music-btn"
+        type="button"
+        title="Sebelumnya"
+      >
+        ‹
+      </button>
+
+      <button
+        id="musicPlay"
+        class="music-btn music-main"
+        type="button"
+        title="Putar"
+      >
+        ▶
+      </button>
+
+      <button
+        id="musicNext"
+        class="music-btn"
+        type="button"
+        title="Berikutnya"
+      >
+        ›
+      </button>
+
+    </div>
+
+    <div class="music-options">
+
+      <label
+        class="music-volume"
+        title="Volume"
+      >
+
+        <span class="music-volume-icon">
+          ♪
+        </span>
+
+        <input
+          id="musicVolume"
+          type="range"
+          min="0"
+          max="1"
+          value="0.8"
+          step="0.01"
+        >
+
+      </label>
+
+      <button
+        id="musicShuffle"
+        class="music-toggle"
+        type="button"
+        title="Shuffle"
+        aria-label="Shuffle"
+      >
+        ⇄
+      </button>
+
+      <button
+        id="musicLoop"
+        class="music-toggle"
+        type="button"
+        title="Loop"
+        aria-label="Loop"
+      >
+        ↻
+      </button>
+
+    </div>
+
+    <div class="music-list-head">
+
+      <span>
+        PLAYLIST
+      </span>
+
+      <span
+        id="musicCount"
+        class="music-list-count"
+      >
+        0
+      </span>
+
+    </div>
+
+    <div
+      id="musicList"
+      class="music-list"
+    >
+
+      <div class="music-empty">
+        Memuat playlist...
+      </div>
+
+    </div>
+
+  </div>
+
+</section>
+
+<!-- GOOGLE API -->
+<script src="https://apis.google.com/js/api.js"></script>
+<script src="https://accounts.google.com/gsi/client"></script>
+
+<script type="module">
+
+import {
+  auth,
+  db
+} from "./firebase-config.js";
 
+import {
+  GoogleAuthProvider,
+  signInWithPopup,
+  signOut,
+  onAuthStateChanged
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
-    window.gapiLoaded = function () {
+import {
+  collection,
+  addDoc,
+  query,
+  where,
+  orderBy,
+  limit,
+  getDocs,
+  serverTimestamp
+} from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
-      console.log(
-        "Google API loaded"
-      );
+/* =========================================
+   HELPERS
+========================================= */
 
+const $ = id =>
+  document.getElementById(id);
 
-      if (
-        typeof window.gapi ===
-        "undefined"
-      ) {
 
-        console.error(
-          "Google API tidak tersedia."
-        );
+/* =========================================
+   CONFIG
+========================================= */
 
-        return;
+const GOOGLE_CLIENT_ID =
+  "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com";
 
-      }
+const DRIVE_SCOPE =
+  "https://www.googleapis.com/auth/drive.file";
 
 
-      window.gapi.load(
-        "client",
-        async function () {
+/* =========================================
+   ELEMENTS
+========================================= */
 
-          try {
+const loginScreen =
+  $("loginScreen");
 
-            await window.gapi.client.init({
+const app =
+  $("app");
 
-              discoveryDocs: [
+const googleLogin =
+  $("googleLogin");
 
-                "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest"
+const loginError =
+  $("loginError");
 
-              ]
+const loadingScreen =
+  $("loadingScreen");
 
-            });
+const driveConnect =
+  $("driveConnect");
 
+const driveState =
+  $("driveState");
 
-            window.RDK_GOOGLE.gapiInited =
-              true;
+const driveDot =
+  $("driveDot");
 
+const profileButton =
+  $("profileButton");
 
-            console.log(
-              "Google Drive API siap."
-            );
+const profileModal =
+  $("profileModal");
 
+const profileClose =
+  $("profileClose");
 
-          } catch (error) {
+const profileLogout =
+  $("profileLogout");
 
-            console.error(
-              "GAPI init error:",
-              error
-            );
+const profileDrive =
+  $("profileDrive");
 
-          }
+const logoutButton =
+  $("logoutButton");
 
-        }
-      );
+const adminButton =
+  $("adminButton");
 
-    };
 
+/* =========================================
+   GOOGLE LOGIN
+========================================= */
 
-    window.gisLoaded = function () {
+googleLogin.addEventListener(
+  "click",
+  async () => {
 
-      console.log(
-        "Google Identity Services loaded"
-      );
+    loginError.textContent = "";
 
+    googleLogin.disabled = true;
 
-      if (
-        !window.google ||
-        !window.google.accounts ||
-        !window.google.accounts.oauth2
-      ) {
+    googleLogin.textContent =
+      "Menghubungkan...";
 
-        console.error(
-          "Google Identity Services tidak tersedia."
-        );
+    try {
 
-        return;
+      const provider =
+        new GoogleAuthProvider();
 
-      }
-
-
-      window.RDK_GOOGLE.tokenClient =
-        window.google.accounts.oauth2.initTokenClient({
-
-          client_id:
-            "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com",
-
-          scope:
-            "https://www.googleapis.com/auth/drive.file",
-
-          callback: ""
-
-        });
-
-
-      window.RDK_GOOGLE.gisInited =
-        true;
-
-
-      console.log(
-        "Google OAuth siap."
-      );
-
-    };
-
-  </script>
-
-
-  <script
-    src="https://apis.google.com/js/api.js"
-    onload="window.gapiLoaded()"
-  ></script>
-
-
-  <script
-    src="https://accounts.google.com/gsi/client"
-    onload="window.gisLoaded()"
-  ></script>
-
-
-  <!-- =========================================
-       STARTUP SAFETY
-       Prevent infinite black loading screen
-  ========================================== -->
-
-  <script>
-    (function () {
-
-      let startupFinished = false;
-
-      function showLoginFallback(message) {
-
-        if (startupFinished) return;
-
-        const loading = document.getElementById("loadingScreen");
-        const login = document.getElementById("loginScreen");
-        const error = document.getElementById("loginError");
-
-        if (loading) loading.style.display = "none";
-        if (login) login.style.display = "flex";
-
-        if (message && error) {
-          error.textContent = message;
-        }
-
-      }
-
-      window.RDK_finishStartup = function () {
-        startupFinished = true;
-      };
-
-      window.addEventListener("error", function (event) {
-
-        console.error("Rojak DriveK1t startup error:", event.error || event.message);
-
-        showLoginFallback(
-          "Aplikasi gagal dimuat. Coba refresh halaman."
-        );
-
+      provider.setCustomParameters({
+        prompt:"select_account"
       });
 
-      window.addEventListener("unhandledrejection", function (event) {
+      await signInWithPopup(
+        auth,
+        provider
+      );
 
-        console.error("Rojak DriveK1t promise error:", event.reason);
+    } catch(error) {
 
-        showLoginFallback(
-          "Aplikasi gagal dimuat. Coba refresh halaman."
-        );
+      console.error(error);
 
-      });
+      loginError.textContent =
+        error?.message ||
+        "Login gagal.";
 
-      // Jangan biarkan loading screen tampil selamanya.
-      setTimeout(function () {
+    } finally {
 
-        if (startupFinished) return;
+      googleLogin.disabled = false;
 
-        const loading = document.getElementById("loadingScreen");
-
-        if (loading && getComputedStyle(loading).display !== "none") {
-
-          console.warn("Rojak DriveK1t startup timeout.");
-
-          showLoginFallback(
-            "Memuat terlalu lama. Silakan coba login kembali."
-          );
-
-        }
-
-      }, 10000);
-
-    })();
-  </script>
-
-
-  <!-- =========================================
-       JAVASCRIPT
-  ========================================== -->
-
-  <script type="module">
-
-    import {
-      auth,
-      db
-    } from "./firebase-config.js";
-
-
-    import {
-      GoogleAuthProvider,
-      signInWithPopup,
-      signInWithRedirect,
-      signOut,
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-
-    import {
-      doc,
-      getDoc,
-      setDoc,
-      updateDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-
-    /* =========================================
-       VARIABLES
-    ========================================== */
-
-    const $ = id =>
-      document.getElementById(id);
-
-
-    let accessToken = null;
-
-    let currentUser = null;
-
-    let currentRole = "member";
-
-
-    const googleState =
-      window.RDK_GOOGLE;
-
-
-    /* =========================================
-       SCREEN
-    ========================================== */
-
-    function showLogin() {
-
-      $("loadingScreen").style.display =
-        "none";
-
-      $("app").style.display =
-        "none";
-
-      $("loginScreen").style.display =
-        "flex";
+      googleLogin.textContent =
+        "Masuk dengan Google";
 
     }
 
+  }
+);
 
-    function showApp() {
 
-      $("loadingScreen").style.display =
+/* =========================================
+   AUTH
+========================================= */
+
+onAuthStateChanged(
+  auth,
+  user => {
+
+    if(user){
+
+      loginScreen.style.display =
         "none";
 
-      $("loginScreen").style.display =
-        "none";
-
-      $("app").style.display =
+      app.style.display =
         "block";
 
-    }
+      setProfile(user);
 
+      loadingScreen.style.display =
+        "none";
 
-    /* =========================================
-       LOGIN ERROR
-    ========================================== */
+    }else{
 
-    function loginError(message) {
+      app.style.display =
+        "none";
 
-      $("loginError").textContent =
-        message;
+      loginScreen.style.display =
+        "flex";
 
-    }
-
-
-    /* =========================================
-       STATUS
-    ========================================== */
-
-    function setStatus(
-      message,
-      type = ""
-    ) {
-
-      $("createStatus").textContent =
-        message;
-
-      $("createStatus").className =
-        "status " + type;
+      loadingScreen.style.display =
+        "none";
 
     }
 
+  }
+);
 
-    function setDriveStatus(
-      text,
-      type = ""
-    ) {
 
-      $("driveStatus").textContent =
-        text;
+/* =========================================
+   PROFILE
+========================================= */
 
-      $("driveDot").className =
-        "drive-dot " + type;
+function setProfile(user){
+
+  const photo =
+    user.photoURL ||
+    "https://files.catbox.moe/brdrmx.png";
+
+  $("profileImage").src =
+    photo;
+
+  $("profileModalImage").src =
+    photo;
+
+  $("profileName").textContent =
+    user.displayName ||
+    "User";
+
+  $("profileEmail").textContent =
+    user.email ||
+    "-";
+
+}
+
+
+/* =========================================
+   PROFILE MODAL
+========================================= */
+
+function openProfile(){
+
+  profileModal.classList.add(
+    "show"
+  );
+
+}
+
+function closeProfile(){
+
+  profileModal.classList.remove(
+    "show"
+  );
+
+}
+
+profileButton.onclick =
+  openProfile;
+
+profileClose.onclick =
+  closeProfile;
+
+profileModal.addEventListener(
+  "click",
+  event => {
+
+    if(
+      event.target ===
+      profileModal
+    ){
+
+      closeProfile();
 
     }
 
+  }
+);
 
-    /* =========================================
-       PROFILE
-    ========================================== */
 
-    async function ensureProfile(user) {
+/* =========================================
+   LOGOUT
+========================================= */
 
-      const ref =
-        doc(
+async function logout(){
+
+  try{
+
+    await signOut(auth);
+
+  }catch(error){
+
+    console.error(error);
+
+  }
+
+}
+
+logoutButton.onclick =
+  logout;
+
+profileLogout.onclick =
+  logout;
+
+
+/* =========================================
+   GOOGLE DRIVE
+========================================= */
+
+let accessToken =
+  null;
+
+let tokenClient =
+  null;
+
+function setDriveState(
+  text,
+  type=""
+){
+
+  driveState.textContent =
+    text;
+
+  driveDot.className =
+    "drive-dot " +
+    type;
+
+}
+
+function initGoogleToken(){
+
+  if(
+    !window.google ||
+    !google.accounts ||
+    !google.accounts.oauth2
+  ){
+
+    return;
+
+  }
+
+  tokenClient =
+    google.accounts.oauth2.initTokenClient({
+
+      client_id:
+        GOOGLE_CLIENT_ID,
+
+      scope:
+        DRIVE_SCOPE,
+
+      callback:
+        response => {
+
+          if(response.error){
+
+            setDriveState(
+              "Gagal terhubung",
+              "error"
+            );
+
+            return;
+
+          }
+
+          accessToken =
+            response.access_token;
+
+          driveConnect.textContent =
+            "Terhubung";
+
+          driveConnect.classList.add(
+            "connected"
+          );
+
+          setDriveState(
+            "Google Drive terhubung",
+            "connected"
+          );
+
+        }
+
+    });
+
+}
+
+window.addEventListener(
+  "load",
+  () => {
+
+    setTimeout(
+      initGoogleToken,
+      700
+    );
+
+  }
+);
+
+async function connectDrive(){
+
+  if(!tokenClient){
+
+    initGoogleToken();
+
+  }
+
+  if(!tokenClient){
+
+    setDriveState(
+      "Google API belum siap",
+      "error"
+    );
+
+    return;
+
+  }
+
+  setDriveState(
+    "Menghubungkan...",
+    "loading"
+  );
+
+  tokenClient.requestAccessToken({
+    prompt:
+      accessToken
+        ? ""
+        : "consent"
+  });
+
+}
+
+driveConnect.onclick =
+  connectDrive;
+
+profileDrive.onclick =
+  () => {
+
+    closeProfile();
+
+    connectDrive();
+
+  };
+
+
+/* =========================================
+   CREATE TXT
+========================================= */
+
+async function createTXT(){
+
+  const name =
+    $("fileName").value.trim();
+
+  const content =
+    $("fileContent").value;
+
+  const status =
+    $("createStatus");
+
+  if(!accessToken){
+
+    status.textContent =
+      "Hubungkan Google Drive terlebih dahulu.";
+
+    return;
+
+  }
+
+  if(!name){
+
+    status.textContent =
+      "Masukkan nama file.";
+
+    return;
+
+  }
+
+  let fileName =
+    name;
+
+  if(
+    !fileName.toLowerCase().endsWith(".txt")
+  ){
+
+    fileName += ".txt";
+
+  }
+
+  status.textContent =
+    "Membuat file...";
+
+  try{
+
+    const metadata = {
+      name:fileName,
+      mimeType:"text/plain"
+    };
+
+    const boundary =
+      "-------314159265358979323846";
+
+    const body =
+      "--" + boundary + "\r\n" +
+      "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+      JSON.stringify(metadata) +
+      "\r\n--" + boundary + "\r\n" +
+      "Content-Type: text/plain\r\n\r\n" +
+      content +
+      "\r\n--" + boundary + "--";
+
+    const response =
+      await fetch(
+        "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart",
+        {
+          method:"POST",
+          headers:{
+            Authorization:
+              "Bearer " + accessToken,
+
+            "Content-Type":
+              "multipart/related; boundary=" +
+              boundary
+          },
+          body
+        }
+      );
+
+    if(!response.ok){
+
+      const errorText =
+        await response.text();
+
+      throw new Error(
+        errorText ||
+        "Gagal membuat file."
+      );
+
+    }
+
+    status.textContent =
+      "File berhasil dibuat.";
+
+    $("fileName").value =
+      "";
+
+    $("fileContent").value =
+      "";
+
+    await loadRecentFiles();
+
+  }catch(error){
+
+    console.error(error);
+
+    status.textContent =
+      "Gagal membuat file.";
+
+  }
+
+}
+
+$("createFile").onclick =
+  createTXT;
+
+
+/* =========================================
+   RECENT FILES
+========================================= */
+
+async function loadRecentFiles(){
+
+  const list =
+    $("recentList");
+
+  if(!auth.currentUser){
+
+    list.innerHTML =
+      '<div class="empty">Belum login.</div>';
+
+    return;
+
+  }
+
+  try{
+
+    const q =
+      query(
+        collection(
           db,
-          "users",
-          user.uid
+          "files"
+        ),
+        where(
+          "uid",
+          "==",
+          auth.currentUser.uid
+        ),
+        orderBy(
+          "createdAt",
+          "desc"
+        ),
+        limit(20)
+      );
+
+    const snapshot =
+      await getDocs(q);
+
+    list.innerHTML =
+      "";
+
+    if(snapshot.empty){
+
+      list.innerHTML =
+        '<div class="empty">Belum ada file.</div>';
+
+      return;
+
+    }
+
+    snapshot.forEach(
+      doc => {
+
+        const data =
+          doc.data();
+
+        const item =
+          document.createElement(
+            "div"
+          );
+
+        item.className =
+          "file-item";
+
+        item.innerHTML =
+          '<div class="file-name">' +
+          escapeHTML(
+            data.name ||
+            "Untitled.txt"
+          ) +
+          '</div>' +
+
+          '<div class="file-meta">' +
+          "TXT" +
+          '</div>';
+
+        list.appendChild(
+          item
         );
-
-
-      const snapshot =
-        await getDoc(ref);
-
-
-      if (!snapshot.exists()) {
-
-        await setDoc(
-          ref,
-          {
-
-            uid:
-              user.uid,
-
-            name:
-              user.displayName ||
-              "User",
-
-            email:
-              user.email ||
-              "",
-
-            photoURL:
-              user.photoURL ||
-              "",
-
-            role:
-              "member",
-
-            createdAt:
-              serverTimestamp(),
-
-            updatedAt:
-              serverTimestamp()
-
-          }
-        );
-
-
-        return "member";
 
       }
+    );
+
+  }catch(error){
+
+    console.warn(
+      "Recent files:",
+      error
+    );
+
+    list.innerHTML =
+      '<div class="empty">Tidak dapat memuat file.</div>';
+
+  }
+
+}
+
+$("recentRefresh").onclick =
+  loadRecentFiles;
 
 
-      const data =
-        snapshot.data();
+/* =========================================
+   OPEN DRIVE
+========================================= */
+
+$("openDrive").onclick =
+  () => {
+
+    window.open(
+      "https://drive.google.com/drive/my-drive",
+      "_blank"
+    );
+
+  };
 
 
-      return data.role === "admin"
-        ? "admin"
-        : "member";
+/* =========================================
+   MUSIC PLAYER
+========================================= */
 
-    }
+const musicSection =
+  $("musicSection");
 
+const musicCollapse =
+  $("musicCollapse");
 
-    async function loadProfile(user) {
+const musicIcon =
+  $("musicIcon");
 
-      currentUser =
-        user;
+const musicStatus =
+  $("musicStatus");
 
+const musicAudio =
+  $("musicAudio");
 
-      currentRole =
-        await Promise.race([
+const musicPlayer = {
 
-          ensureProfile(user),
+  tracks:[],
 
-          new Promise((_, reject) =>
-            setTimeout(
-              () => reject(new Error("Profile loading timeout")),
-              10000
-            )
-          )
+  index:-1,
 
-        ]);
+  shuffle:false,
 
+  loop:false
 
-      const avatar =
-        user.photoURL ||
-        "https://www.gravatar.com/avatar/?d=mp";
-
-
-      $("topAvatar").src =
-        avatar;
+};
 
 
-      $("profileAvatar").src =
-        avatar;
+/* MUSIC ESCAPE */
+
+function musicEscape(
+  value
+){
+
+  return String(value)
+
+    .replace(
+      /&/g,
+      "&amp;"
+    )
+
+    .replace(
+      /</g,
+      "&lt;"
+    )
+
+    .replace(
+      />/g,
+      "&gt;"
+    )
+
+    .replace(
+      /"/g,
+      "&quot;"
+    )
+
+    .replace(
+      /'/g,
+      "&#039;"
+    );
+
+}
 
 
-      const displayName =
-        user.displayName ||
-        user.email?.split("@")[0] ||
-        "User";
+/* MUSIC TIME */
+
+function musicTime(
+  seconds
+){
+
+  if(
+    !Number.isFinite(seconds) ||
+    seconds < 0
+  ){
+
+    return "0:00";
+
+  }
+
+  const minutes =
+    Math.floor(
+      seconds / 60
+    );
+
+  const secondsPart =
+    Math.floor(
+      seconds % 60
+    )
+      .toString()
+      .padStart(
+        2,
+        "0"
+      );
+
+  return (
+    minutes +
+    ":" +
+    secondsPart
+  );
+
+}
 
 
-      $("profileName").value =
-        displayName;
+/* MUSIC COUNT */
+
+function updateMusicCount(){
+
+  $("musicCount").textContent =
+    musicPlayer.tracks.length;
+
+}
 
 
-      $("profileEmail").value =
-        user.email ||
-        "";
+/* RENDER MUSIC */
 
+function renderMusic(){
 
-      /* PROFILE HEADER */
+  const list =
+    $("musicList");
 
-      $("profileUserName").textContent =
-        displayName;
+  list.innerHTML =
+    "";
 
+  updateMusicCount();
 
-      $("profileUserEmail").textContent =
-        user.email ||
-        "-";
+  if(
+    !musicPlayer.tracks.length
+  ){
 
+    list.innerHTML =
+      '<div class="music-empty">' +
+      'Belum ada lagu. Upload file ke folder <b>music</b> lalu isi <b>playlist.json</b>.' +
+      '</div>';
 
-      $("profileRole").textContent =
-        currentRole.toUpperCase();
+    return;
 
+  }
 
-      /* ADMIN */
+  musicPlayer.tracks.forEach(
+    (track,index) => {
 
-      $("adminButton").style.display =
-        currentRole === "admin"
-          ? "block"
-          : "none";
-
-
-      showApp();
-
-    }
-
-
-    /* =========================================
-       GOOGLE LOGIN
-    ========================================== */
-
-    async function loginGoogle() {
-
-      try {
-
-        loginError("");
-
-
-        $("loginButton").disabled =
-          true;
-
-
-        $("loginButton").textContent =
-          "Membuka Google...";
-
-
-        const provider =
-          new GoogleAuthProvider();
-
-
-        provider.setCustomParameters({
-
-          prompt:
-            "select_account"
-
-        });
-
-
-        await signInWithPopup(
-          auth,
-          provider
+      const item =
+        document.createElement(
+          "div"
         );
 
-
-      } catch (error) {
-
-        console.error(
-          "Login error:",
-          error
+      item.className =
+        "music-item" +
+        (
+          index === musicPlayer.index
+            ? " active"
+            : ""
         );
 
+      item.innerHTML =
 
-        if (
-          error.code ===
-            "auth/popup-blocked" ||
-          error.code ===
-            "auth/popup-closed-by-user"
-        ) {
+        '<div class="music-item-num">' +
+        (index + 1) +
+        '</div>' +
 
-          try {
+        '<div class="music-item-name">' +
+        musicEscape(
+          track.title
+        ) +
+        '</div>' +
 
-            await signInWithRedirect(
-              auth,
-              new GoogleAuthProvider()
-            );
+        '<div class="music-item-play">' +
+        (
+          index === musicPlayer.index
+            ? "●"
+            : "›"
+        ) +
+        '</div>';
 
-            return;
+      item.onclick =
+        () => {
 
-          } catch (redirectError) {
-
-            console.error(
-              redirectError
-            );
-
-          }
-
-        }
-
-
-        if (
-          error.code ===
-          "auth/unauthorized-domain"
-        ) {
-
-          loginError(
-            "Domain website belum diizinkan di Firebase Authorized domains."
+          loadMusic(
+            index,
+            true
           );
 
-        } else {
+        };
 
-          loginError(
-            "Login gagal: " +
-            (
-              error.code ||
-              error.message
-            )
-          );
-
-        }
-
-
-      } finally {
-
-        $("loginButton").disabled =
-          false;
-
-
-        $("loginButton").textContent =
-          "Continue with Google";
-
-      }
+      list.appendChild(
+        item
+      );
 
     }
+  );
+
+}
 
 
-    $("loginButton").onclick =
-      loginGoogle;
+/* UPDATE ACTIVE */
 
+function updateMusicActive(){
 
-    /* =========================================
-       AUTH STATE
-    ========================================== */
+  document
+    .querySelectorAll(
+      ".music-item"
+    )
+    .forEach(
+      (item,index) => {
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+        const active =
+          index ===
+          musicPlayer.index;
 
-        try {
+        item.classList.toggle(
+          "active",
+          active
+        );
 
-          if (!user) {
-
-            showLogin();
-
-            if (window.RDK_finishStartup) {
-              window.RDK_finishStartup();
-            }
-
-            return;
-
-          }
-
-
-          $("loadingText").textContent =
-            "Memuat profil...";
-
-
-          await loadProfile(
-            user
+        const icon =
+          item.querySelector(
+            ".music-item-play"
           );
 
-          if (window.RDK_finishStartup) {
-            window.RDK_finishStartup();
-          }
+        if(icon){
 
-        } catch (error) {
-
-          console.error(
-            "Auth/profile error:",
-            error
-          );
-
-          showLogin();
-
-          loginError(
-            "Sesi gagal dimuat. Silakan login kembali."
-          );
-
-          if (window.RDK_finishStartup) {
-            window.RDK_finishStartup();
-          }
+          icon.textContent =
+            active
+              ? "●"
+              : "›";
 
         }
 
       }
     );
 
+}
 
-    /* =========================================
-       WAIT GOOGLE
-    ========================================== */
 
-    async function waitForGoogle(
-      timeout = 10000
-    ) {
+/* LOAD MUSIC */
 
-      const start =
-        Date.now();
+function loadMusic(
+  index,
+  autoplay=false
+){
 
+  if(
+    !musicPlayer.tracks.length
+  ){
 
-      while (
-        Date.now() - start <
-        timeout
-      ) {
+    return;
 
-        if (
-          googleState.gapiInited &&
-          googleState.gisInited &&
-          googleState.tokenClient
-        ) {
+  }
 
-          return true;
+  if(
+    index < 0 ||
+    index >= musicPlayer.tracks.length
+  ){
 
-        }
+    return;
 
+  }
 
-        await new Promise(
-          resolve =>
-            setTimeout(
-              resolve,
-              200
-            )
-        );
+  musicPlayer.index =
+    index;
 
-      }
+  const track =
+    musicPlayer.tracks[index];
 
+  musicAudio.pause();
 
-      return false;
+  musicAudio.src =
+    track.src;
 
-    }
+  musicAudio.load();
 
+  $("musicName").textContent =
+    track.title;
 
-    /* =========================================
-       CONNECT DRIVE
-    ========================================== */
+  $("musicSub").textContent =
+    "Track " +
+    (index + 1) +
+    " dari " +
+    musicPlayer.tracks.length;
 
-    async function connectDrive() {
+  musicStatus.textContent =
+    "Track " +
+    (index + 1) +
+    " / " +
+    musicPlayer.tracks.length;
 
-      const button =
-        $("connectDriveButton");
+  $("musicCurrent").textContent =
+    "0:00";
 
+  $("musicDuration").textContent =
+    "0:00";
 
-      button.disabled =
-        true;
+  $("musicSeek").value =
+    0;
 
+  updateMusicActive();
 
-      button.textContent =
-        "Loading...";
+  if(autoplay){
 
+    musicAudio
+      .play()
+      .catch(
+        () => {
 
-      setDriveStatus(
-        "Menghubungkan...",
-        "loading"
-      );
-
-
-      const ready =
-        await waitForGoogle();
-
-
-      if (!ready) {
-
-        button.disabled =
-          false;
-
-
-        button.textContent =
-          "Connect Drive";
-
-
-        setDriveStatus(
-          "Google belum siap",
-          "error"
-        );
-
-
-        setStatus(
-          "Google Drive gagal dimuat. Coba refresh halaman.",
-          "error"
-        );
-
-
-        return false;
-
-      }
-
-
-      return new Promise(
-        resolve => {
-
-          googleState.tokenClient.callback =
-            response => {
-
-              console.log(
-                "Drive OAuth:",
-                response
-              );
-
-
-              button.disabled =
-                false;
-
-
-              if (
-                response.error ||
-                !response.access_token
-              ) {
-
-                button.textContent =
-                  "Connect Drive";
-
-
-                button.classList.remove(
-                  "connected"
-                );
-
-
-                accessToken =
-                  null;
-
-
-                setDriveStatus(
-                  "Belum terhubung",
-                  "error"
-                );
-
-
-                setStatus(
-                  "Izin Google Drive tidak diberikan.",
-                  "error"
-                );
-
-
-                resolve(false);
-
-                return;
-
-              }
-
-
-              accessToken =
-                response.access_token;
-
-
-              window.gapi.client.setToken({
-
-                access_token:
-                  accessToken
-
-              });
-
-
-              button.textContent =
-                "Connected";
-
-
-              button.classList.add(
-                "connected"
-              );
-
-
-              setDriveStatus(
-                "Connected",
-                "connected"
-              );
-
-
-              setStatus(
-                "Google Drive berhasil terhubung.",
-                "success"
-              );
-
-
-              resolve(true);
-
-            };
-
-
-          try {
-
-            googleState.tokenClient.requestAccessToken({
-
-              prompt:
-                "consent"
-
-            });
-
-          } catch (error) {
-
-            console.error(
-              error
-            );
-
-
-            button.disabled =
-              false;
-
-
-            button.textContent =
-              "Connect Drive";
-
-
-            setDriveStatus(
-              "Belum terhubung",
-              "error"
-            );
-
-
-            setStatus(
-              "Gagal membuka Google Drive.",
-              "error"
-            );
-
-
-            resolve(false);
-
-          }
+          musicStatus.textContent =
+            "Tekan play untuk memutar";
 
         }
       );
 
-    }
+  }
 
+}
 
-    $("connectDriveButton").onclick =
-      async () => {
 
-        const connected =
-          await connectDrive();
+/* PLAY */
 
+function playMusic(){
 
-        if (connected) {
+  if(
+    !musicPlayer.tracks.length
+  ){
 
-          await loadRecentFiles();
+    musicStatus.textContent =
+      "Playlist kosong";
 
-        }
+    return;
 
-      };
+  }
 
+  if(
+    musicPlayer.index === -1
+  ){
 
-    /* =========================================
-       CREATE TXT
-    ========================================== */
+    loadMusic(
+      0,
+      true
+    );
 
-    async function createTXT() {
+    return;
 
-      let name =
-        $("fileName")
-          .value
-          .trim();
+  }
 
-
-      const content =
-        $("fileContent")
-          .value;
-
-
-      if (!name) {
-
-        setStatus(
-          "File name belum diisi.",
-          "error"
-        );
-
-        $("fileName").focus();
-
-        return;
-
-      }
-
-
-      if (!content.trim()) {
-
-        setStatus(
-          "Content belum diisi.",
-          "error"
-        );
-
-        $("fileContent").focus();
-
-        return;
-
-      }
-
-
-      if (!accessToken) {
-
-        const connected =
-          await connectDrive();
-
-
-        if (!connected) {
-
-          return;
-
-        }
-
-      }
-
-
-      if (
-        !name
-          .toLowerCase()
-          .endsWith(".txt")
-      ) {
-
-        name += ".txt";
-
-      }
-
-
-      const metadata = {
-
-        name:
-          name,
-
-        mimeType:
-          "text/plain"
-
-      };
-
-
-      const boundary =
-        "-------314159265358979323846";
-
-
-      const delimiter =
-        "\r\n--" +
-        boundary +
-        "\r\n";
-
-
-      const closeDelimiter =
-        "\r\n--" +
-        boundary +
-        "--";
-
-
-      const body =
-        delimiter +
-        "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
-        JSON.stringify(metadata) +
-        delimiter +
-        "Content-Type: text/plain\r\n\r\n" +
-        content +
-        closeDelimiter;
-
-
-      try {
-
-        $("createButton").disabled =
-          true;
-
-
-        setStatus(
-          "Menyimpan file..."
-        );
-
-
-        const response =
-          await fetch(
-
-            "https://www.googleapis.com/upload/drive/v3/files?uploadType=multipart&fields=id,name,mimeType,modifiedTime,webViewLink",
-
-            {
-
-              method:
-                "POST",
-
-              headers: {
-
-                Authorization:
-                  "Bearer " +
-                  accessToken,
-
-                "Content-Type":
-                  "multipart/related; boundary=" +
-                  boundary
-
-              },
-
-              body:
-                body
-
-            }
-
-          );
-
-
-        if (
-          response.status === 401
-        ) {
-
-          accessToken =
-            null;
-
-
-          window.gapi.client.setToken(
-            null
-          );
-
-
-          $("connectDriveButton")
-            .classList.remove(
-              "connected"
-            );
-
-
-          $("connectDriveButton").textContent =
-            "Connect Drive";
-
-
-          setDriveStatus(
-            "Belum terhubung",
-            "error"
-          );
-
-
-          setStatus(
-            "Sesi Google Drive habis. Hubungkan kembali.",
-            "error"
-          );
-
-
-          return;
-
-        }
-
-
-        if (!response.ok) {
-
-          const errorText =
-            await response.text();
-
-
-          console.error(
-            errorText
-          );
-
-
-          throw new Error(
-            "HTTP " +
-            response.status
-          );
-
-        }
-
-
-        await response.json();
-
-
-        setStatus(
-          "File berhasil dibuat dan disimpan ke Google Drive.",
-          "success"
-        );
-
-
-        $("fileName").value =
-          "";
-
-
-        $("fileContent").value =
-          "";
-
-
-        await loadRecentFiles();
-
-
-      } catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        setStatus(
-          "Gagal membuat file: " +
-          error.message,
-          "error"
-        );
-
-      } finally {
-
-        $("createButton").disabled =
-          false;
-
-      }
-
-    }
-
-
-    $("createButton").onclick =
-      createTXT;
-
-
-    /* =========================================
-       CLEAR
-    ========================================== */
-
-    $("clearButton").onclick =
+  musicAudio
+    .play()
+    .catch(
       () => {
 
-        $("fileName").value =
-          "";
-
-        $("fileContent").value =
-          "";
-
-        setStatus("");
-
-      };
-
-
-    /* =========================================
-       RECENT FILES
-    ========================================== */
-
-    async function loadRecentFiles() {
-
-      if (!accessToken) {
-
-        $("filesList").innerHTML =
-
-          `
-            <div class="empty">
-              Hubungkan Google Drive terlebih dahulu.
-            </div>
-          `;
-
-        return;
+        musicStatus.textContent =
+          "Tekan play untuk memutar";
 
       }
+    );
+
+}
 
 
-      try {
+/* NEXT */
 
-        $("filesList").innerHTML =
+function nextMusic(){
 
-          `
-            <div class="empty">
-              Memuat file...
-            </div>
-          `;
+  if(
+    !musicPlayer.tracks.length
+  ){
+
+    return;
+
+  }
+
+  if(
+    musicPlayer.tracks.length === 1
+  ){
+
+    if(
+      musicPlayer.loop
+    ){
+
+      loadMusic(
+        0,
+        true
+      );
+
+    }
+
+    return;
+
+  }
+
+  let next;
+
+  if(
+    musicPlayer.shuffle
+  ){
+
+    do{
+
+      next =
+        Math.floor(
+          Math.random() *
+          musicPlayer.tracks.length
+        );
+
+    }while(
+      next === musicPlayer.index
+    );
+
+  }else{
+
+    next =
+      (
+        musicPlayer.index + 1
+      ) %
+      musicPlayer.tracks.length;
+
+  }
+
+  loadMusic(
+    next,
+    true
+  );
+
+}
 
 
-        const response =
-          await window.gapi.client.drive.files.list({
+/* PREVIOUS */
 
-            pageSize:
-              10,
+function prevMusic(){
 
-            orderBy:
-              "modifiedTime desc",
+  if(
+    !musicPlayer.tracks.length
+  ){
 
-            fields:
-              "files(id,name,mimeType,modifiedTime,webViewLink)",
+    return;
 
-            q:
-              "trashed = false"
+  }
 
-          });
+  if(
+    musicAudio.currentTime > 3
+  ){
+
+    musicAudio.currentTime =
+      0;
+
+    return;
+
+  }
+
+  const previous =
+    (
+      musicPlayer.index -
+      1 +
+      musicPlayer.tracks.length
+    ) %
+    musicPlayer.tracks.length;
+
+  loadMusic(
+    previous,
+    true
+  );
+
+}
 
 
-        const files =
-          response.result.files ||
-          [];
+/* LOAD PLAYLIST */
 
+async function loadMusicPlaylist(){
 
-        if (!files.length) {
+  const refresh =
+    $("musicRefresh");
 
-          $("filesList").innerHTML =
+  refresh.disabled =
+    true;
 
-            `
-              <div class="empty">
-                Belum ada file.
-              </div>
-            `;
+  musicStatus.textContent =
+    "Memuat playlist...";
 
-          return;
+  try{
 
+    const response =
+      await fetch(
+        "./music/playlist.json?v=" +
+        Date.now(),
+        {
+          cache:"no-store"
         }
+      );
 
+    if(
+      !response.ok
+    ){
 
-        $("filesList").innerHTML =
-          files
-            .map(
-              file => {
+      throw new Error(
+        "playlist.json tidak ditemukan"
+      );
 
-                const date =
-                  file.modifiedTime
-                    ? new Date(
-                        file.modifiedTime
-                      ).toLocaleString(
-                        "id-ID"
-                      )
-                    : "-";
+    }
 
+    const data =
+      await response.json();
 
-                return `
+    musicPlayer.tracks =
+      Array.isArray(data)
 
-                  <div class="file-row">
+        ? data
 
-                    <div class="file-info">
-
-                      <div class="file-name">
-                        ${escapeHTML(file.name)}
-                      </div>
-
-                      <div class="file-date">
-                        Modified ${escapeHTML(date)}
-                      </div>
-
-                    </div>
-
-                    <button
-                      class="open-file"
-                      type="button"
-                      data-file-id="${escapeHTML(file.id)}"
-                    >
-                      Open
-                    </button>
-
-                  </div>
-
-                `;
-
-              }
-            )
-            .join("");
-
-
-        document
-          .querySelectorAll(
-            "[data-file-id]"
+          .filter(
+            track =>
+              track &&
+              typeof track.src ===
+              "string" &&
+              track.src.trim()
           )
-          .forEach(
-            button => {
 
-              button.onclick =
-                () => {
+          .map(
+            track => ({
 
-                  openFile(
-                    button.dataset.fileId
-                  );
+              title:
+                String(
+                  track.title ||
+                  track.src
+                    .split("/")
+                    .pop() ||
+                  "Untitled"
+                ),
 
-                };
+              src:
+                String(
+                  track.src
+                )
 
-            }
-          );
+            })
+          )
 
+        : [];
 
-      } catch (error) {
+    musicPlayer.index =
+      -1;
 
-        console.error(
-          error
-        );
+    musicAudio.pause();
 
+    musicAudio.removeAttribute(
+      "src"
+    );
 
-        $("filesList").innerHTML =
+    musicAudio.load();
 
-          `
-            <div class="empty">
-              Gagal memuat file.
-            </div>
-          `;
+    $("musicPlay").textContent =
+      "▶";
 
-      }
+    $("musicIcon").textContent =
+      "♪";
 
-    }
+    $("musicIcon")
+      .classList.remove(
+        "playing"
+      );
 
+    musicSection
+      .classList.remove(
+        "playing"
+      );
 
-    /* =========================================
-       REFRESH
-    ========================================== */
+    renderMusic();
 
-    $("refreshFilesButton").onclick =
-      async () => {
+    if(
+      musicPlayer.tracks.length
+    ){
 
-        await loadRecentFiles();
+      $("musicName").textContent =
+        "Pilih lagu";
 
-      };
-
-
-    /* =========================================
-       OPEN FILE
-    ========================================== */
-
-    async function openFile(
-      fileId
-    ) {
-
-      try {
-
-        const response =
-          await window.gapi.client.drive.files.get({
-
-            fileId:
-              fileId,
-
-            fields:
-              "id,name,mimeType,webViewLink"
-
-          });
-
-
-        const file =
-          response.result;
-
-
-        window.open(
-
-          file.webViewLink ||
-          (
-            "https://drive.google.com/file/d/" +
-            fileId +
-            "/view"
-          ),
-
-          "_blank"
-
-        );
-
-
-      } catch (error) {
-
-        console.error(
-          error
-        );
-
-
-        alert(
-          "Gagal membuka file."
-        );
-
-      }
-
-    }
-
-
-    /* =========================================
-       OPEN GOOGLE DRIVE
-    ========================================== */
-
-    $("openDriveButton").onclick =
-      async () => {
-
-        if (!accessToken) {
-
-          const connected =
-            await connectDrive();
-
-
-          if (!connected) {
-
-            return;
-
-          }
-
-        }
-
-
-        window.open(
-          "https://drive.google.com/drive/my-drive",
-          "_blank"
-        );
-
-      };
-
-
-    /* =========================================
-       PROFILE MODAL
-    ========================================== */
-
-    function openProfile() {
-
-      $("profileModal")
-        .classList.add(
-          "open"
-        );
-
-    }
-
-
-    function closeProfile() {
-
-      $("profileModal")
-        .classList.remove(
-          "open"
-        );
-
-      $("profileStatus").textContent =
-        "";
-
-    }
-
-
-    $("profileButton").onclick =
-      openProfile;
-
-
-    $("closeProfile").onclick =
-      closeProfile;
-
-
-    $("closeProfile2").onclick =
-      closeProfile;
-
-
-    /* =========================================
-       SAVE PROFILE
-    ========================================== */
-
-    $("saveProfile").onclick =
-      async () => {
-
-        if (!currentUser) {
-
-          return;
-
-        }
-
-
-        const name =
-          $("profileName")
-            .value
-            .trim();
-
-
-        if (!name) {
-
-          $("profileStatus").textContent =
-            "Nama tidak boleh kosong.";
-
-          $("profileStatus").className =
-            "status error";
-
-          return;
-
-        }
-
-
-        try {
-
-          $("saveProfile").disabled =
-            true;
-
-
-          $("saveProfile").textContent =
-            "Saving...";
-
-
-          await updateDoc(
-
-            doc(
-              db,
-              "users",
-              currentUser.uid
-            ),
-
-            {
-
-              name:
-                name,
-
-              updatedAt:
-                serverTimestamp()
-
-            }
-
-          );
-
-
-          $("profileUserName").textContent =
-            name;
-
-
-          $("profileStatus").textContent =
-            "Profil berhasil disimpan.";
-
-          $("profileStatus").className =
-            "status success";
-
-
-        } catch (error) {
-
-          console.error(
-            error
-          );
-
-
-          $("profileStatus").textContent =
-            "Gagal menyimpan profil.";
-
-          $("profileStatus").className =
-            "status error";
-
-
-        } finally {
-
-          $("saveProfile").disabled =
-            false;
-
-
-          $("saveProfile").textContent =
-            "Save Changes";
-
-        }
-
-      };
-
-
-    /* =========================================
-       ADMIN
-    ========================================== */
-
-    $("adminButton").onclick =
-      () => {
-
-        window.location.href =
-          "./admin.html";
-
-      };
-
-
-    /* =========================================
-       LOGOUT
-    ========================================== */
-
-    $("logoutButton").onclick =
-      async () => {
-
-        try {
-
-          if (
-            accessToken &&
-            window.google &&
-            window.google.accounts &&
-            window.google.accounts.oauth2
-          ) {
-
-            try {
-
-              window.google.accounts.oauth2.revoke(
-                accessToken,
-                () => {}
-              );
-
-            } catch (error) {
-
-              console.error(
-                error
-              );
-
-            }
-
-          }
-
-
-          accessToken =
-            null;
-
-
-          if (
-            window.gapi &&
-            window.gapi.client
-          ) {
-
-            window.gapi.client.setToken(
-              null
-            );
-
-          }
-
-
-          $("connectDriveButton")
-            .classList.remove(
-              "connected"
-            );
-
-
-          $("connectDriveButton").textContent =
-            "Connect Drive";
-
-
-          setDriveStatus(
-            "Belum terhubung"
-          );
-
-
-          await signOut(
-            auth
-          );
-
-
-        } catch (error) {
-
-          console.error(
-            error
-          );
-
-        }
-
-      };
-
-
-
-    const musicSection = $("musicSection");
-    const musicCollapse = $("musicCollapse");
-    const musicIcon = $("musicIcon");
-    const musicStatus = $("musicStatus");
-
-    function toggleMusicCompact() {
-      musicSection.classList.toggle("collapsed");
-    }
-
-    musicCollapse.onclick = toggleMusicCompact;
-    musicIcon.onclick = () => {
-      if (musicSection.classList.contains("collapsed")) {
-        musicSection.classList.remove("collapsed");
-      } else {
-        playMusic();
-      }
-    };
-
-    /* =========================================
-       LOCAL MUSIC PLAYER
-    ========================================== */
-
-    const musicAudio = $("musicAudio");
-
-    const musicPlayer = {
-      tracks: [],
-      index: -1,
-      shuffle: false,
-      loop: false
-    };
-
-    function musicEscape(value) {
-      return String(value)
-        .replace(/&/g, "&amp;")
-        .replace(/</g, "&lt;")
-        .replace(/>/g, "&gt;")
-        .replace(/"/g, "&quot;")
-        .replace(/'/g, "&#039;");
-    }
-
-    function musicTime(seconds) {
-      if (!Number.isFinite(seconds)) return "0:00";
-      const m = Math.floor(seconds / 60);
-      const s = Math.floor(seconds % 60).toString().padStart(2, "0");
-      return m + ":" + s;
-    }
-
-    function renderMusic() {
-      const list = $("musicList");
-      list.innerHTML = "";
-
-      if (!musicPlayer.tracks.length) {
-        list.innerHTML =
-          '<div class="music-empty">' +
-          'Belum ada lagu. Upload file ke folder <b>music</b> lalu isi <b>playlist.json</b>.' +
-          '</div>';
-        return;
-      }
-
-      musicPlayer.tracks.forEach((track, i) => {
-        const item = document.createElement("div");
-        item.className = "music-item" + (i === musicPlayer.index ? " active" : "");
-        item.innerHTML =
-          '<div class="music-item-num">' + (i + 1) + '</div>' +
-          '<div class="music-item-name">' + musicEscape(track.title) + '</div>' +
-          '<div class="music-item-play">' + (i === musicPlayer.index ? '●' : '›') + '</div>';
-        item.onclick = () => loadMusic(i, true);
-        list.appendChild(item);
-      });
-    }
-
-    function updateMusicActive() {
-      document.querySelectorAll(".music-item").forEach((item, i) => {
-        item.classList.toggle("active", i === musicPlayer.index);
-      });
-    }
-
-    function loadMusic(index, autoplay = false) {
-      if (!musicPlayer.tracks.length) return;
-      if (index < 0 || index >= musicPlayer.tracks.length) return;
-
-      musicPlayer.index = index;
-      const track = musicPlayer.tracks[index];
-
-      musicAudio.src = track.src;
-      musicAudio.load();
-
-      $("musicName").textContent = track.title;
       $("musicSub").textContent =
-        "Track " + (index + 1) + " dari " + musicPlayer.tracks.length;
-      if (musicStatus) musicStatus.textContent = "Track " + (index + 1) + " / " + musicPlayer.tracks.length;
+        musicPlayer.tracks.length +
+        " lagu tersedia";
 
-      $("musicCurrent").textContent = "0:00";
-      $("musicDuration").textContent = "0:00";
-      $("musicSeek").value = 0;
+      musicStatus.textContent =
+        musicPlayer.tracks.length +
+        " lagu";
 
-      updateMusicActive();
+    }else{
 
-      if (autoplay) {
-        musicAudio.play().catch(() => {});
-      }
+      $("musicName").textContent =
+        "Playlist kosong";
+
+      $("musicSub").textContent =
+        "Tambahkan lagu ke folder music";
+
+      musicStatus.textContent =
+        "Playlist kosong";
+
     }
 
-    function playMusic() {
-      if (!musicPlayer.tracks.length) return;
+  }catch(error){
 
-      if (musicPlayer.index === -1) {
-        loadMusic(0, true);
-        return;
-      }
+    console.warn(
+      "Music playlist:",
+      error
+    );
 
-      musicAudio.play().catch(() => {});
+    musicPlayer.tracks =
+      [];
+
+    musicPlayer.index =
+      -1;
+
+    renderMusic();
+
+    $("musicName").textContent =
+      "Playlist belum dibuat";
+
+    $("musicSub").textContent =
+      "Buat file music/playlist.json";
+
+    musicStatus.textContent =
+      "Playlist belum dibuat";
+
+  }finally{
+
+    refresh.disabled =
+      false;
+
+  }
+
+}
+
+
+/* MUSIC PLAY BUTTON */
+
+$("musicPlay").onclick =
+  () => {
+
+    if(
+      musicAudio.paused
+    ){
+
+      playMusic();
+
+    }else{
+
+      musicAudio.pause();
+
     }
 
-    function nextMusic() {
-      if (!musicPlayer.tracks.length) return;
+  };
 
-      let next;
-      if (musicPlayer.shuffle && musicPlayer.tracks.length > 1) {
-        do {
-          next = Math.floor(Math.random() * musicPlayer.tracks.length);
-        } while (next === musicPlayer.index);
-      } else {
-        next = (musicPlayer.index + 1) % musicPlayer.tracks.length;
-      }
 
-      loadMusic(next, true);
+/* PREVIOUS */
+
+$("musicPrev").onclick =
+  prevMusic;
+
+
+/* NEXT */
+
+$("musicNext").onclick =
+  nextMusic;
+
+
+/* REFRESH */
+
+$("musicRefresh").onclick =
+  loadMusicPlaylist;
+
+
+/* VOLUME */
+
+$("musicVolume").oninput =
+  event => {
+
+    const volume =
+      Number(
+        event.target.value
+      );
+
+    musicAudio.volume =
+      volume;
+
+    localStorage.setItem(
+      "rojakMusicVolume",
+      String(volume)
+    );
+
+  };
+
+
+/* SHUFFLE */
+
+$("musicShuffle").onclick =
+  () => {
+
+    musicPlayer.shuffle =
+      !musicPlayer.shuffle;
+
+    $("musicShuffle")
+      .classList.toggle(
+        "active",
+        musicPlayer.shuffle
+      );
+
+  };
+
+
+/* LOOP */
+
+$("musicLoop").onclick =
+  () => {
+
+    musicPlayer.loop =
+      !musicPlayer.loop;
+
+    $("musicLoop")
+      .classList.toggle(
+        "active",
+        musicPlayer.loop
+      );
+
+  };
+
+
+/* SEEK */
+
+$("musicSeek").oninput =
+  event => {
+
+    if(
+      Number.isFinite(
+        musicAudio.duration
+      ) &&
+      musicAudio.duration > 0
+    ){
+
+      musicAudio.currentTime =
+        (
+          Number(
+            event.target.value
+          ) / 100
+        ) *
+        musicAudio.duration;
+
     }
 
-    function prevMusic() {
-      if (!musicPlayer.tracks.length) return;
+  };
 
-      if (musicAudio.currentTime > 3) {
-        musicAudio.currentTime = 0;
-        return;
-      }
 
-      const prev =
-        (musicPlayer.index - 1 + musicPlayer.tracks.length) %
-        musicPlayer.tracks.length;
+/* LOADED METADATA */
 
-      loadMusic(prev, true);
+musicAudio.addEventListener(
+  "loadedmetadata",
+  () => {
+
+    $("musicDuration").textContent =
+      musicTime(
+        musicAudio.duration
+      );
+
+  }
+);
+
+
+/* TIME UPDATE */
+
+musicAudio.addEventListener(
+  "timeupdate",
+  () => {
+
+    $("musicCurrent").textContent =
+      musicTime(
+        musicAudio.currentTime
+      );
+
+    if(
+      Number.isFinite(
+        musicAudio.duration
+      ) &&
+      musicAudio.duration > 0
+    ){
+
+      $("musicSeek").value =
+        (
+          musicAudio.currentTime /
+          musicAudio.duration
+        ) *
+        100;
+
     }
 
-    async function loadMusicPlaylist() {
-      try {
-        const response = await fetch("./music/playlist.json?v=" + Date.now(), {
-          cache: "no-store"
-        });
+  }
+);
 
-        if (!response.ok) throw new Error("playlist.json tidak ditemukan");
 
-        const data = await response.json();
+/* PLAY */
 
-        musicPlayer.tracks = Array.isArray(data)
-          ? data
-              .filter(t => t && typeof t.src === "string")
-              .map(t => ({
-                title: String(t.title || t.src.split("/").pop()),
-                src: String(t.src)
-              }))
-          : [];
+musicAudio.addEventListener(
+  "play",
+  () => {
 
-        musicPlayer.index = -1;
-        if (musicStatus) musicStatus.textContent = musicPlayer.tracks.length ? (musicPlayer.tracks.length + " lagu") : "Playlist kosong";
-        musicAudio.pause();
-        musicAudio.removeAttribute("src");
-        musicAudio.load();
+    $("musicPlay").textContent =
+      "Ⅱ";
 
-        renderMusic();
+    $("musicPlay").title =
+      "Jeda";
 
-        if (musicPlayer.tracks.length) {
-          $("musicName").textContent = "Pilih lagu";
-          $("musicSub").textContent =
-            musicPlayer.tracks.length + " lagu tersedia";
-        } else {
-          $("musicName").textContent = "Playlist kosong";
-          $("musicSub").textContent = "Tambahkan lagu ke folder music";
-        }
-      } catch (error) {
-        console.warn("Music playlist:", error);
-        musicPlayer.tracks = [];
-        musicPlayer.index = -1;
-        if (musicStatus) musicStatus.textContent = "Playlist belum dibuat";
-        renderMusic();
-        $("musicName").textContent = "Playlist belum dibuat";
-        $("musicSub").textContent = "Buat file music/playlist.json";
-      }
+    $("musicIcon").textContent =
+      "♫";
+
+    $("musicIcon")
+      .classList.add(
+        "playing"
+      );
+
+    musicSection
+      .classList.add(
+        "playing"
+      );
+
+    musicStatus.textContent =
+      "Sedang diputar";
+
+    updateMusicActive();
+
+  }
+);
+
+
+/* PAUSE */
+
+musicAudio.addEventListener(
+  "pause",
+  () => {
+
+    $("musicPlay").textContent =
+      "▶";
+
+    $("musicPlay").title =
+      "Putar";
+
+    $("musicIcon").textContent =
+      "♪";
+
+    $("musicIcon")
+      .classList.remove(
+        "playing"
+      );
+
+    musicSection
+      .classList.remove(
+        "playing"
+      );
+
+    if(
+      musicPlayer.index >= 0
+    ){
+
+      musicStatus.textContent =
+        "Dijeda";
+
     }
 
-    $("musicPlay").onclick = () => {
-      if (musicAudio.paused) playMusic();
-      else musicAudio.pause();
-    };
-
-    $("musicPrev").onclick = prevMusic;
-    $("musicNext").onclick = nextMusic;
-    $("musicRefresh").onclick = loadMusicPlaylist;
-
-    $("musicVolume").oninput = event => {
-      musicAudio.volume = Number(event.target.value);
-    };
-
-    $("musicShuffle").onclick = () => {
-      musicPlayer.shuffle = !musicPlayer.shuffle;
-      $("musicShuffle").textContent =
-        "Shuffle: " + (musicPlayer.shuffle ? "On" : "Off");
-      $("musicShuffle").classList.toggle("active", musicPlayer.shuffle);
-    };
-
-    $("musicLoop").onclick = () => {
-      musicPlayer.loop = !musicPlayer.loop;
-      $("musicLoop").textContent =
-        "Loop: " + (musicPlayer.loop ? "On" : "Off");
-      $("musicLoop").classList.toggle("active", musicPlayer.loop);
-    };
-
-    $("musicSeek").oninput = event => {
-      if (musicAudio.duration) {
-        musicAudio.currentTime =
-          (Number(event.target.value) / 100) * musicAudio.duration;
-      }
-    };
-
-    musicAudio.addEventListener("loadedmetadata", () => {
-      $("musicDuration").textContent = musicTime(musicAudio.duration);
-    });
-
-    musicAudio.addEventListener("timeupdate", () => {
-      $("musicCurrent").textContent = musicTime(musicAudio.currentTime);
-      if (musicAudio.duration) {
-        $("musicSeek").value =
-          (musicAudio.currentTime / musicAudio.duration) * 100;
-      }
-    });
-
-    musicAudio.addEventListener("play", () => {
-      $("musicPlay").textContent = "Ⅱ";
-      $("musicIcon").textContent = "♫";
-      if (musicStatus) musicStatus.textContent = "Sedang diputar";
-    });
-
-    musicAudio.addEventListener("pause", () => {
-      $("musicPlay").textContent = "▶";
-      $("musicIcon").textContent = "♪";
-      if (musicStatus && musicPlayer.index >= 0) musicStatus.textContent = "Dijeda";
-    });
-
-    musicAudio.addEventListener("ended", () => {
-      if (musicPlayer.loop) {
-        musicAudio.currentTime = 0;
-        musicAudio.play().catch(() => {});
-      } else {
-        nextMusic();
-      }
-    });
-
-    musicAudio.volume = 0.8;
-    loadMusicPlaylist();
+  }
+);
 
 
-    /* =========================================
-       TABS
-    ========================================== */
+/* AUDIO ERROR */
 
-    document
-      .querySelectorAll(".tab")
-      .forEach(
-        tab => {
+musicAudio.addEventListener(
+  "error",
+  () => {
 
-          tab.addEventListener(
-            "click",
-            async () => {
+    musicStatus.textContent =
+      "Gagal memutar lagu";
 
-              document
-                .querySelectorAll(".tab")
-                .forEach(
-                  item => {
-
-                    item.classList.remove(
-                      "active"
-                    );
-
-                  }
-                );
+  }
+);
 
 
-              document
-                .querySelectorAll(".panel")
-                .forEach(
-                  panel => {
+/* END */
 
-                    panel.classList.remove(
-                      "active"
-                    );
+musicAudio.addEventListener(
+  "ended",
+  () => {
 
-                  }
-                );
+    if(
+      musicPlayer.loop
+    ){
+
+      musicAudio.currentTime =
+        0;
+
+      musicAudio
+        .play()
+        .catch(
+          () => {}
+        );
+
+      return;
+
+    }
+
+    if(
+      musicPlayer.tracks.length > 1
+    ){
+
+      nextMusic();
+
+    }else{
+
+      $("musicPlay").textContent =
+        "▶";
+
+      $("musicIcon").textContent =
+        "♪";
+
+      musicSection
+        .classList.remove(
+          "playing"
+        );
+
+      musicStatus.textContent =
+        "Selesai";
+
+    }
+
+  }
+);
 
 
-              tab.classList.add(
-                "active"
-              );
+/* MUSIC ICON */
+
+musicIcon.onclick =
+  () => {
+
+    if(
+      musicSection.classList.contains(
+        "collapsed"
+      )
+    ){
+
+      musicSection.classList.remove(
+        "collapsed"
+      );
+
+      return;
+
+    }
+
+    if(
+      musicAudio.paused
+    ){
+
+      playMusic();
+
+    }else{
+
+      musicAudio.pause();
+
+    }
+
+  };
 
 
-              const name =
-                tab.dataset.tab;
+/* COLLAPSE */
+
+musicCollapse.onclick =
+  () => {
+
+    musicSection.classList.toggle(
+      "collapsed"
+    );
+
+  };
 
 
-              $(
-                name +
-                "Panel"
-              )
-                .classList.add(
+/* SAVED VOLUME */
+
+const savedMusicVolume =
+  Number(
+    localStorage.getItem(
+      "rojakMusicVolume"
+    )
+  );
+
+const initialVolume =
+  Number.isFinite(
+    savedMusicVolume
+  ) &&
+  savedMusicVolume >= 0 &&
+  savedMusicVolume <= 1
+
+    ? savedMusicVolume
+    : .8;
+
+musicAudio.volume =
+  initialVolume;
+
+$("musicVolume").value =
+  initialVolume;
+
+
+/* LOAD MUSIC */
+
+loadMusicPlaylist();
+
+
+/* =========================================
+   TABS
+========================================= */
+
+document
+  .querySelectorAll(
+    ".tab"
+  )
+  .forEach(
+    tab => {
+
+      tab.addEventListener(
+        "click",
+        async () => {
+
+          document
+            .querySelectorAll(
+              ".tab"
+            )
+            .forEach(
+              item => {
+
+                item.classList.remove(
                   "active"
                 );
 
+              }
+            );
 
-              if (
-                name ===
-                "recent"
-              ) {
+          document
+            .querySelectorAll(
+              ".panel"
+            )
+            .forEach(
+              panel => {
 
-                await loadRecentFiles();
+                panel.classList.remove(
+                  "active"
+                );
 
               }
+            );
 
-            }
+          tab.classList.add(
+            "active"
           );
 
-        }
-      );
+          const name =
+            tab.dataset.tab;
 
+          $(
+            name +
+            "Panel"
+          )
+            .classList.add(
+              "active"
+            );
 
-    /* =========================================
-       MODAL CLICK OUTSIDE
-    ========================================== */
+          if(
+            name ===
+            "recent"
+          ){
 
-    $("profileModal").addEventListener(
-      "click",
-      event => {
-
-        if (
-          event.target ===
-          $("profileModal")
-        ) {
-
-          closeProfile();
-
-        }
-
-      }
-    );
-
-
-    /* =========================================
-       ESCAPE
-    ========================================== */
-
-    document.addEventListener(
-      "keydown",
-      event => {
-
-        if (
-          event.key ===
-          "Escape"
-        ) {
-
-          closeProfile();
-
-        }
-
-      }
-    );
-
-
-    /* =========================================
-       CTRL + ENTER
-    ========================================== */
-
-    $("fileContent")
-      .addEventListener(
-        "keydown",
-        event => {
-
-          if (
-            event.ctrlKey &&
-            event.key ===
-            "Enter"
-          ) {
-
-            event.preventDefault();
-
-            createTXT();
+            await loadRecentFiles();
 
           }
 
         }
       );
 
+    }
+  );
 
-    /* =========================================
-       ESCAPE HTML
-    ========================================== */
 
-    function escapeHTML(
-      value
-    ) {
+/* =========================================
+   ESCAPE
+========================================= */
 
-      return String(value)
+document.addEventListener(
+  "keydown",
+  event => {
 
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
+    if(
+      event.key ===
+      "Escape"
+    ){
 
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
+      closeProfile();
 
     }
 
-  </script>
+  }
+);
+
+
+/* =========================================
+   CTRL + ENTER
+========================================= */
+
+$("fileContent")
+  .addEventListener(
+    "keydown",
+    event => {
+
+      if(
+        event.ctrlKey &&
+        event.key ===
+        "Enter"
+      ){
+
+        event.preventDefault();
+
+        createTXT();
+
+      }
+
+    }
+  );
+
+
+/* =========================================
+   ESCAPE HTML
+========================================= */
+
+function escapeHTML(
+  value
+){
+
+  return String(value)
+
+    .replaceAll(
+      "&",
+      "&amp;"
+    )
+
+    .replaceAll(
+      "<",
+      "&lt;"
+    )
+
+    .replaceAll(
+      ">",
+      "&gt;"
+    )
+
+    .replaceAll(
+      '"',
+      "&quot;"
+    )
+
+    .replaceAll(
+      "'",
+      "&#039;"
+    );
+
+}
+
+</script>
 
 </body>
 </html>
