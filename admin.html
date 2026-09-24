@@ -12,6 +12,12 @@
   <title>Rojak DriveKit - Admin</title>
 
   <link
+    rel="icon"
+    type="image/png"
+    href="https://files.catbox.moe/brdrmx.png"
+  >
+
+  <link
     href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
     rel="stylesheet"
   >
@@ -79,7 +85,7 @@
 
     /* =========================
        TOPBAR
-    ========================= */
+    ========================== */
 
     .topbar {
       height:56px;
@@ -108,22 +114,29 @@
 
 
     .brand-mark {
-      width:26px;
-      height:26px;
+      width:30px;
+      height:30px;
 
       display:grid;
       place-items:center;
 
-      border:1px solid var(--line2);
+      overflow:hidden;
 
-      border-radius:6px;
+      border:1px solid var(--line);
+
+      border-radius:7px;
 
       background:var(--surface2);
+    }
 
-      color:var(--accent-hover);
 
-      font-size:11px;
-      font-weight:800;
+    .brand-mark img {
+      width:100%;
+      height:100%;
+
+      display:block;
+
+      object-fit:cover;
     }
 
 
@@ -156,7 +169,7 @@
 
     /* =========================
        MAIN
-    ========================= */
+    ========================== */
 
     .container {
       width:min(
@@ -197,7 +210,7 @@
 
     /* =========================
        SUMMARY
-    ========================= */
+    ========================== */
 
     .summary {
       display:flex;
@@ -241,8 +254,8 @@
 
 
     /* =========================
-       USERS HEADER
-    ========================= */
+       USERS
+    ========================== */
 
     .users-section {
       margin-top:27px;
@@ -275,7 +288,7 @@
 
     /* =========================
        TABLE
-    ========================= */
+    ========================== */
 
     .user-table {
       overflow:hidden;
@@ -343,7 +356,7 @@
 
     /* =========================
        USER
-    ========================= */
+    ========================== */
 
     .user-main {
       display:flex;
@@ -403,28 +416,7 @@
 
     /* =========================
        ROLE
-    ========================= */
-
-    .role-text {
-      font-size:9px;
-      font-weight:700;
-
-      color:var(--muted);
-    }
-
-
-    .role-text.admin {
-      color:var(--accent-hover);
-    }
-
-
-    .role-action {
-      display:flex;
-      align-items:center;
-
-      gap:5px;
-    }
-
+    ========================== */
 
     .role-select {
       width:96px;
@@ -456,41 +448,17 @@
     }
 
 
-    .save-role {
-      height:30px;
-
-      padding:0 9px;
-
-      border:1px solid var(--line);
-
-      border-radius:6px;
-
-      background:var(--surface2);
-
-      color:var(--text);
+    .self-role {
+      color:var(--accent-hover);
 
       font-size:8px;
       font-weight:700;
     }
 
 
-    .save-role:hover {
-      border-color:var(--accent);
-
-      color:var(--accent-hover);
-    }
-
-
-    .save-role:disabled {
-      opacity:.4;
-
-      cursor:default;
-    }
-
-
     /* =========================
        UID
-    ========================= */
+    ========================== */
 
     .uid {
       overflow:hidden;
@@ -513,20 +481,8 @@
 
 
     /* =========================
-       SELF
-    ========================= */
-
-    .self-role {
-      color:var(--accent-hover);
-
-      font-size:8px;
-      font-weight:700;
-    }
-
-
-    /* =========================
        MESSAGE
-    ========================= */
+    ========================== */
 
     .message {
       padding:40px 15px;
@@ -546,7 +502,7 @@
 
     /* =========================
        MOBILE
-    ========================= */
+    ========================== */
 
     @media(max-width:700px) {
 
@@ -563,8 +519,8 @@
 
 
       .brand-mark {
-        width:24px;
-        height:24px;
+        width:27px;
+        height:27px;
       }
 
 
@@ -611,15 +567,8 @@
       }
 
 
-      .role-action {
-        padding-left:44px;
-      }
-
-
       .role-select {
-        flex:1;
-
-        width:auto;
+        width:100%;
       }
 
 
@@ -639,23 +588,29 @@
 <body>
 
 
-  <!-- =========================
-       TOPBAR
-  ========================== -->
+  <!-- TOPBAR -->
 
   <header class="topbar">
+
 
     <div class="brand">
 
       <div class="brand-mark">
-        R
+
+        <img
+          src="https://files.catbox.moe/brdrmx.png"
+          alt="Rojak DriveKit"
+        >
+
       </div>
+
 
       <span>
         Rojak DriveKit · Admin
       </span>
 
     </div>
+
 
 
     <button
@@ -665,13 +620,12 @@
       ← Kembali
     </button>
 
+
   </header>
 
 
 
-  <!-- =========================
-       MAIN
-  ========================== -->
+  <!-- MAIN -->
 
   <main class="container">
 
@@ -693,6 +647,7 @@
     <!-- SUMMARY -->
 
     <div class="summary">
+
 
       <div class="summary-item">
 
@@ -747,6 +702,7 @@
 
       </div>
 
+
     </div>
 
 
@@ -754,6 +710,7 @@
     <!-- USERS -->
 
     <section class="users-section">
+
 
       <div class="section-head">
 
@@ -768,10 +725,9 @@
       </div>
 
 
+
       <div class="user-table">
 
-
-        <!-- TABLE HEADER -->
 
         <div class="user-table-head">
 
@@ -790,7 +746,6 @@
         </div>
 
 
-        <!-- LOADING -->
 
         <div
           id="message"
@@ -800,7 +755,6 @@
         </div>
 
 
-        <!-- USERS -->
 
         <div
           id="usersTable"
@@ -810,6 +764,7 @@
 
       </div>
 
+
     </section>
 
 
@@ -817,9 +772,7 @@
 
 
 
-  <!-- =========================
-       JAVASCRIPT
-  ========================== -->
+  <!-- FIREBASE -->
 
   <script type="module">
 
@@ -845,6 +798,7 @@
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
+
     const $ =
       id => document.getElementById(id);
 
@@ -854,7 +808,9 @@
        ESCAPE HTML
     ========================== */
 
-    function escapeHTML(value) {
+    function escapeHTML(
+      value
+    ) {
 
       return String(value)
 
@@ -893,7 +849,9 @@
 
     async function loadAdmin() {
 
+
       onAuthStateChanged(
+
         auth,
 
         async user => {
@@ -930,14 +888,18 @@
 
             if (
               !currentSnap.exists() ||
-              currentSnap.data().role !== "admin"
+
+              currentSnap.data().role !==
+              "admin"
             ) {
+
 
               $("message").innerHTML =
 
                 `<span class="error">
                   Kamu tidak memiliki akses Admin.
                 </span>`;
+
 
               return;
 
@@ -950,10 +912,12 @@
             );
 
 
-          } catch (error) {
+          } catch(error) {
 
 
-            console.error(error);
+            console.error(
+              error
+            );
 
 
             $("message").innerHTML =
@@ -965,6 +929,7 @@
           }
 
         }
+
       );
 
     }
@@ -982,16 +947,19 @@
 
       const snapshot =
         await getDocs(
+
           collection(
             db,
             "users"
           )
+
         );
 
 
 
       const users =
         snapshot.docs.map(
+
           item => ({
 
             id:item.id,
@@ -999,6 +967,7 @@
             ...item.data()
 
           })
+
         );
 
 
@@ -1092,19 +1061,13 @@
               <div class="user-row">
 
 
-                <!-- USER -->
-
                 <div class="user-main">
 
 
                   <img
-
                     class="avatar"
-
                     src="${escapeHTML(photo)}"
-
                     alt=""
-
                   >
 
 
@@ -1138,8 +1101,6 @@
 
 
 
-                <!-- ROLE -->
-
                 <div>
 
 
@@ -1163,8 +1124,8 @@
                         value="member"
                         ${
                           user.role === "member"
-                          ? "selected"
-                          : ""
+                            ? "selected"
+                            : ""
                         }
                       >
                         Member
@@ -1175,8 +1136,8 @@
                         value="admin"
                         ${
                           user.role === "admin"
-                          ? "selected"
-                          : ""
+                            ? "selected"
+                            : ""
                         }
                       >
                         Admin
@@ -1190,8 +1151,6 @@
                 </div>
 
 
-
-                <!-- UID -->
 
                 <div class="uid">
 
@@ -1217,12 +1176,16 @@
       ========================== */
 
       document
-        .querySelectorAll(".roleSelect")
+        .querySelectorAll(
+          ".roleSelect"
+        )
         .forEach(
+
           select => {
 
 
             select.addEventListener(
+
               "change",
 
               async event => {
@@ -1271,7 +1234,7 @@
                   );
 
 
-                } catch (error) {
+                } catch(error) {
 
 
                   console.error(
@@ -1299,6 +1262,7 @@
             );
 
           }
+
         );
 
     }
