@@ -1,13 +1,16 @@
 rules_version = '2';
 
 service cloud.firestore {
+
   match /databases/{database}/documents {
 
     function signedIn() {
       return request.auth != null;
     }
 
+
     function isAdmin() {
+
       return signedIn()
         && exists(
           /databases/$(database)/documents/users/$(request.auth.uid)
@@ -17,27 +20,32 @@ service cloud.firestore {
         ).data.role == "admin";
     }
 
+
     match /users/{userId} {
 
-      // User baru hanya boleh membuat profil dirinya sendiri
-      // dengan role member.
+      // User baru boleh membuat profilnya sendiri
+      // dan role awal wajib member.
       allow create: if signedIn()
         && request.auth.uid == userId
-        && request.resource.data.role == "member"
-        && request.resource.data.email == request.auth.token.email;
+        && request.resource.data.uid == request.auth.uid
+        && request.resource.data.email == request.auth.token.email
+        && request.resource.data.role == "member";
 
-      // User bisa membaca profil sendiri.
-      // Admin bisa membaca semua user.
+
+      // User boleh membaca profil sendiri.
+      // Admin boleh membaca semua user.
       allow read: if signedIn()
         && (
           request.auth.uid == userId
           || isAdmin()
         );
 
-      // Member hanya boleh mengubah data profil.
+
+      // Member hanya boleh mengubah data profil sendiri.
       // Tidak boleh mengubah role.
       allow update: if signedIn()
         && request.auth.uid == userId
+        && request.resource.data.role == resource.data.role
         && request.resource.data.diff(resource.data)
           .affectedKeys()
           .hasOnly([
@@ -45,14 +53,14 @@ service cloud.firestore {
             "email",
             "photoURL",
             "updatedAt"
-          ])
-        && request.resource.data.role == resource.data.role;
+          ]);
 
-      // Admin dapat mengubah data user,
-      // termasuk role.
+
+      // Admin boleh mengubah role/data user.
       allow update: if isAdmin();
 
-      // Hanya Admin yang dapat menghapus user.
+
+      // Hanya admin yang boleh menghapus user.
       allow delete: if isAdmin();
     }
   }
