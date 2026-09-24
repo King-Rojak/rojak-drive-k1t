@@ -1,18 +1,10 @@
 <!DOCTYPE html>
 <html lang="id">
 <head>
-  <meta charset="UTF-8" />
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
   <title>Rojak DriveKit</title>
-
-  <meta
-    name="description"
-    content="Rojak DriveKit - Google Drive Utility"
-  />
 
   <style>
     :root {
@@ -22,7 +14,7 @@
       --surface3: #1e1e22;
 
       --line: rgba(255,255,255,.08);
-      --line2: rgba(255,255,255,.13);
+      --line2: rgba(255,255,255,.14);
 
       --text: #f5f5f3;
       --muted: #9999a1;
@@ -31,11 +23,9 @@
       --accent2: #ff7955;
 
       --green: #70d68a;
-      --yellow: #e6bd62;
       --red: #ed7569;
 
-      --shadow:
-        0 24px 80px rgba(0,0,0,.4);
+      --shadow: 0 24px 80px rgba(0,0,0,.45);
     }
 
     * {
@@ -52,7 +42,6 @@
 
       font-family:
         Inter,
-        ui-sans-serif,
         system-ui,
         -apple-system,
         BlinkMacSystemFont,
@@ -63,14 +52,14 @@
 
       background:
         radial-gradient(
-          circle at 15% 0%,
-          rgba(223,90,56,.13),
-          transparent 28%
+          circle at 10% 0%,
+          rgba(223,90,56,.14),
+          transparent 30%
         ),
         radial-gradient(
-          circle at 85% 20%,
+          circle at 90% 10%,
           rgba(255,121,85,.06),
-          transparent 30%
+          transparent 28%
         ),
         var(--bg);
     }
@@ -100,21 +89,22 @@
       align-items: center;
       justify-content: center;
 
-      padding: 24px;
+      padding: 20px;
     }
 
     .loading-card {
       width: min(420px, 100%);
 
-      padding: 32px;
+      padding: 35px;
+
+      text-align: center;
 
       border: 1px solid var(--line);
       border-radius: 24px;
 
-      background: rgba(17,17,19,.85);
-      box-shadow: var(--shadow);
+      background: rgba(17,17,19,.9);
 
-      text-align: center;
+      box-shadow: var(--shadow);
     }
 
     .spinner {
@@ -148,7 +138,7 @@
       align-items: center;
       justify-content: center;
 
-      padding: 24px;
+      padding: 20px;
     }
 
     .login-shell {
@@ -157,28 +147,26 @@
       display: grid;
       grid-template-columns: 1.15fr .85fr;
 
+      overflow: hidden;
+
       border: 1px solid var(--line);
       border-radius: 30px;
 
-      overflow: hidden;
-
-      background: rgba(17,17,19,.88);
+      background: rgba(17,17,19,.9);
 
       box-shadow: var(--shadow);
-
-      backdrop-filter: blur(20px);
     }
 
     .login-left {
       position: relative;
 
-      min-height: 560px;
-
-      padding: 48px;
+      min-height: 570px;
 
       display: flex;
       flex-direction: column;
       justify-content: space-between;
+
+      padding: 48px;
 
       overflow: hidden;
     }
@@ -188,11 +176,11 @@
 
       position: absolute;
 
-      width: 420px;
-      height: 420px;
+      width: 450px;
+      height: 450px;
 
-      right: -160px;
-      top: -170px;
+      right: -180px;
+      top: -180px;
 
       border-radius: 50%;
 
@@ -213,14 +201,10 @@
       gap: 12px;
     }
 
-    .brand-icon {
-      width: 44px;
-      height: 44px;
-
+    .brand-icon,
+    .mini-logo {
       display: grid;
       place-items: center;
-
-      border-radius: 13px;
 
       background:
         linear-gradient(
@@ -230,10 +214,18 @@
         );
 
       color: white;
+
       font-weight: 900;
 
       box-shadow:
         0 10px 30px rgba(223,90,56,.25);
+    }
+
+    .brand-icon {
+      width: 44px;
+      height: 44px;
+
+      border-radius: 13px;
     }
 
     .brand-text strong {
@@ -257,7 +249,6 @@
       display: inline-flex;
 
       padding: 7px 11px;
-
       margin-bottom: 18px;
 
       border: 1px solid var(--line2);
@@ -272,7 +263,9 @@
       margin: 0;
 
       font-size: clamp(38px, 5vw, 62px);
+
       line-height: .98;
+
       letter-spacing: -3px;
     }
 
@@ -282,8 +275,6 @@
 
     .hero p {
       margin: 22px 0 0;
-
-      max-width: 510px;
 
       color: var(--muted);
 
@@ -312,22 +303,27 @@
 
     .feature b {
       display: block;
+
       margin-bottom: 5px;
+
       font-size: 13px;
     }
 
     .feature span {
       color: var(--muted);
+
       font-size: 11px;
       line-height: 1.4;
     }
 
     .login-right {
-      padding: 48px;
-
       display: flex;
       flex-direction: column;
       justify-content: center;
+
+      padding: 48px;
+
+      border-left: 1px solid var(--line);
 
       background:
         linear-gradient(
@@ -335,12 +331,11 @@
           rgba(255,255,255,.025),
           rgba(255,255,255,.01)
         );
-
-      border-left: 1px solid var(--line);
     }
 
     .login-right h2 {
       margin: 0 0 10px;
+
       font-size: 27px;
     }
 
@@ -355,13 +350,12 @@
 
     .google-btn {
       width: 100%;
-
       min-height: 52px;
 
-      border: 1px solid var(--line2);
+      border: 1px solid #ddd;
       border-radius: 14px;
 
-      background: #fff;
+      background: white;
       color: #111;
 
       font-weight: 700;
@@ -372,6 +366,11 @@
     .google-btn:hover {
       transform: translateY(-1px);
       filter: brightness(.95);
+    }
+
+    .google-btn:disabled {
+      opacity: .6;
+      cursor: wait;
     }
 
     .login-error {
@@ -385,7 +384,6 @@
 
     .security-note {
       margin-top: 28px;
-
       padding-top: 20px;
 
       border-top: 1px solid var(--line);
@@ -407,10 +405,14 @@
     .app-shell {
       width: min(1180px, calc(100% - 32px));
 
-      margin: 0 auto;
+      margin: auto;
 
       padding: 22px 0 120px;
     }
+
+    /* =========================
+       TOPBAR
+    ========================= */
 
     .topbar {
       position: sticky;
@@ -428,7 +430,7 @@
       border: 1px solid var(--line);
       border-radius: 18px;
 
-      background: rgba(17,17,19,.82);
+      background: rgba(17,17,19,.84);
 
       backdrop-filter: blur(18px);
 
@@ -439,7 +441,6 @@
     .topbar-left {
       display: flex;
       align-items: center;
-      gap: 12px;
     }
 
     .topbar-brand {
@@ -452,45 +453,62 @@
       width: 36px;
       height: 36px;
 
-      display: grid;
-      place-items: center;
-
       border-radius: 11px;
 
-      background:
-        linear-gradient(
-          135deg,
-          var(--accent2),
-          var(--accent)
-        );
-
       font-size: 13px;
-      font-weight: 900;
     }
 
     .topbar-title strong {
       display: block;
+
       font-size: 13px;
     }
 
     .topbar-title span {
       color: var(--muted);
+
       font-size: 10px;
     }
 
     .user-area {
       display: flex;
       align-items: center;
+
+      gap: 8px;
+    }
+
+    .profile-trigger {
+      display: flex;
+      align-items: center;
+
       gap: 9px;
+
+      padding: 5px;
+
+      border: 0;
+      border-radius: 13px;
+
+      background: transparent;
+      color: var(--text);
+
+      text-align: left;
+
+      transition: .2s;
+    }
+
+    .profile-trigger:hover {
+      background: rgba(255,255,255,.045);
     }
 
     .avatar {
-      width: 36px;
-      height: 36px;
+      width: 38px;
+      height: 38px;
 
-      border-radius: 50%;
+      flex: 0 0 auto;
 
       object-fit: cover;
+
+      border-radius: 50%;
 
       background: var(--surface3);
     }
@@ -510,7 +528,7 @@
       font-size: 12px;
     }
 
-    .user-info span {
+    .user-info > span:not(.role) {
       display: block;
 
       overflow: hidden;
@@ -524,7 +542,7 @@
     }
 
     .role {
-      display: inline-flex;
+      display: inline-flex !important;
 
       margin-top: 3px;
 
@@ -533,10 +551,11 @@
       border-radius: 999px;
 
       background: rgba(223,90,56,.12);
+
       color: var(--accent2);
 
-      font-size: 9px;
-      font-weight: 700;
+      font-size: 9px !important;
+      font-weight: 800;
     }
 
     .top-actions {
@@ -561,7 +580,14 @@
 
     .btn:hover {
       border-color: var(--line2);
+
       transform: translateY(-1px);
+    }
+
+    .btn:disabled {
+      opacity: .55;
+      cursor: wait;
+      transform: none;
     }
 
     .btn.primary {
@@ -586,7 +612,7 @@
     }
 
     /* =========================
-       DASHBOARD
+       HEADER
     ========================= */
 
     .dashboard-head {
@@ -596,7 +622,8 @@
     .dashboard-head h1 {
       margin: 0;
 
-      font-size: clamp(30px, 4vw, 48px);
+      font-size: clamp(30px,4vw,48px);
+
       letter-spacing: -2px;
     }
 
@@ -631,6 +658,7 @@
     .drive-status-left {
       display: flex;
       align-items: center;
+
       gap: 12px;
     }
 
@@ -644,15 +672,19 @@
       border-radius: 12px;
 
       background: rgba(112,214,138,.08);
+
+      font-size: 18px;
     }
 
     .drive-status strong {
       display: block;
+
       font-size: 13px;
     }
 
     .drive-status span {
       color: var(--muted);
+
       font-size: 11px;
     }
 
@@ -671,11 +703,13 @@
 
     .status-dot.connected {
       background: var(--green);
-      box-shadow: 0 0 12px rgba(112,214,138,.5);
+
+      box-shadow:
+        0 0 12px rgba(112,214,138,.5);
     }
 
     /* =========================
-       NAV
+       TABS
     ========================= */
 
     .tabs {
@@ -685,7 +719,6 @@
       gap: 5px;
 
       padding: 5px;
-
       margin-bottom: 18px;
 
       border: 1px solid var(--line);
@@ -721,14 +754,14 @@
     }
 
     /* =========================
-       CARDS
+       CARD
     ========================= */
 
     .card {
+      padding: 22px;
+
       border: 1px solid var(--line);
       border-radius: 20px;
-
-      padding: 22px;
 
       background:
         linear-gradient(
@@ -794,25 +827,25 @@
 
     .input {
       height: 48px;
+
       padding: 0 14px;
     }
 
     .textarea {
       min-height: 260px;
 
-      resize: vertical;
-
       padding: 14px;
 
-      line-height: 1.6;
+      resize: vertical;
 
       font-family:
         "SFMono-Regular",
         Consolas,
-        "Liberation Mono",
         monospace;
 
       font-size: 12px;
+
+      line-height: 1.6;
     }
 
     .input:focus,
@@ -825,9 +858,9 @@
 
     .form-actions {
       display: flex;
-      gap: 8px;
-
       flex-wrap: wrap;
+
+      gap: 8px;
 
       margin-top: 14px;
     }
@@ -848,10 +881,6 @@
 
     .status-message.error {
       color: var(--red);
-    }
-
-    .status-message.info {
-      color: var(--accent2);
     }
 
     .tips {
@@ -884,6 +913,7 @@
       color: var(--muted);
 
       font-size: 10px;
+
       line-height: 1.5;
     }
 
@@ -916,6 +946,7 @@
 
       display: flex;
       align-items: center;
+
       gap: 11px;
     }
 
@@ -967,7 +998,7 @@
     }
 
     /* =========================
-       DRIVE CARD
+       DRIVE
     ========================= */
 
     .drive-open-card {
@@ -999,6 +1030,7 @@
 
     .drive-open-card h2 {
       margin: 0 0 8px;
+
       font-size: 20px;
     }
 
@@ -1058,7 +1090,7 @@
       font-size: 11px;
     }
 
-    .step span {
+    .step span:last-child {
       display: block;
 
       margin-top: 5px;
@@ -1067,6 +1099,244 @@
 
       font-size: 9px;
       line-height: 1.5;
+    }
+
+    /* =========================
+       PROFILE MODAL
+    ========================= */
+
+    .profile-overlay {
+      position: fixed;
+      inset: 0;
+
+      z-index: 100;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      padding: 20px;
+
+      background: rgba(0,0,0,.72);
+
+      backdrop-filter: blur(12px);
+    }
+
+    .profile-modal {
+      width: min(430px,100%);
+
+      max-height: 90vh;
+
+      overflow-y: auto;
+
+      padding: 24px;
+
+      border: 1px solid var(--line2);
+      border-radius: 24px;
+
+      background: #111113;
+
+      box-shadow:
+        0 30px 100px rgba(0,0,0,.6);
+
+      animation: modalIn .18s ease;
+    }
+
+    @keyframes modalIn {
+      from {
+        opacity: 0;
+        transform: translateY(10px) scale(.98);
+      }
+
+      to {
+        opacity: 1;
+        transform: none;
+      }
+    }
+
+    .profile-header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+
+      margin-bottom: 22px;
+    }
+
+    .profile-header h2 {
+      margin: 0;
+
+      font-size: 19px;
+    }
+
+    .profile-close {
+      width: 34px;
+      height: 34px;
+
+      border: 1px solid var(--line);
+      border-radius: 10px;
+
+      background: var(--surface2);
+      color: var(--muted);
+
+      font-size: 20px;
+
+      cursor: pointer;
+    }
+
+    .profile-main {
+      text-align: center;
+
+      padding-bottom: 20px;
+
+      border-bottom: 1px solid var(--line);
+    }
+
+    .profile-avatar {
+      width: 82px;
+      height: 82px;
+
+      display: block;
+
+      margin: 0 auto 12px;
+
+      border-radius: 50%;
+
+      object-fit: cover;
+
+      background: var(--surface3);
+
+      border: 2px solid rgba(255,255,255,.08);
+    }
+
+    .profile-main strong {
+      display: block;
+
+      font-size: 16px;
+    }
+
+    .profile-main span:not(.role-large) {
+      display: block;
+
+      margin-top: 4px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .role-large {
+      display: inline-flex !important;
+
+      margin-top: 8px !important;
+
+      padding: 5px 10px;
+
+      border-radius: 999px;
+
+      background: rgba(223,90,56,.12);
+
+      color: var(--accent2) !important;
+
+      font-size: 10px !important;
+      font-weight: 800;
+    }
+
+    .profile-field {
+      margin-top: 16px;
+    }
+
+    .profile-field label {
+      display: block;
+
+      margin-bottom: 7px;
+
+      color: var(--muted);
+
+      font-size: 10px;
+      font-weight: 700;
+    }
+
+    .profile-input {
+      width: 100%;
+      height: 45px;
+
+      padding: 0 13px;
+
+      border: 1px solid var(--line);
+      border-radius: 12px;
+
+      outline: none;
+
+      background: var(--surface);
+      color: var(--text);
+
+      font-size: 12px;
+    }
+
+    .profile-input:focus {
+      border-color: rgba(255,121,85,.55);
+
+      box-shadow:
+        0 0 0 3px rgba(223,90,56,.08);
+    }
+
+    .profile-readonly {
+      width: 100%;
+      min-height: 45px;
+
+      display: flex;
+      align-items: center;
+
+      padding: 0 13px;
+
+      border: 1px solid var(--line);
+      border-radius: 12px;
+
+      background: rgba(255,255,255,.025);
+
+      color: #cfcfd3;
+
+      font-size: 12px;
+
+      word-break: break-word;
+    }
+
+    .profile-hint {
+      margin-top: 6px;
+
+      color: var(--muted);
+
+      font-size: 9px;
+    }
+
+    .profile-actions {
+      display: flex;
+
+      gap: 8px;
+
+      margin-top: 22px;
+    }
+
+    .profile-actions .btn {
+      flex: 1;
+    }
+
+    .profile-status {
+      min-height: 18px;
+
+      margin-top: 10px;
+
+      color: var(--muted);
+
+      font-size: 11px;
+    }
+
+    .profile-status.success {
+      color: var(--green);
+    }
+
+    .profile-status.error {
+      color: var(--red);
     }
 
     /* =========================
@@ -1083,10 +1353,10 @@
 
       width: 320px;
 
+      overflow: hidden;
+
       border: 1px solid var(--line);
       border-radius: 16px;
-
-      overflow: hidden;
 
       background: var(--surface);
 
@@ -1118,7 +1388,8 @@
        RESPONSIVE
     ========================= */
 
-    @media(max-width: 850px) {
+    @media(max-width:850px) {
+
       .login-shell {
         grid-template-columns: 1fr;
       }
@@ -1141,7 +1412,8 @@
       }
     }
 
-    @media(max-width: 620px) {
+    @media(max-width:620px) {
+
       #loginScreen {
         padding: 12px;
       }
@@ -1161,21 +1433,14 @@
       }
 
       .app-shell {
-        width: min(100% - 20px, 1180px);
+        width: calc(100% - 20px);
       }
 
       .topbar {
         align-items: flex-start;
       }
 
-      .topbar-left {
-        min-width: 0;
-      }
-
-      .topbar-title {
-        display: none;
-      }
-
+      .topbar-title,
       .user-info {
         display: none;
       }
@@ -1212,48 +1477,78 @@
 
         width: calc(100% - 20px);
       }
+
+      .profile-trigger {
+        padding: 3px;
+      }
     }
   </style>
 </head>
 
 <body>
 
-  <!-- =========================
+  <!-- =========================================
        LOADING
-  ========================= -->
+  ========================================== -->
 
   <section id="loadingScreen">
+
     <div class="loading-card">
+
       <div class="spinner"></div>
-      <strong>Menyiapkan Rojak DriveKit...</strong>
+
+      <strong>
+        Menyiapkan Rojak DriveKit...
+      </strong>
+
       <p
         id="loadingText"
-        style="color:var(--muted);font-size:12px;"
+        style="
+          color:var(--muted);
+          font-size:12px;
+        "
       >
         Menghubungkan layanan...
       </p>
+
     </div>
+
   </section>
 
 
-  <!-- =========================
+  <!-- =========================================
        LOGIN
-  ========================= -->
+  ========================================== -->
 
-  <section id="loginScreen" class="hidden">
+  <section
+    id="loginScreen"
+    class="hidden"
+  >
 
     <div class="login-shell">
 
       <div class="login-left">
 
         <div class="brand">
-          <div class="brand-icon">RD</div>
+
+          <div class="brand-icon">
+            RD
+          </div>
 
           <div class="brand-text">
-            <strong>Rojak DriveKit</strong>
-            <span>Google Drive Utility</span>
+
+            <strong>
+              Rojak DriveKit
+            </strong>
+
+            <span>
+              Google Drive Utility
+            </span>
+
           </div>
+
         </div>
+
 
         <div class="hero">
 
@@ -1275,26 +1570,27 @@
 
         </div>
 
+
         <div class="feature-grid">
 
           <div class="feature">
             <b>01 · TXT</b>
             <span>
-              Buat file teks tanpa aplikasi tambahan.
+              Buat file teks dengan cepat.
             </span>
           </div>
 
           <div class="feature">
             <b>02 · DRIVE</b>
             <span>
-              File langsung tersimpan ke Google Drive.
+              Simpan langsung ke Google Drive.
             </span>
           </div>
 
           <div class="feature">
-            <b>03 · ADMIN</b>
+            <b>03 · PROFILE</b>
             <span>
-              Sistem role Member dan Admin.
+              Kelola nama dan lihat role akun.
             </span>
           </div>
 
@@ -1305,11 +1601,13 @@
 
       <div class="login-right">
 
-        <h2>Masuk ke DriveKit</h2>
+        <h2>
+          Masuk ke DriveKit
+        </h2>
 
         <p>
-          Login menggunakan akun Google untuk mengakses
-          workspace dan menghubungkan Google Drive.
+          Login menggunakan akun Google untuk
+          mengakses workspace.
         </p>
 
         <button
@@ -1325,9 +1623,9 @@
         ></div>
 
         <div class="security-note">
-          Setelah login, Google Drive tetap membutuhkan
-          izin terpisah. Ini normal karena Firebase Login
-          dan Google Drive OAuth menggunakan akses yang berbeda.
+          Login akun dan izin Google Drive dipisahkan.
+          Setelah masuk, hubungkan Google Drive untuk
+          membuat file TXT.
         </div>
 
       </div>
@@ -1337,13 +1635,17 @@
   </section>
 
 
-  <!-- =========================
+  <!-- =========================================
        APP
-  ========================= -->
+  ========================================== -->
 
-  <section id="app" class="hidden">
+  <section
+    id="app"
+    class="hidden"
+  >
 
     <div class="app-shell">
+
 
       <!-- TOPBAR -->
 
@@ -1358,8 +1660,15 @@
             </div>
 
             <div class="topbar-title">
-              <strong>Rojak DriveKit</strong>
-              <span>Google Drive Utility</span>
+
+              <strong>
+                Rojak DriveKit
+              </strong>
+
+              <span>
+                Google Drive Utility
+              </span>
+
             </div>
 
           </div>
@@ -1369,24 +1678,42 @@
 
         <div class="user-area">
 
-          <img
-            id="userAvatar"
-            class="avatar"
-            src=""
-            alt="Avatar"
-          />
+          <!-- PROFILE BUTTON -->
 
-          <div class="user-info">
-            <strong id="userName">User</strong>
-            <span id="userEmail">-</span>
+          <button
+            id="profileButton"
+            class="profile-trigger"
+            title="Buka Profile"
+          >
 
-            <span
-              id="userRole"
-              class="role"
+            <img
+              id="userAvatar"
+              class="avatar"
+              src=""
+              alt="Avatar"
             >
-              Member
-            </span>
-          </div>
+
+            <div class="user-info">
+
+              <strong id="userName">
+                User
+              </strong>
+
+              <span id="userEmail">
+                -
+              </span>
+
+              <span
+                id="userRole"
+                class="role"
+              >
+                MEMBER
+              </span>
+
+            </div>
+
+          </button>
+
 
           <div class="top-actions">
 
@@ -1439,6 +1766,7 @@
           <div>
 
             <strong>
+
               <span
                 id="driveDot"
                 class="status-dot"
@@ -1447,6 +1775,7 @@
               <span id="driveStatusText">
                 Google Drive belum terhubung
               </span>
+
             </strong>
 
             <span id="driveStatusDetail">
@@ -1456,6 +1785,7 @@
           </div>
 
         </div>
+
 
         <button
           id="connectDriveButton"
@@ -1467,7 +1797,7 @@
       </section>
 
 
-      <!-- NAV -->
+      <!-- TABS -->
 
       <nav class="tabs">
 
@@ -1507,11 +1837,15 @@
           <div class="card-head">
 
             <div>
-              <h2>Buat File TXT</h2>
+
+              <h2>
+                Buat File TXT
+              </h2>
 
               <p>
                 Masukkan nama file dan isi yang ingin disimpan.
               </p>
+
             </div>
 
           </div>
@@ -1529,7 +1863,7 @@
               type="text"
               placeholder="contoh: rumus-excel"
               autocomplete="off"
-            />
+            >
 
           </div>
 
@@ -1577,24 +1911,39 @@
           <div class="tips">
 
             <div class="tip">
-              <strong>Nama file</strong>
+
+              <strong>
+                Nama file
+              </strong>
+
               <span>
-                Ekstensi .txt akan ditambahkan otomatis.
+                Ekstensi .txt ditambahkan otomatis.
               </span>
+
             </div>
 
             <div class="tip">
-              <strong>Shortcut</strong>
+
+              <strong>
+                Shortcut
+              </strong>
+
               <span>
                 Gunakan Ctrl + Enter untuk membuat file.
               </span>
+
             </div>
 
             <div class="tip">
-              <strong>Drive</strong>
+
+              <strong>
+                Drive
+              </strong>
+
               <span>
                 Pastikan Google Drive sudah terhubung.
               </span>
+
             </div>
 
           </div>
@@ -1602,50 +1951,98 @@
         </div>
 
 
+        <!-- WORKFLOW -->
+
         <div class="workflow">
 
-          <h2>Workflow</h2>
+          <h2>
+            Workflow
+          </h2>
 
           <div class="steps">
 
             <div class="step">
-              <span class="step-number">01</span>
-              <strong>Guru kirim tugas</strong>
+
+              <span class="step-number">
+                01
+              </span>
+
+              <strong>
+                Guru kirim tugas
+              </strong>
+
               <span>
                 Terima soal atau rumus Excel.
               </span>
+
             </div>
 
+
             <div class="step">
-              <span class="step-number">02</span>
-              <strong>ChatGPT</strong>
+
+              <span class="step-number">
+                02
+              </span>
+
+              <strong>
+                ChatGPT
+              </strong>
+
               <span>
                 Cari dan salin rumus.
               </span>
+
             </div>
 
+
             <div class="step">
-              <span class="step-number">03</span>
-              <strong>DriveKit</strong>
+
+              <span class="step-number">
+                03
+              </span>
+
+              <strong>
+                DriveKit
+              </strong>
+
               <span>
                 Tempel ke file TXT.
               </span>
+
             </div>
 
+
             <div class="step">
-              <span class="step-number">04</span>
-              <strong>Google Drive</strong>
+
+              <span class="step-number">
+                04
+              </span>
+
+              <strong>
+                Google Drive
+              </strong>
+
               <span>
                 File tersimpan online.
               </span>
+
             </div>
 
+
             <div class="step">
-              <span class="step-number">05</span>
-              <strong>Excel sekolah</strong>
+
+              <span class="step-number">
+                05
+              </span>
+
+              <strong>
+                Excel sekolah
+              </strong>
+
               <span>
                 Copy dan paste rumus.
               </span>
+
             </div>
 
           </div>
@@ -1655,7 +2052,7 @@
       </section>
 
 
-      <!-- RECENT -->
+      <!-- RECENT FILES -->
 
       <section
         id="tab-recent"
@@ -1667,11 +2064,15 @@
           <div class="card-head">
 
             <div>
-              <h2>Recent Files</h2>
+
+              <h2>
+                Recent Files
+              </h2>
 
               <p>
                 File yang dapat diakses oleh DriveKit.
               </p>
+
             </div>
 
             <button
@@ -1683,13 +2084,16 @@
 
           </div>
 
+
           <div
             id="fileList"
             class="file-list"
           >
+
             <div class="empty">
               Hubungkan Google Drive terlebih dahulu.
             </div>
+
           </div>
 
         </div>
@@ -1697,7 +2101,7 @@
       </section>
 
 
-      <!-- DRIVE -->
+      <!-- OPEN DRIVE -->
 
       <section
         id="tab-drive"
@@ -1733,7 +2137,159 @@
     </div>
 
 
-    <!-- SPOTIFY -->
+    <!-- =========================================
+         PROFILE MODAL
+    ========================================== -->
+
+    <div
+      id="profileOverlay"
+      class="profile-overlay hidden"
+    >
+
+      <div class="profile-modal">
+
+        <div class="profile-header">
+
+          <h2>
+            Profile
+          </h2>
+
+          <button
+            id="closeProfileButton"
+            class="profile-close"
+          >
+            ×
+          </button>
+
+        </div>
+
+
+        <div class="profile-main">
+
+          <img
+            id="profileAvatar"
+            class="profile-avatar"
+            src=""
+            alt="Profile"
+          >
+
+          <strong id="profileDisplayName">
+            User
+          </strong>
+
+          <span id="profileDisplayEmail">
+            -
+          </span>
+
+          <span
+            id="profileDisplayRole"
+            class="role-large"
+          >
+            MEMBER
+          </span>
+
+        </div>
+
+
+        <!-- NAMA -->
+
+        <div class="profile-field">
+
+          <label for="profileNameInput">
+            Nama
+          </label>
+
+          <input
+            id="profileNameInput"
+            class="profile-input"
+            type="text"
+            maxlength="60"
+            placeholder="Nama kamu"
+          >
+
+          <div class="profile-hint">
+            Nama ini digunakan sebagai nama profil DriveKit.
+          </div>
+
+        </div>
+
+
+        <!-- EMAIL -->
+
+        <div class="profile-field">
+
+          <label>
+            Gmail
+          </label>
+
+          <div
+            id="profileEmailBox"
+            class="profile-readonly"
+          >
+            -
+          </div>
+
+          <div class="profile-hint">
+            Gmail berasal dari akun Google dan tidak dapat diedit di sini.
+          </div>
+
+        </div>
+
+
+        <!-- ROLE -->
+
+        <div class="profile-field">
+
+          <label>
+            Role
+          </label>
+
+          <div
+            id="profileRoleBox"
+            class="profile-readonly"
+          >
+            MEMBER
+          </div>
+
+          <div class="profile-hint">
+            Role hanya dapat dikelola oleh Admin.
+          </div>
+
+        </div>
+
+
+        <div
+          id="profileStatus"
+          class="profile-status"
+        ></div>
+
+
+        <div class="profile-actions">
+
+          <button
+            id="cancelProfileButton"
+            class="btn"
+          >
+            Batal
+          </button>
+
+          <button
+            id="saveProfileButton"
+            class="btn primary"
+          >
+            Simpan Perubahan
+          </button>
+
+        </div>
+
+      </div>
+
+    </div>
+
+
+    <!-- =========================================
+         SPOTIFY
+    ========================================== -->
 
     <div class="spotify-box">
 
@@ -1757,17 +2313,25 @@
   <!-- GOOGLE API -->
 
   <script src="https://apis.google.com/js/api.js"></script>
+
   <script src="https://accounts.google.com/gsi/client"></script>
 
 
-  <!-- APP -->
+  <!-- =========================================
+       JAVASCRIPT
+  ========================================== -->
 
   <script type="module">
+
+    /* =========================================
+       FIREBASE
+    ========================================= */
 
     import {
       auth,
       db
     } from "./firebase-config.js";
+
 
     import {
       GoogleAuthProvider,
@@ -1778,65 +2342,141 @@
       onAuthStateChanged
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
+
     import {
       doc,
       getDoc,
       setDoc,
+      updateDoc,
       serverTimestamp
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
 
 
-    /* =====================================================
-       GOOGLE DRIVE CONFIG
-    ===================================================== */
+    /* =========================================
+       GOOGLE DRIVE
+    ========================================= */
 
     const CLIENT_ID =
       "222625790422-7j7nhagd4d7gdpaqhq257deucjjfanva.apps.googleusercontent.com";
 
+
     const SCOPES =
       "https://www.googleapis.com/auth/drive.file";
+
 
     const DISCOVERY_DOC =
       "https://www.googleapis.com/discovery/v1/apis/drive/v3/rest";
 
 
-    /* =====================================================
+    /* =========================================
        STATE
-    ===================================================== */
+    ========================================= */
 
     let tokenClient = null;
 
     let gapiInited = false;
+
     let gisInited = false;
 
     let accessToken = null;
 
     let currentUser = null;
+
     let currentRole = "member";
 
 
-    /* =====================================================
+    /* =========================================
+       HELPER
+    ========================================= */
+
+    const $ = id =>
+      document.getElementById(id);
+
+
+    /* =========================================
        ELEMENTS
-    ===================================================== */
+    ========================================= */
 
-    const $ = id => document.getElementById(id);
+    const loadingScreen =
+      $("loadingScreen");
 
-    const loadingScreen = $("loadingScreen");
-    const loadingText = $("loadingText");
+    const loadingText =
+      $("loadingText");
 
-    const loginScreen = $("loginScreen");
-    const app = $("app");
+    const loginScreen =
+      $("loginScreen");
 
-    const loginButton = $("loginButton");
-    const loginError = $("loginError");
+    const app =
+      $("app");
 
-    const userAvatar = $("userAvatar");
-    const userName = $("userName");
-    const userEmail = $("userEmail");
-    const userRole = $("userRole");
+    const loginButton =
+      $("loginButton");
 
-    const adminButton = $("adminButton");
-    const logoutButton = $("logoutButton");
+    const loginError =
+      $("loginError");
+
+
+    const userAvatar =
+      $("userAvatar");
+
+    const userName =
+      $("userName");
+
+    const userEmail =
+      $("userEmail");
+
+    const userRole =
+      $("userRole");
+
+
+    const adminButton =
+      $("adminButton");
+
+    const logoutButton =
+      $("logoutButton");
+
+
+    const profileButton =
+      $("profileButton");
+
+    const profileOverlay =
+      $("profileOverlay");
+
+    const closeProfileButton =
+      $("closeProfileButton");
+
+    const cancelProfileButton =
+      $("cancelProfileButton");
+
+    const saveProfileButton =
+      $("saveProfileButton");
+
+
+    const profileAvatar =
+      $("profileAvatar");
+
+    const profileDisplayName =
+      $("profileDisplayName");
+
+    const profileDisplayEmail =
+      $("profileDisplayEmail");
+
+    const profileDisplayRole =
+      $("profileDisplayRole");
+
+
+    const profileNameInput =
+      $("profileNameInput");
+
+    const profileEmailBox =
+      $("profileEmailBox");
+
+    const profileRoleBox =
+      $("profileRoleBox");
+
+    const profileStatus =
+      $("profileStatus");
+
 
     const connectDriveButton =
       $("connectDriveButton");
@@ -1849,6 +2489,7 @@
 
     const driveStatusDetail =
       $("driveStatusDetail");
+
 
     const fileName =
       $("fileName");
@@ -1865,6 +2506,7 @@
     const statusMessage =
       $("statusMessage");
 
+
     const refreshFilesButton =
       $("refreshFilesButton");
 
@@ -1875,81 +2517,125 @@
       $("openDriveButton");
 
 
-    /* =====================================================
-       GENERAL UI
-    ===================================================== */
+    /* =========================================
+       SCREEN
+    ========================================= */
 
     function showLogin() {
-      loadingScreen.classList.add("hidden");
-      app.classList.add("hidden");
-      loginScreen.classList.remove("hidden");
+
+      loadingScreen.classList.add(
+        "hidden"
+      );
+
+      app.classList.add(
+        "hidden"
+      );
+
+      loginScreen.classList.remove(
+        "hidden"
+      );
     }
 
 
     function showApp() {
-      loadingScreen.classList.add("hidden");
-      loginScreen.classList.add("hidden");
-      app.classList.remove("hidden");
+
+      loadingScreen.classList.add(
+        "hidden"
+      );
+
+      loginScreen.classList.add(
+        "hidden"
+      );
+
+      app.classList.remove(
+        "hidden"
+      );
     }
 
 
-    function showLoginError(message) {
-      loginError.textContent = message || "";
+    function showLoginError(
+      message
+    ) {
+
+      loginError.textContent =
+        message || "";
     }
 
 
-    function status(message, type = "") {
-      statusMessage.textContent = message;
+    function status(
+      message,
+      type = ""
+    ) {
+
+      statusMessage.textContent =
+        message;
 
       statusMessage.className =
         "status-message " + type;
     }
 
 
-    /* =====================================================
+    /* =========================================
        FIREBASE PROFILE
-    ===================================================== */
+    ========================================= */
 
-    async function ensureProfile(user) {
+    async function ensureProfile(
+      user
+    ) {
 
       const ref =
-        doc(db, "users", user.uid);
+        doc(
+          db,
+          "users",
+          user.uid
+        );
+
 
       const snap =
         await getDoc(ref);
 
+
       if (!snap.exists()) {
 
-        await setDoc(ref, {
+        await setDoc(
+          ref,
+          {
 
-          uid: user.uid,
+            uid:
+              user.uid,
 
-          name:
-            user.displayName ||
-            "User",
+            name:
+              user.displayName ||
+              "User",
 
-          email:
-            user.email ||
-            "",
+            email:
+              user.email ||
+              "",
 
-          photoURL:
-            user.photoURL ||
-            "",
+            photoURL:
+              user.photoURL ||
+              "",
 
-          role: "member",
+            role:
+              "member",
 
-          createdAt:
-            serverTimestamp(),
+            createdAt:
+              serverTimestamp(),
 
-          updatedAt:
-            serverTimestamp()
+            updatedAt:
+              serverTimestamp()
 
-        });
+          }
+        );
+
 
         return "member";
       }
 
-      const data = snap.data();
+
+      const data =
+        snap.data();
+
 
       return data.role === "admin"
         ? "admin"
@@ -1957,27 +2643,37 @@
     }
 
 
-    async function loadProfile(user) {
+    async function loadProfile(
+      user
+    ) {
 
       try {
 
-        currentUser = user;
+        currentUser =
+          user;
 
-        const role =
-          await ensureProfile(user);
 
-        currentRole = role;
+        currentRole =
+          await ensureProfile(
+            user
+          );
+
 
         userName.textContent =
-          user.displayName || "User";
+          user.displayName ||
+          "User";
+
 
         userEmail.textContent =
-          user.email || "";
+          user.email ||
+          "";
+
 
         userRole.textContent =
-          role === "admin"
+          currentRole === "admin"
             ? "ADMIN"
             : "MEMBER";
+
 
         if (user.photoURL) {
 
@@ -1991,17 +2687,24 @@
         }
 
 
-        if (role === "admin") {
+        if (
+          currentRole === "admin"
+        ) {
 
-          adminButton.classList.remove("hidden");
+          adminButton.classList.remove(
+            "hidden"
+          );
 
         } else {
 
-          adminButton.classList.add("hidden");
+          adminButton.classList.add(
+            "hidden"
+          );
         }
 
 
         showApp();
+
 
       } catch (error) {
 
@@ -2010,19 +2713,24 @@
           error
         );
 
+
         showLogin();
+
 
         showLoginError(
           "Profil gagal dimuat: " +
-          (error.code || error.message)
+          (
+            error.code ||
+            error.message
+          )
         );
       }
     }
 
 
-    /* =====================================================
-       FIREBASE LOGIN
-    ===================================================== */
+    /* =========================================
+       GOOGLE LOGIN
+    ========================================= */
 
     async function loginGoogle() {
 
@@ -2030,7 +2738,8 @@
 
         showLoginError("");
 
-        loginButton.disabled = true;
+        loginButton.disabled =
+          true;
 
         loginButton.textContent =
           "Membuka Google...";
@@ -2039,8 +2748,10 @@
         const provider =
           new GoogleAuthProvider();
 
+
         provider.setCustomParameters({
-          prompt: "select_account"
+          prompt:
+            "select_account"
         });
 
 
@@ -2048,6 +2759,7 @@
           auth,
           provider
         );
+
 
       } catch (error) {
 
@@ -2114,13 +2826,18 @@
 
           showLoginError(
             "Login gagal: " +
-            (error.code || error.message)
+            (
+              error.code ||
+              error.message
+            )
           );
         }
 
+
       } finally {
 
-        loginButton.disabled = false;
+        loginButton.disabled =
+          false;
 
         loginButton.textContent =
           "Continue with Google";
@@ -2128,9 +2845,9 @@
     }
 
 
-    /* =====================================================
-       FIREBASE AUTH STATE
-    ===================================================== */
+    /* =========================================
+       AUTH STATE
+    ========================================= */
 
     onAuthStateChanged(
       auth,
@@ -2143,39 +2860,251 @@
           return;
         }
 
+
         loadingText.textContent =
           "Memuat profil...";
 
-        await loadProfile(user);
+
+        await loadProfile(
+          user
+        );
       }
     );
 
 
-    /* =====================================================
-       REDIRECT RESULT
-    ===================================================== */
+    /* =========================================
+       REDIRECT LOGIN RESULT
+    ========================================= */
 
     try {
 
-      await getRedirectResult(auth);
+      await getRedirectResult(
+        auth
+      );
 
     } catch (error) {
 
       console.error(
-        "Redirect login error:",
+        "Redirect error:",
         error
       );
 
       showLoginError(
         "Login redirect gagal: " +
-        (error.code || error.message)
+        (
+          error.code ||
+          error.message
+        )
       );
     }
 
 
-    /* =====================================================
-       GOOGLE DRIVE GAPI
-    ===================================================== */
+    /* =========================================
+       PROFILE
+    ========================================= */
+
+    function openProfile() {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      const name =
+        userName.textContent ||
+        currentUser.displayName ||
+        "User";
+
+
+      const email =
+        currentUser.email ||
+        "";
+
+
+      const role =
+        currentRole === "admin"
+          ? "ADMIN"
+          : "MEMBER";
+
+
+      profileAvatar.src =
+        currentUser.photoURL ||
+        "https://www.gravatar.com/avatar/?d=mp";
+
+
+      profileDisplayName.textContent =
+        name;
+
+
+      profileDisplayEmail.textContent =
+        email;
+
+
+      profileDisplayRole.textContent =
+        role;
+
+
+      profileNameInput.value =
+        name;
+
+
+      profileEmailBox.textContent =
+        email;
+
+
+      profileRoleBox.textContent =
+        role;
+
+
+      profileStatus.textContent =
+        "";
+
+      profileStatus.className =
+        "profile-status";
+
+
+      profileOverlay.classList.remove(
+        "hidden"
+      );
+
+
+      setTimeout(
+        () => {
+
+          profileNameInput.focus();
+
+        },
+        100
+      );
+    }
+
+
+    function closeProfile() {
+
+      profileOverlay.classList.add(
+        "hidden"
+      );
+    }
+
+
+    async function saveProfile() {
+
+      if (!currentUser) {
+        return;
+      }
+
+
+      const newName =
+        profileNameInput.value.trim();
+
+
+      if (!newName) {
+
+        profileStatus.textContent =
+          "Nama tidak boleh kosong.";
+
+        profileStatus.className =
+          "profile-status error";
+
+        return;
+      }
+
+
+      if (newName.length > 60) {
+
+        profileStatus.textContent =
+          "Nama maksimal 60 karakter.";
+
+        profileStatus.className =
+          "profile-status error";
+
+        return;
+      }
+
+
+      saveProfileButton.disabled =
+        true;
+
+
+      saveProfileButton.textContent =
+        "Menyimpan...";
+
+
+      try {
+
+        const ref =
+          doc(
+            db,
+            "users",
+            currentUser.uid
+          );
+
+
+        await updateDoc(
+          ref,
+          {
+
+            name:
+              newName,
+
+            updatedAt:
+              serverTimestamp()
+
+          }
+        );
+
+
+        userName.textContent =
+          newName;
+
+
+        profileDisplayName.textContent =
+          newName;
+
+
+        profileStatus.textContent =
+          "Nama berhasil diperbarui.";
+
+
+        profileStatus.className =
+          "profile-status success";
+
+
+      } catch (error) {
+
+        console.error(
+          "Update profile error:",
+          error
+        );
+
+
+        profileStatus.textContent =
+          "Gagal menyimpan: " +
+          (
+            error.code ||
+            error.message
+          );
+
+
+        profileStatus.className =
+          "profile-status error";
+
+
+      } finally {
+
+        saveProfileButton.disabled =
+          false;
+
+
+        saveProfileButton.textContent =
+          "Simpan Perubahan";
+      }
+    }
+
+
+    /* =========================================
+       GAPI
+    ========================================= */
 
     function gapiLoaded() {
 
@@ -2204,16 +3133,22 @@
       try {
 
         await gapi.client.init({
+
           discoveryDocs: [
             DISCOVERY_DOC
           ]
+
         });
 
-        gapiInited = true;
+
+        gapiInited =
+          true;
+
 
         console.log(
           "Google API siap."
         );
+
 
       } catch (error) {
 
@@ -2225,9 +3160,9 @@
     }
 
 
-    /* =====================================================
-       GOOGLE IDENTITY SERVICES
-    ===================================================== */
+    /* =========================================
+       GIS
+    ========================================= */
 
     function gisLoaded() {
 
@@ -2257,11 +3192,14 @@
           scope:
             SCOPES,
 
-          callback: ""
+          callback:
+            ""
         });
 
 
-      gisInited = true;
+      gisInited =
+        true;
+
 
       console.log(
         "Google OAuth siap."
@@ -2269,9 +3207,9 @@
     }
 
 
-    /* =====================================================
-       CONNECT GOOGLE DRIVE
-    ===================================================== */
+    /* =========================================
+       DRIVE CONNECT
+    ========================================= */
 
     function connectDrive() {
 
@@ -2286,69 +3224,80 @@
           "error"
         );
 
-        return Promise.resolve(false);
+        return Promise.resolve(
+          false
+        );
       }
 
 
-      return new Promise(resolve => {
+      return new Promise(
+        resolve => {
 
-        tokenClient.callback =
-          response => {
+          tokenClient.callback =
+            response => {
 
-            console.log(
-              "Drive OAuth:",
-              response
-            );
-
-
-            if (
-              response.error ||
-              !response.access_token
-            ) {
-
-              console.error(
-                "Drive OAuth gagal:",
+              console.log(
+                "Drive OAuth response:",
                 response
               );
 
+
+              if (
+                response.error ||
+                !response.access_token
+              ) {
+
+                console.error(
+                  "Drive OAuth gagal:",
+                  response
+                );
+
+
+                status(
+                  "Izin Google Drive tidak diberikan.",
+                  "error"
+                );
+
+
+                resolve(
+                  false
+                );
+
+                return;
+              }
+
+
+              accessToken =
+                response.access_token;
+
+
+              gapi.client.setToken({
+                access_token:
+                  accessToken
+              });
+
+
+              setDriveConnected();
+
+
               status(
-                "Izin Google Drive tidak diberikan.",
-                "error"
+                "Google Drive berhasil terhubung.",
+                "success"
               );
 
-              resolve(false);
 
-              return;
-            }
-
-
-            accessToken =
-              response.access_token;
+              resolve(
+                true
+              );
+            };
 
 
-            gapi.client.setToken({
-              access_token:
-                accessToken
-            });
+          tokenClient.requestAccessToken({
+            prompt: "consent"
+          });
 
-
-            setDriveConnected();
-
-            status(
-              "Google Drive berhasil terhubung.",
-              "success"
-            );
-
-
-            resolve(true);
-          };
-
-
-        tokenClient.requestAccessToken({
-          prompt: "consent"
-        });
-
-      });
+        }
+      );
     }
 
 
@@ -2358,14 +3307,18 @@
         "connected"
       );
 
+
       driveStatusText.textContent =
         "Google Drive terhubung";
+
 
       driveStatusDetail.textContent =
         "Drive siap digunakan untuk file TXT.";
 
+
       connectDriveButton.textContent =
         "Terhubung ✓";
+
 
       connectDriveButton.classList.remove(
         "primary"
@@ -2379,14 +3332,18 @@
         "connected"
       );
 
+
       driveStatusText.textContent =
         "Google Drive belum terhubung";
+
 
       driveStatusDetail.textContent =
         "Hubungkan Drive untuk membuat dan membaca file.";
 
+
       connectDriveButton.textContent =
         "Hubungkan Google Drive";
+
 
       connectDriveButton.classList.add(
         "primary"
@@ -2394,14 +3351,15 @@
     }
 
 
-    /* =====================================================
+    /* =========================================
        CREATE TXT
-    ===================================================== */
+    ========================================= */
 
     async function createTxtFile() {
 
       const name =
         fileName.value.trim();
+
 
       const content =
         fileContent.value;
@@ -2433,7 +3391,9 @@
       }
 
 
-      createButton.disabled = true;
+      createButton.disabled =
+        true;
+
 
       createButton.textContent =
         "Menyiapkan...";
@@ -2446,6 +3406,7 @@
           const connected =
             await connectDrive();
 
+
           if (!connected) {
 
             throw new Error(
@@ -2457,6 +3418,7 @@
 
         let finalName =
           name;
+
 
         if (
           !finalName
@@ -2479,16 +3441,19 @@
 
           mimeType:
             "text/plain"
+
         };
 
 
         const boundary =
           "-------314159265358979323846";
 
+
         const delimiter =
           "\r\n--" +
           boundary +
           "\r\n";
+
 
         const closeDelimiter =
           "\r\n--" +
@@ -2501,7 +3466,9 @@
 
           "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
 
-          JSON.stringify(metadata) +
+          JSON.stringify(
+            metadata
+          ) +
 
           delimiter +
 
@@ -2514,12 +3481,17 @@
 
         const response =
           await fetch(
+
             "https://www.googleapis.com/upload/drive/v3/files" +
+
             "?uploadType=multipart" +
+
             "&fields=id,name,mimeType,modifiedTime,webViewLink",
+
             {
 
-              method: "POST",
+              method:
+                "POST",
 
               headers: {
 
@@ -2530,20 +3502,26 @@
                 "Content-Type":
                   "multipart/related; boundary=" +
                   boundary
+
               },
 
-              body
+              body:
+                body
             }
           );
 
 
         if (
-          response.status === 401
+          response.status ===
+          401
         ) {
 
-          accessToken = null;
+          accessToken =
+            null;
+
 
           setDriveDisconnected();
+
 
           throw new Error(
             "Sesi Google Drive telah habis. Hubungkan Drive lagi."
@@ -2551,14 +3529,18 @@
         }
 
 
-        if (!response.ok) {
+        if (
+          !response.ok
+        ) {
 
           const errorText =
             await response.text();
 
+
           console.error(
             errorText
           );
+
 
           throw new Error(
             "Google Drive menolak pembuatan file."
@@ -2571,16 +3553,21 @@
 
 
         status(
-          `Berhasil membuat ${data.name}`,
+          "Berhasil membuat " +
+          data.name,
           "success"
         );
 
 
-        fileName.value = "";
-        fileContent.value = "";
+        fileName.value =
+          "";
+
+        fileContent.value =
+          "";
 
 
         loadRecentFiles();
+
 
       } catch (error) {
 
@@ -2589,16 +3576,19 @@
           error
         );
 
+
         status(
           error.message ||
           "Gagal membuat file.",
           "error"
         );
 
+
       } finally {
 
         createButton.disabled =
           false;
+
 
         createButton.textContent =
           "Buat .TXT";
@@ -2606,9 +3596,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================================
        RECENT FILES
-    ===================================================== */
+    ========================================= */
 
     async function loadRecentFiles() {
 
@@ -2636,7 +3626,8 @@
         const response =
           await gapi.client.drive.files.list({
 
-            pageSize: 10,
+            pageSize:
+              10,
 
             orderBy:
               "modifiedTime desc",
@@ -2646,11 +3637,13 @@
 
             q:
               "trashed = false"
+
           });
 
 
         const files =
-          response.result.files || [];
+          response.result.files ||
+          [];
 
 
         if (!files.length) {
@@ -2666,76 +3659,80 @@
 
 
         fileList.innerHTML =
-          files.map(file => {
+          files
+            .map(
+              file => {
 
-            const date =
-              file.modifiedTime
-                ? new Date(
-                    file.modifiedTime
-                  ).toLocaleString(
-                    "id-ID"
-                  )
-                : "-";
+                const date =
+                  file.modifiedTime
+                    ? new Date(
+                        file.modifiedTime
+                      ).toLocaleString(
+                        "id-ID"
+                      )
+                    : "-";
 
 
-            return `
+                return `
 
-              <div class="file-item">
+                  <div class="file-item">
 
-                <div class="file-left">
+                    <div class="file-left">
 
-                  <div class="file-icon">
-                    TXT
-                  </div>
+                      <div class="file-icon">
+                        TXT
+                      </div>
 
-                  <div style="min-width:0">
+                      <div style="min-width:0">
 
-                    <div class="file-name">
-                      ${escapeHtml(
-                        file.name
-                      )}
+                        <div class="file-name">
+                          ${escapeHtml(
+                            file.name
+                          )}
+                        </div>
+
+                        <div class="file-date">
+                          Diubah ${date}
+                        </div>
+
+                      </div>
+
                     </div>
 
-                    <div class="file-date">
-                      Diubah ${date}
-                    </div>
+                    <button
+                      class="btn"
+                      data-open-file="${file.id}"
+                    >
+                      Buka
+                    </button>
 
                   </div>
 
-                </div>
-
-
-                <button
-                  class="btn"
-                  data-open-file="${file.id}"
-                >
-                  Buka
-                </button>
-
-              </div>
-
-            `;
-
-          }).join("");
+                `;
+              }
+            )
+            .join("");
 
 
         document
           .querySelectorAll(
             "[data-open-file]"
           )
-          .forEach(button => {
+          .forEach(
+            button => {
 
-            button.addEventListener(
-              "click",
-              () => {
+              button.addEventListener(
+                "click",
+                () => {
 
-                openDriveFile(
-                  button.dataset.openFile
-                );
-              }
-            );
+                  openDriveFile(
+                    button.dataset.openFile
+                  );
+                }
+              );
 
-          });
+            }
+          );
 
 
       } catch (error) {
@@ -2747,10 +3744,12 @@
 
 
         if (
-          error.status === 401
+          error.status ===
+          401
         ) {
 
-          accessToken = null;
+          accessToken =
+            null;
 
           setDriveDisconnected();
         }
@@ -2765,9 +3764,9 @@
     }
 
 
-    /* =====================================================
-       OPEN FILE
-    ===================================================== */
+    /* =========================================
+       OPEN DRIVE FILE
+    ========================================= */
 
     async function openDriveFile(
       fileId
@@ -2778,10 +3777,12 @@
         const response =
           await gapi.client.drive.files.get({
 
-            fileId,
+            fileId:
+              fileId,
 
             fields:
               "id,name,mimeType,webViewLink"
+
           });
 
 
@@ -2789,7 +3790,9 @@
           response.result;
 
 
-        if (file.webViewLink) {
+        if (
+          file.webViewLink
+        ) {
 
           window.open(
             file.webViewLink,
@@ -2813,6 +3816,7 @@
           error
         );
 
+
         status(
           "File tidak dapat dibuka.",
           "error"
@@ -2821,24 +3825,46 @@
     }
 
 
-    /* =====================================================
+    /* =========================================
        ESCAPE HTML
-    ===================================================== */
+    ========================================= */
 
-    function escapeHtml(value) {
+    function escapeHtml(
+      value
+    ) {
 
       return String(value)
-        .replaceAll("&", "&amp;")
-        .replaceAll("<", "&lt;")
-        .replaceAll(">", "&gt;")
-        .replaceAll('"', "&quot;")
-        .replaceAll("'", "&#039;");
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
     }
 
 
-    /* =====================================================
+    /* =========================================
        LOGOUT
-    ===================================================== */
+    ========================================= */
 
     async function logout() {
 
@@ -2863,7 +3889,9 @@
         }
 
 
-        accessToken = null;
+        accessToken =
+          null;
+
 
         setDriveDisconnected();
 
@@ -2874,11 +3902,15 @@
           gapi.client
         ) {
 
-          gapi.client.setToken(null);
+          gapi.client.setToken(
+            null
+          );
         }
 
 
-        await signOut(auth);
+        await signOut(
+          auth
+        );
 
 
       } catch (error) {
@@ -2891,9 +3923,9 @@
     }
 
 
-    /* =====================================================
+    /* =========================================
        EVENTS
-    ===================================================== */
+    ========================================= */
 
     loginButton.addEventListener(
       "click",
@@ -2904,6 +3936,45 @@
     logoutButton.addEventListener(
       "click",
       logout
+    );
+
+
+    profileButton.addEventListener(
+      "click",
+      openProfile
+    );
+
+
+    closeProfileButton.addEventListener(
+      "click",
+      closeProfile
+    );
+
+
+    cancelProfileButton.addEventListener(
+      "click",
+      closeProfile
+    );
+
+
+    saveProfileButton.addEventListener(
+      "click",
+      saveProfile
+    );
+
+
+    profileOverlay.addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          profileOverlay
+        ) {
+
+          closeProfile();
+        }
+      }
     );
 
 
@@ -2923,8 +3994,11 @@
       "click",
       () => {
 
-        fileName.value = "";
-        fileContent.value = "";
+        fileName.value =
+          "";
+
+        fileContent.value =
+          "";
 
         status("");
       }
@@ -2959,70 +4033,80 @@
     );
 
 
-    /* =====================================================
+    /* =========================================
        TABS
-    ===================================================== */
+    ========================================= */
 
     document
       .querySelectorAll(".tab")
-      .forEach(tab => {
+      .forEach(
+        tab => {
 
-        tab.addEventListener(
-          "click",
-          () => {
+          tab.addEventListener(
+            "click",
+            () => {
 
-            document
-              .querySelectorAll(".tab")
-              .forEach(item => {
+              document
+                .querySelectorAll(".tab")
+                .forEach(
+                  item => {
 
-                item.classList.remove(
-                  "active"
+                    item.classList.remove(
+                      "active"
+                    );
+                  }
                 );
-              });
 
 
-            document
-              .querySelectorAll(".tab-panel")
-              .forEach(panel => {
+              document
+                .querySelectorAll(
+                  ".tab-panel"
+                )
+                .forEach(
+                  panel => {
 
-                panel.classList.remove(
-                  "active"
+                    panel.classList.remove(
+                      "active"
+                    );
+                  }
                 );
-              });
 
 
-            tab.classList.add(
-              "active"
-            );
+              tab.classList.add(
+                "active"
+              );
 
 
-            const target =
-              $("tab-" +
-                tab.dataset.tab);
+              const target =
+                $(
+                  "tab-" +
+                  tab.dataset.tab
+                );
 
 
-            target.classList.add(
-              "active"
-            );
+              target.classList.add(
+                "active"
+              );
 
 
-            if (
-              tab.dataset.tab ===
-              "recent"
-            ) {
+              if (
+                tab.dataset.tab ===
+                "recent"
+              ) {
 
-              loadRecentFiles();
+                loadRecentFiles();
+              }
+
             }
+          );
 
-          }
-        );
-
-      });
+        }
+      );
 
 
-    /* =====================================================
+    /* =========================================
        CTRL + ENTER
-    ===================================================== */
+    ========================================= */
 
     fileContent.addEventListener(
       "keydown",
@@ -3041,65 +4125,97 @@
     );
 
 
-    /* =====================================================
-       GOOGLE API LOAD
-    ===================================================== */
+    /* =========================================
+       ESC PROFILE
+    ========================================= */
+
+    document.addEventListener(
+      "keydown",
+      event => {
+
+        if (
+          event.key === "Escape" &&
+          !profileOverlay.classList.contains(
+            "hidden"
+          )
+        ) {
+
+          closeProfile();
+        }
+      }
+    );
+
+
+    /* =========================================
+       GOOGLE API LOADER
+    ========================================= */
 
     function waitForGoogleAPIs() {
 
-      let attempts = 0;
+      let attempts =
+        0;
+
 
       const timer =
-        setInterval(() => {
+        setInterval(
+          () => {
 
-          attempts++;
-
-
-          if (
-            typeof gapi !==
-            "undefined" &&
-            !gapiInited
-          ) {
-
-            gapiLoaded();
-          }
+            attempts++;
 
 
-          if (
-            typeof google !==
-            "undefined" &&
-            !gisInited
-          ) {
+            if (
+              typeof gapi !==
+              "undefined" &&
+              !gapiInited
+            ) {
 
-            gisLoaded();
-          }
-
-
-          if (
-            gapiInited &&
-            gisInited
-          ) {
-
-            clearInterval(timer);
-
-            console.log(
-              "Google Drive OAuth siap digunakan."
-            );
-          }
+              gapiLoaded();
+            }
 
 
-          if (
-            attempts > 100
-          ) {
+            if (
+              typeof google !==
+              "undefined" &&
+              !gisInited
+            ) {
 
-            clearInterval(timer);
+              gisLoaded();
+            }
 
-            console.error(
-              "Google API timeout."
-            );
-          }
 
-        }, 200);
+            if (
+              gapiInited &&
+              gisInited
+            ) {
+
+              clearInterval(
+                timer
+              );
+
+
+              console.log(
+                "Google Drive OAuth siap digunakan."
+              );
+            }
+
+
+            if (
+              attempts > 100
+            ) {
+
+              clearInterval(
+                timer
+              );
+
+
+              console.error(
+                "Google API timeout."
+              );
+            }
+
+          },
+          200
+        );
     }
 
 
