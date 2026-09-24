@@ -1,0 +1,10 @@
+[
+  {
+    "title": "Lagu 01",
+    "src": "./music/01.mp3"
+  },
+  {
+    "title": "Lagu 02",
+    "src": "./music/02.mp3"
+  }
+]
