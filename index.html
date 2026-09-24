@@ -116,7 +116,6 @@
 
     .loading-text {
       color: var(--muted);
-
       font-size: 9px;
     }
 
@@ -161,7 +160,6 @@
     .login-logo img {
       width: 100%;
       height: 100%;
-
       object-fit: cover;
     }
 
@@ -222,7 +220,6 @@
 
     .app {
       display: none;
-
       min-height: 100vh;
     }
 
@@ -898,13 +895,12 @@
     }
 
     /* ================================
-       MODAL
+       PROFILE MODAL
     ================================= */
 
     .modal {
       position: fixed;
       inset: 0;
-
       z-index: 5000;
 
       display: none;
@@ -912,9 +908,9 @@
       align-items: center;
       justify-content: center;
 
-      padding: 18px;
+      padding: 16px;
 
-      background: rgba(0, 0, 0, .7);
+      background: rgba(0, 0, 0, .72);
     }
 
     .modal.open {
@@ -922,7 +918,7 @@
     }
 
     .modal-box {
-      width: min(350px, 100%);
+      width: min(360px, 100%);
 
       overflow: hidden;
 
@@ -930,14 +926,19 @@
       border-radius: 6px;
 
       background: var(--panel);
+
+      box-shadow:
+        0 12px 35px rgba(0, 0, 0, .35);
     }
 
     .modal-header {
+      height: 45px;
+
       display: flex;
       align-items: center;
       justify-content: space-between;
 
-      padding: 12px 13px;
+      padding: 0 12px;
 
       border-bottom: 1px solid var(--border);
     }
@@ -946,11 +947,17 @@
       margin: 0;
 
       font-size: 11px;
+      font-weight: 700;
     }
 
     .close-button {
       width: 26px;
       height: 26px;
+
+      display: grid;
+      place-items: center;
+
+      padding: 0;
 
       border: 1px solid var(--border);
       border-radius: 5px;
@@ -967,40 +974,124 @@
       color: var(--text);
     }
 
+    /* PROFILE CONTENT */
+
     .profile-content {
       padding: 14px;
     }
 
+    .profile-user {
+      display: flex;
+      align-items: center;
+
+      gap: 10px;
+
+      padding-bottom: 13px;
+
+      border-bottom: 1px solid var(--border);
+    }
+
     .profile-image {
-      width: 46px;
-      height: 46px;
+      width: 43px;
+      height: 43px;
+
+      flex: 0 0 43px;
 
       display: block;
 
-      margin-bottom: 9px;
-
+      border: 1px solid var(--border);
       border-radius: 50%;
 
       object-fit: cover;
+
+      background: var(--panel-2);
+    }
+
+    .profile-user-info {
+      min-width: 0;
+    }
+
+    .profile-user-name {
+      overflow: hidden;
+
+      color: var(--text);
+
+      font-size: 10px;
+      font-weight: 700;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
+    }
+
+    .profile-user-email {
+      overflow: hidden;
+
+      margin-top: 3px;
+
+      color: var(--muted);
+
+      font-size: 8px;
+
+      text-overflow: ellipsis;
+      white-space: nowrap;
     }
 
     .role-label {
-      display: inline-block;
+      display: inline-flex;
+      align-items: center;
 
-      margin-bottom: 13px;
+      height: 20px;
+
+      margin-top: 7px;
+      padding: 0 7px;
+
+      border: 1px solid rgba(228, 86, 50, .25);
+      border-radius: 4px;
+
+      background: rgba(228, 86, 50, .06);
 
       color: var(--orange);
 
-      font-size: 8px;
+      font-size: 7px;
       font-weight: 700;
     }
 
+    .profile-form {
+      padding-top: 13px;
+    }
+
+    .profile-form .field {
+      margin-bottom: 10px;
+    }
+
+    .profile-form .field:last-child {
+      margin-bottom: 0;
+    }
+
     .profile-actions {
-      display: flex;
+      display: grid;
+
+      grid-template-columns: 1fr auto;
 
       gap: 6px;
 
-      margin-top: 12px;
+      margin-top: 13px;
+    }
+
+    .profile-actions .create-button {
+      height: 34px;
+    }
+
+    .profile-actions .clear-button {
+      height: 34px;
+
+      padding: 0 13px;
+    }
+
+    #profileStatus {
+      min-height: 13px;
+
+      margin-top: 7px;
     }
 
     /* ================================
@@ -1011,7 +1102,6 @@
 
       .topbar {
         height: 55px;
-
         padding: 0 10px;
       }
 
@@ -1055,6 +1145,7 @@
 
       .drive-button {
         font-size: 7px;
+
         padding: 0 8px;
       }
 
@@ -1112,13 +1203,16 @@
     id="loadingScreen"
     class="loading-screen"
   >
+
     <div class="loading-box">
 
       <div class="loading-logo">
+
         <img
           src="https://files.catbox.moe/brdrmx.png"
           alt="Rojak DriveK1t"
         >
+
       </div>
 
       <div
@@ -1129,6 +1223,7 @@
       </div>
 
     </div>
+
   </div>
 
 
@@ -1144,10 +1239,12 @@
     <div class="login-box">
 
       <div class="login-logo">
+
         <img
           src="https://files.catbox.moe/brdrmx.png"
           alt="Rojak DriveK1t"
         >
+
       </div>
 
       <h1>
@@ -1192,10 +1289,12 @@
       <div class="brand">
 
         <div class="brand-logo">
+
           <img
             src="https://files.catbox.moe/brdrmx.png"
             alt="Rojak DriveK1t"
           >
+
         </div>
 
         <div class="brand-text">
@@ -1230,11 +1329,13 @@
           type="button"
           title="Profile"
         >
+
           <img
             id="topAvatar"
             src="https://www.gravatar.com/avatar/?d=mp"
             alt="Profile"
           >
+
         </button>
 
       </div>
@@ -1538,78 +1639,108 @@
 
       <div class="profile-content">
 
-        <img
-          id="profileAvatar"
-          class="profile-image"
-          src="https://www.gravatar.com/avatar/?d=mp"
-          alt="Profile"
-        >
+        <!-- USER INFO -->
 
+        <div class="profile-user">
 
-        <div
-          id="profileRole"
-          class="role-label"
-        >
-          MEMBER
-        </div>
-
-
-        <div class="field">
-
-          <label for="profileName">
-            Name
-          </label>
-
-          <input
-            id="profileName"
-            class="input"
-            type="text"
+          <img
+            id="profileAvatar"
+            class="profile-image"
+            src="https://www.gravatar.com/avatar/?d=mp"
+            alt="Profile"
           >
 
-        </div>
+          <div class="profile-user-info">
 
+            <div
+              id="profileUserName"
+              class="profile-user-name"
+            >
+              User
+            </div>
 
-        <div class="field">
+            <div
+              id="profileUserEmail"
+              class="profile-user-email"
+            >
+              -
+            </div>
 
-          <label for="profileEmail">
-            Email
-          </label>
+            <div
+              id="profileRole"
+              class="role-label"
+            >
+              MEMBER
+            </div>
 
-          <input
-            id="profileEmail"
-            class="input"
-            type="text"
-            disabled
-          >
+          </div>
 
         </div>
 
 
-        <div class="profile-actions">
+        <!-- FORM -->
 
-          <button
-            id="saveProfile"
-            class="create-button"
-            type="button"
-          >
-            Save
-          </button>
+        <div class="profile-form">
 
-          <button
-            id="closeProfile2"
-            class="clear-button"
-            type="button"
-          >
-            Close
-          </button>
+          <div class="field">
+
+            <label for="profileName">
+              Name
+            </label>
+
+            <input
+              id="profileName"
+              class="input"
+              type="text"
+              autocomplete="name"
+            >
+
+          </div>
+
+
+          <div class="field">
+
+            <label for="profileEmail">
+              Email
+            </label>
+
+            <input
+              id="profileEmail"
+              class="input"
+              type="text"
+              disabled
+            >
+
+          </div>
+
+
+          <div class="profile-actions">
+
+            <button
+              id="saveProfile"
+              class="create-button"
+              type="button"
+            >
+              Save Changes
+            </button>
+
+            <button
+              id="closeProfile2"
+              class="clear-button"
+              type="button"
+            >
+              Close
+            </button>
+
+          </div>
+
+
+          <div
+            id="profileStatus"
+            class="status"
+          ></div>
 
         </div>
-
-
-        <div
-          id="profileStatus"
-          class="status"
-        ></div>
 
       </div>
 
@@ -1620,8 +1751,6 @@
 
   <!-- =========================================
        GOOGLE API INITIALIZER
-       PENTING:
-       script ini harus sebelum API Google
   ========================================== -->
 
   <script>
@@ -1629,9 +1758,7 @@
     window.RDK_GOOGLE = {
 
       gapiInited: false,
-
       gisInited: false,
-
       tokenClient: null
 
     };
@@ -1748,15 +1875,11 @@
   </script>
 
 
-  <!-- GOOGLE API -->
-
   <script
     src="https://apis.google.com/js/api.js"
     onload="window.gapiLoaded()"
   ></script>
 
-
-  <!-- GOOGLE IDENTITY -->
 
   <script
     src="https://accounts.google.com/gsi/client"
@@ -1769,10 +1892,6 @@
   ========================================== -->
 
   <script type="module">
-
-    /* =========================================
-       FIREBASE
-    ========================================== */
 
     import {
       auth,
@@ -1863,7 +1982,7 @@
 
 
     /* =========================================
-       CREATE STATUS
+       STATUS
     ========================================== */
 
     function setStatus(
@@ -1879,10 +1998,6 @@
 
     }
 
-
-    /* =========================================
-       DRIVE STATUS
-    ========================================== */
 
     function setDriveStatus(
       text,
@@ -1991,10 +2106,14 @@
         avatar;
 
 
-      $("profileName").value =
+      const displayName =
         user.displayName ||
         user.email?.split("@")[0] ||
         "User";
+
+
+      $("profileName").value =
+        displayName;
 
 
       $("profileEmail").value =
@@ -2002,9 +2121,22 @@
         "";
 
 
+      /* PROFILE HEADER */
+
+      $("profileUserName").textContent =
+        displayName;
+
+
+      $("profileUserEmail").textContent =
+        user.email ||
+        "-";
+
+
       $("profileRole").textContent =
         currentRole.toUpperCase();
 
+
+      /* ADMIN */
 
       $("adminButton").style.display =
         currentRole === "admin"
@@ -2988,6 +3120,9 @@
           "open"
         );
 
+      $("profileStatus").textContent =
+        "";
+
     }
 
 
@@ -3002,6 +3137,10 @@
     $("closeProfile2").onclick =
       closeProfile;
 
+
+    /* =========================================
+       SAVE PROFILE
+    ========================================== */
 
     $("saveProfile").onclick =
       async () => {
@@ -3034,6 +3173,14 @@
 
         try {
 
+          $("saveProfile").disabled =
+            true;
+
+
+          $("saveProfile").textContent =
+            "Saving...";
+
+
           await updateDoc(
 
             doc(
@@ -3055,6 +3202,10 @@
           );
 
 
+          $("profileUserName").textContent =
+            name;
+
+
           $("profileStatus").textContent =
             "Profil berhasil disimpan.";
 
@@ -3074,6 +3225,16 @@
 
           $("profileStatus").className =
             "status error";
+
+
+        } finally {
+
+          $("saveProfile").disabled =
+            false;
+
+
+          $("saveProfile").textContent =
+            "Save Changes";
 
         }
 
@@ -3248,7 +3409,28 @@
 
 
     /* =========================================
-       CLOSE MODAL
+       MODAL CLICK OUTSIDE
+    ========================================== */
+
+    $("profileModal").addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          $("profileModal")
+        ) {
+
+          closeProfile();
+
+        }
+
+      }
+    );
+
+
+    /* =========================================
+       ESCAPE
     ========================================== */
 
     document.addEventListener(
