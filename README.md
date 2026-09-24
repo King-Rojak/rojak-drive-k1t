@@ -39,3 +39,32 @@ Aktifkan Google Authentication dan Firestore. Deploy `firestore.rules`. Setelah 
 
 ## Music
 Admin mengisi judul, artist, MP3, dan cover. MP3/cover masuk GitHub melalui `/api/music`; metadata masuk collection Firestore `music`.
+
+## FIX 2 — GitHub Diagnostic
+
+Versi ini memperbaiki `/api/music` agar memeriksa GitHub sebelum upload:
+
+1. Validasi `GITHUB_TOKEN`.
+2. Menampilkan akun GitHub yang terautentikasi.
+3. Memeriksa `King-Rojak/rojak-drive-k1t`.
+4. Memeriksa branch `main`.
+5. Mengembalikan pesan khusus untuk 401/403/404.
+6. Upload memakai GitHub REST API dengan header API version.
+
+GitHub fine-grained token harus memiliki repository `King-Rojak/rojak-drive-k1t` dan `Contents: Read and write`.
+
+### Batas file FIX 2
+- MP3: maksimal 3.5 MB
+- Cover: maksimal 600 KB
+- Total multipart dijaga di bawah batas payload Vercel.
+
+### Diagnostic endpoint
+Admin yang sudah login dapat memeriksa:
+
+`GET /api/music?diagnose=1`
+
+Header:
+
+`Authorization: Bearer <Firebase ID token>`
+
+Jangan pernah memasukkan `GITHUB_TOKEN` ke frontend.

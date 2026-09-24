@@ -20,4 +20,38 @@ async function loadMusic(){const s=await getDocs(query(collection(db,"music"),or
 $("form").onsubmit=async e=>{e.preventDefault();const b=$("upload"),mp3=$("mp3").files[0],cover=$("cover").files[0];if(!mp3||!cover)return;if(mp3.size>4*1024*1024){alert("MP3 maksimal 4 MB.");return}b.disabled=true;b.textContent="Mengupload...";try{const token=await me.getIdToken();const f=new FormData();f.append("title",$("title").value);f.append("artist",$("artist").value);f.append("mp3",mp3);f.append("cover",cover);const r=await fetch("/api/music",{method:"POST",headers:{Authorization:"Bearer "+token},body:f});const d=await r.json();if(!r.ok)throw new Error(d.error||"Upload gagal");$("form").reset();await loadMusic();alert("Music berhasil ditambahkan.")}catch(e){alert(e.message)}finally{b.disabled=false;b.textContent="+ Upload Music"}};
 $("back").onclick=()=>location.href="index.html";
 onAuthStateChanged(auth,async user=>{if(!user){try{const p=new GoogleAuthProvider();p.setCustomParameters({prompt:"select_account"});await signInWithPopup(auth,p)}catch(e){alert("Login Admin gagal.");location.href="index.html"}return}me=user;try{await checkAdmin();await Promise.all([loadUsers(),loadMusic()])}catch(e){console.error(e)}});
-</script></body></html>
+</script>
+<div id="githubDiagnostic" style="display:none;position:fixed;inset:0;background:rgba(0,0,0,.65);z-index:9999;align-items:center;justify-content:center;padding:20px;">
+  <div style="width:min(520px,100%);background:#151614;border:1px solid #292a27;border-radius:10px;padding:18px;box-shadow:0 20px 60px rgba(0,0,0,.45);">
+    <div style="display:flex;justify-content:space-between;align-items:center;gap:10px;">
+      <strong>GitHub Diagnostic</strong>
+      <button id="closeGithubDiagnostic" type="button">Tutup</button>
+    </div>
+    <pre id="githubDiagnosticText" style="margin:14px 0 0;white-space:pre-wrap;word-break:break-word;color:#bdbdbd;font-size:12px;line-height:1.6;"></pre>
+  </div>
+</div>
+<script>
+window.openGithubDiagnostic = async function () {
+  const box = document.getElementById('githubDiagnostic');
+  const text = document.getElementById('githubDiagnosticText');
+  box.style.display = 'flex';
+  text.textContent = 'Mengecek GitHub...';
+  try {
+    const user = window.firebaseAuth?.currentUser;
+    if (!user) throw new Error('Login Firebase belum tersedia.');
+    const token = await user.getIdToken(true);
+    const response = await fetch('/api/music?diagnose=1', {
+      headers: { Authorization: 'Bearer ' + token }
+    });
+    const data = await response.json();
+    text.textContent = JSON.stringify(data, null, 2);
+  } catch (error) {
+    text.textContent = error.message || String(error);
+  }
+};
+window.addEventListener('DOMContentLoaded', function(){
+  const close = document.getElementById('closeGithubDiagnostic');
+  if (close) close.onclick = () => document.getElementById('githubDiagnostic').style.display='none';
+});
+</script>
+</body></html>
