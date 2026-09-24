@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="id">
+
 <head>
 
   <meta charset="UTF-8">
@@ -9,17 +10,12 @@
     content="width=device-width, initial-scale=1.0"
   >
 
-  <title>Rojak DriveKit - Admin</title>
+  <title>Rojak DriveK1t · Admin</title>
 
   <link
     rel="icon"
     type="image/png"
     href="https://files.catbox.moe/brdrmx.png"
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap"
-    rel="stylesheet"
   >
 
   <style>
@@ -43,23 +39,15 @@
       --red:#d8665c;
     }
 
-
     * {
       box-sizing:border-box;
     }
-
-
-    html {
-      background:var(--bg);
-    }
-
 
     body {
       margin:0;
       min-height:100vh;
 
       background:var(--bg);
-
       color:var(--text);
 
       font-family:
@@ -71,21 +59,26 @@
         sans-serif;
     }
 
-
     button,
+    input,
     select {
       font:inherit;
     }
-
 
     button {
       cursor:pointer;
     }
 
+    button:disabled {
+      opacity:.5;
+      cursor:not-allowed;
+    }
 
-    /* =========================
-       TOPBAR
-    ========================== */
+    .hidden {
+      display:none !important;
+    }
+
+    /* TOPBAR */
 
     .topbar {
       height:56px;
@@ -101,7 +94,6 @@
       background:var(--surface);
     }
 
-
     .brand {
       display:flex;
       align-items:center;
@@ -112,33 +104,22 @@
       font-weight:700;
     }
 
-
     .brand-mark {
       width:30px;
       height:30px;
 
-      display:grid;
-      place-items:center;
-
       overflow:hidden;
 
       border:1px solid var(--line);
-
       border-radius:7px;
-
-      background:var(--surface2);
     }
-
 
     .brand-mark img {
       width:100%;
       height:100%;
 
-      display:block;
-
       object-fit:cover;
     }
-
 
     .back {
       height:31px;
@@ -146,57 +127,41 @@
       padding:0 10px;
 
       border:1px solid var(--line);
-
       border-radius:6px;
 
       background:var(--surface2);
-
       color:var(--muted);
 
       font-size:9px;
       font-weight:600;
     }
 
-
     .back:hover {
-      border-color:var(--line2);
-
       color:var(--text);
-
-      background:var(--surface3);
+      border-color:var(--line2);
     }
 
-
-    /* =========================
-       MAIN
-    ========================== */
+    /* CONTAINER */
 
     .container {
-      width:min(
-        1040px,
-        calc(100% - 32px)
-      );
+      width:min(1040px,calc(100% - 32px));
 
       margin:auto;
 
       padding:38px 0 60px;
     }
 
-
     .page-head {
       margin-bottom:22px;
     }
-
 
     .page-head h1 {
       margin:0;
 
       font-size:26px;
-      font-weight:700;
 
       letter-spacing:-.8px;
     }
-
 
     .page-head p {
       margin:6px 0 0;
@@ -204,13 +169,9 @@
       color:var(--muted);
 
       font-size:10px;
-      line-height:1.5;
     }
 
-
-    /* =========================
-       SUMMARY
-    ========================== */
+    /* SUMMARY */
 
     .summary {
       display:flex;
@@ -228,14 +189,12 @@
       font-size:9px;
     }
 
-
     .summary-item {
       display:flex;
       align-items:center;
 
       gap:5px;
     }
-
 
     .summary-value {
       color:var(--text);
@@ -244,7 +203,6 @@
       font-weight:700;
     }
 
-
     .summary-divider {
       width:1px;
       height:12px;
@@ -252,15 +210,11 @@
       background:var(--line2);
     }
 
+    /* SECTION */
 
-    /* =========================
-       USERS
-    ========================== */
-
-    .users-section {
+    .section {
       margin-top:27px;
     }
-
 
     .section-head {
       display:flex;
@@ -270,7 +224,6 @@
       margin-bottom:9px;
     }
 
-
     .section-title {
       margin:0;
 
@@ -278,28 +231,22 @@
       font-weight:700;
     }
 
-
     .section-info {
       color:var(--muted);
 
       font-size:8px;
     }
 
-
-    /* =========================
-       TABLE
-    ========================== */
+    /* USER TABLE */
 
     .user-table {
       overflow:hidden;
 
       border:1px solid var(--line);
-
       border-radius:8px;
 
       background:var(--surface);
     }
-
 
     .user-table-head {
       display:grid;
@@ -309,9 +256,9 @@
         120px
         210px;
 
-      align-items:center;
-
       min-height:36px;
+
+      align-items:center;
 
       padding:0 12px;
 
@@ -321,10 +268,7 @@
 
       font-size:8px;
       font-weight:700;
-
-      letter-spacing:.3px;
     }
-
 
     .user-row {
       display:grid;
@@ -343,20 +287,13 @@
       border-bottom:1px solid var(--line);
     }
 
-
     .user-row:last-child {
       border-bottom:0;
     }
 
-
     .user-row:hover {
       background:#131314;
     }
-
-
-    /* =========================
-       USER
-    ========================== */
 
     .user-main {
       display:flex;
@@ -367,12 +304,9 @@
       min-width:0;
     }
 
-
     .avatar {
       width:34px;
       height:34px;
-
-      flex:0 0 auto;
 
       border-radius:50%;
 
@@ -381,16 +315,12 @@
       background:var(--surface3);
     }
 
-
     .user-details {
       min-width:0;
     }
 
-
     .name {
       overflow:hidden;
-
-      color:var(--text);
 
       font-size:10px;
       font-weight:700;
@@ -398,7 +328,6 @@
       text-overflow:ellipsis;
       white-space:nowrap;
     }
-
 
     .email {
       overflow:hidden;
@@ -413,53 +342,6 @@
       white-space:nowrap;
     }
 
-
-    /* =========================
-       ROLE
-    ========================== */
-
-    .role-select {
-      width:96px;
-      height:30px;
-
-      padding:0 7px;
-
-      border:1px solid var(--line);
-
-      border-radius:6px;
-
-      outline:none;
-
-      background:var(--surface2);
-
-      color:var(--text);
-
-      font-size:9px;
-    }
-
-
-    .role-select:hover {
-      border-color:var(--line2);
-    }
-
-
-    .role-select:focus {
-      border-color:var(--accent);
-    }
-
-
-    .self-role {
-      color:var(--accent-hover);
-
-      font-size:8px;
-      font-weight:700;
-    }
-
-
-    /* =========================
-       UID
-    ========================== */
-
     .uid {
       overflow:hidden;
 
@@ -467,10 +349,6 @@
 
       font-family:
         ui-monospace,
-        SFMono-Regular,
-        Menlo,
-        Monaco,
-        Consolas,
         monospace;
 
       font-size:8px;
@@ -479,50 +357,383 @@
       white-space:nowrap;
     }
 
+    .role-select {
+      width:96px;
+      height:30px;
 
-    /* =========================
-       MESSAGE
-    ========================== */
+      padding:0 7px;
 
-    .message {
-      padding:40px 15px;
+      border:1px solid var(--line);
+      border-radius:6px;
 
-      text-align:center;
-
-      color:var(--muted);
+      background:var(--surface2);
+      color:var(--text);
 
       font-size:9px;
     }
 
+    .self-role {
+      color:var(--accent-hover);
+
+      font-size:8px;
+      font-weight:700;
+    }
+
+    /* MUSIC */
+
+    .music-panel {
+      overflow:hidden;
+
+      border:1px solid var(--line);
+      border-radius:8px;
+
+      background:var(--surface);
+    }
+
+    .music-panel-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:10px 12px;
+
+      border-bottom:1px solid var(--line);
+    }
+
+    .add-button {
+      height:30px;
+
+      padding:0 10px;
+
+      border:1px solid var(--accent);
+      border-radius:6px;
+
+      background:var(--accent);
+      color:#fff;
+
+      font-size:9px;
+      font-weight:700;
+    }
+
+    .add-button:hover {
+      background:var(--accent-hover);
+    }
+
+    .music-row {
+      display:grid;
+
+      grid-template-columns:
+        46px
+        minmax(0,1fr)
+        150px;
+
+      align-items:center;
+
+      gap:10px;
+
+      min-height:64px;
+
+      padding:8px 12px;
+
+      border-bottom:1px solid var(--line);
+    }
+
+    .music-row:last-child {
+      border-bottom:0;
+    }
+
+    .music-row:hover {
+      background:#131314;
+    }
+
+    .cover {
+      width:42px;
+      height:42px;
+
+      border-radius:5px;
+
+      object-fit:cover;
+
+      background:#222;
+    }
+
+    .song-info {
+      min-width:0;
+    }
+
+    .song-title {
+      overflow:hidden;
+
+      font-size:10px;
+      font-weight:700;
+
+      text-overflow:ellipsis;
+      white-space:nowrap;
+    }
+
+    .song-artist {
+      margin-top:3px;
+
+      color:var(--muted);
+
+      font-size:8px;
+    }
+
+    .song-duration {
+      margin-top:3px;
+
+      color:#666;
+
+      font-size:7px;
+    }
+
+    .music-actions {
+      display:flex;
+      justify-content:flex-end;
+
+      gap:5px;
+    }
+
+    .small-button {
+      height:28px;
+
+      padding:0 8px;
+
+      border:1px solid var(--line);
+      border-radius:5px;
+
+      background:var(--surface2);
+      color:var(--muted);
+
+      font-size:8px;
+    }
+
+    .small-button:hover {
+      border-color:var(--line2);
+      color:var(--text);
+    }
+
+    .small-button.danger:hover {
+      color:var(--red);
+      border-color:#63322e;
+    }
+
+    .empty {
+      padding:38px 15px;
+
+      color:var(--muted);
+
+      text-align:center;
+
+      font-size:9px;
+    }
+
+    /* MODAL */
+
+    .modal {
+      position:fixed;
+
+      inset:0;
+
+      z-index:100;
+
+      display:grid;
+      place-items:center;
+
+      padding:18px;
+
+      background:rgba(0,0,0,.68);
+    }
+
+    .modal-box {
+      width:min(470px,100%);
+
+      max-height:
+        calc(100vh - 36px);
+
+      overflow:auto;
+
+      border:1px solid var(--line);
+
+      border-radius:8px;
+
+      background:var(--surface);
+    }
+
+    .modal-head {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+
+      padding:13px;
+
+      border-bottom:1px solid var(--line);
+    }
+
+    .modal-title {
+      font-size:11px;
+      font-weight:700;
+    }
+
+    .close {
+      width:27px;
+      height:27px;
+
+      border:1px solid var(--line);
+      border-radius:5px;
+
+      background:var(--surface2);
+      color:var(--muted);
+    }
+
+    .modal-body {
+      padding:14px;
+    }
+
+    .form-group {
+      margin-bottom:12px;
+    }
+
+    .form-group label {
+      display:block;
+
+      margin-bottom:5px;
+
+      color:var(--muted);
+
+      font-size:8px;
+      font-weight:600;
+    }
+
+    .input {
+      width:100%;
+      height:36px;
+
+      padding:0 9px;
+
+      border:1px solid var(--line);
+      border-radius:6px;
+
+      outline:none;
+
+      background:#0d0e0c;
+      color:var(--text);
+
+      font-size:9px;
+    }
+
+    .input:focus {
+      border-color:var(--accent);
+    }
+
+    input[type="file"].input {
+      padding:8px;
+    }
+
+    .help {
+      margin-top:4px;
+
+      color:#666;
+
+      font-size:7px;
+      line-height:1.4;
+    }
+
+    .cover-preview {
+      width:70px;
+      height:70px;
+
+      display:none;
+
+      margin-top:8px;
+
+      border-radius:6px;
+
+      object-fit:cover;
+
+      border:1px solid var(--line);
+    }
+
+    .modal-actions {
+      display:flex;
+      justify-content:flex-end;
+
+      gap:6px;
+
+      margin-top:16px;
+    }
+
+    .message {
+      padding:30px;
+
+      color:var(--muted);
+
+      text-align:center;
+
+      font-size:9px;
+    }
 
     .error {
       color:var(--red);
     }
 
+    /* TOAST */
 
-    /* =========================
-       MOBILE
-    ========================== */
+    .toast {
+      position:fixed;
+
+      left:50%;
+      bottom:20px;
+
+      z-index:200;
+
+      transform:
+        translate(-50%,20px);
+
+      opacity:0;
+
+      padding:9px 13px;
+
+      border:1px solid var(--line);
+      border-radius:6px;
+
+      background:#171718;
+
+      color:var(--text);
+
+      font-size:9px;
+      font-weight:600;
+
+      pointer-events:none;
+
+      transition:.2s;
+    }
+
+    .toast.show {
+      opacity:1;
+
+      transform:
+        translate(-50%,0);
+    }
+
+    .toast.success {
+      border-color:#315a3b;
+    }
+
+    .toast.error {
+      border-color:#63322e;
+
+      color:#ed9990;
+    }
+
+    /* MOBILE */
 
     @media(max-width:700px) {
 
       .topbar {
         height:52px;
-
         padding:0 12px;
       }
-
-
-      .brand {
-        font-size:10px;
-      }
-
-
-      .brand-mark {
-        width:27px;
-        height:27px;
-      }
-
 
       .container {
         width:calc(100% - 20px);
@@ -530,28 +741,22 @@
         padding:28px 0 45px;
       }
 
-
       .page-head h1 {
         font-size:23px;
       }
 
-
       .summary {
         flex-wrap:wrap;
-
         gap:8px 14px;
       }
-
 
       .summary-divider {
         display:none;
       }
 
-
       .user-table-head {
         display:none;
       }
-
 
       .user-row {
         display:block;
@@ -561,21 +766,28 @@
         padding:13px;
       }
 
-
       .user-main {
         margin-bottom:12px;
       }
-
 
       .role-select {
         width:100%;
       }
 
-
       .uid {
         margin-top:9px;
-
         padding-left:44px;
+      }
+
+      .music-row {
+        grid-template-columns:
+          46px
+          minmax(0,1fr);
+      }
+
+      .music-actions {
+        grid-column:2;
+        justify-content:flex-start;
       }
 
     }
@@ -588,711 +800,2080 @@
 <body>
 
 
-  <!-- TOPBAR -->
+<header class="topbar">
 
-  <header class="topbar">
+  <div class="brand">
+
+    <div class="brand-mark">
+
+      <img
+        src="https://files.catbox.moe/brdrmx.png"
+        alt="Rojak DriveK1t"
+      >
+
+    </div>
+
+    <span>
+      Rojak DriveK1t · Admin
+    </span>
+
+  </div>
 
 
-    <div class="brand">
+  <button
+    id="backButton"
+    class="back"
+    type="button"
+  >
+    ← Kembali
+  </button>
 
-      <div class="brand-mark">
+</header>
 
-        <img
-          src="https://files.catbox.moe/brdrmx.png"
-          alt="Rojak DriveKit"
-        >
 
-      </div>
+<main class="container">
 
+
+  <div class="page-head">
+
+    <h1>
+      Admin Panel
+    </h1>
+
+    <p>
+      Kelola pengguna dan koleksi music Rojak DriveK1t.
+    </p>
+
+  </div>
+
+
+  <!-- SUMMARY -->
+
+  <div class="summary">
+
+    <div class="summary-item">
 
       <span>
-        Rojak DriveKit · Admin
+        Users
+      </span>
+
+      <span
+        id="totalUsers"
+        class="summary-value"
+      >
+        0
       </span>
 
     </div>
 
 
-
-    <button
-      id="backButton"
-      class="back"
-    >
-      ← Kembali
-    </button>
+    <div class="summary-divider"></div>
 
 
-  </header>
+    <div class="summary-item">
+
+      <span>
+        Admin
+      </span>
+
+      <span
+        id="totalAdmins"
+        class="summary-value"
+      >
+        0
+      </span>
+
+    </div>
 
 
-
-  <!-- MAIN -->
-
-  <main class="container">
+    <div class="summary-divider"></div>
 
 
-    <div class="page-head">
+    <div class="summary-item">
 
-      <h1>
+      <span>
+        Member
+      </span>
+
+      <span
+        id="totalMembers"
+        class="summary-value"
+      >
+        0
+      </span>
+
+    </div>
+
+
+    <div class="summary-divider"></div>
+
+
+    <div class="summary-item">
+
+      <span>
+        Music
+      </span>
+
+      <span
+        id="totalMusic"
+        class="summary-value"
+      >
+        0
+      </span>
+
+    </div>
+
+  </div>
+
+
+  <!-- ===================================================
+       USERS
+  ==================================================== -->
+
+  <section class="section">
+
+    <div class="section-head">
+
+      <h2 class="section-title">
         Users
-      </h1>
+      </h2>
 
-      <p>
-        Kelola akses pengguna Rojak DriveKit.
-      </p>
-
-    </div>
-
-
-
-    <!-- SUMMARY -->
-
-    <div class="summary">
-
-
-      <div class="summary-item">
-
-        <span>
-          Users
-        </span>
-
-        <span
-          id="totalUsers"
-          class="summary-value"
-        >
-          0
-        </span>
-
-      </div>
-
-
-      <div class="summary-divider"></div>
-
-
-      <div class="summary-item">
-
-        <span>
-          Admin
-        </span>
-
-        <span
-          id="totalAdmins"
-          class="summary-value"
-        >
-          0
-        </span>
-
-      </div>
-
-
-      <div class="summary-divider"></div>
-
-
-      <div class="summary-item">
-
-        <span>
-          Member
-        </span>
-
-        <span
-          id="totalMembers"
-          class="summary-value"
-        >
-          0
-        </span>
-
-      </div>
-
+      <span class="section-info">
+        Role dapat diubah
+      </span>
 
     </div>
 
 
+    <div class="user-table">
 
-    <!-- USERS -->
+      <div class="user-table-head">
 
-    <section class="users-section">
-
-
-      <div class="section-head">
-
-        <h2 class="section-title">
-          Daftar pengguna
-        </h2>
-
-        <span class="section-info">
-          Role dapat diubah oleh Admin
-        </span>
-
-      </div>
-
-
-
-      <div class="user-table">
-
-
-        <div class="user-table-head">
-
-          <div>
-            USER
-          </div>
-
-          <div>
-            ROLE
-          </div>
-
-          <div>
-            UID
-          </div>
-
+        <div>
+          USER
         </div>
 
+        <div>
+          ROLE
+        </div>
+
+        <div>
+          UID
+        </div>
+
+      </div>
 
 
-        <div
-          id="message"
-          class="message"
-        >
+      <div id="userList">
+        <div class="message">
           Memuat pengguna...
         </div>
+      </div>
+
+    </div>
+
+  </section>
 
 
+  <!-- ===================================================
+       MUSIC
+  ==================================================== -->
 
-        <div
-          id="usersTable"
-          style="display:none;"
-        ></div>
+  <section class="section">
 
+    <div class="section-head">
+
+      <h2 class="section-title">
+        Music
+      </h2>
+
+      <span class="section-info">
+        Kelola lagu website
+      </span>
+
+    </div>
+
+
+    <div class="music-panel">
+
+      <div class="music-panel-head">
+
+        <span class="section-info">
+          MP3 + Cover
+        </span>
+
+        <button
+          id="addMusicButton"
+          class="add-button"
+          type="button"
+        >
+          + Tambah Lagu
+        </button>
 
       </div>
 
 
-    </section>
+      <div id="musicList">
+
+        <div class="empty">
+          Memuat music...
+        </div>
+
+      </div>
+
+    </div>
+
+  </section>
 
 
-  </main>
+</main>
 
 
+<!-- =====================================================
+     MUSIC MODAL
+===================================================== -->
 
-  <!-- FIREBASE -->
+<div
+  id="musicModal"
+  class="modal hidden"
+>
 
-  <script type="module">
+  <div class="modal-box">
 
+    <div class="modal-head">
 
-    import {
-      auth,
-      db
-    } from "./firebase-config.js";
+      <span
+        id="modalTitle"
+        class="modal-title"
+      >
+        Tambah Lagu
+      </span>
 
+      <button
+        id="closeModalButton"
+        class="close"
+        type="button"
+      >
+        ×
+      </button>
 
-    import {
-      onAuthStateChanged
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
-
-
-    import {
-      collection,
-      getDocs,
-      doc,
-      getDoc,
-      updateDoc,
-      serverTimestamp
-    } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
-
-
-
-    const $ =
-      id => document.getElementById(id);
-
+    </div>
 
 
-    /* =========================
-       ESCAPE HTML
-    ========================== */
+    <form
+      id="musicForm"
+      class="modal-body"
+    >
 
-    function escapeHTML(
-      value
+
+      <div class="form-group">
+
+        <label>
+          Judul Lagu
+        </label>
+
+        <input
+          id="musicTitle"
+          class="input"
+          type="text"
+          maxlength="100"
+          placeholder="Contoh: Night Changes"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Artis
+        </label>
+
+        <input
+          id="musicArtist"
+          class="input"
+          type="text"
+          maxlength="100"
+          placeholder="Contoh: One Direction"
+          required
+        >
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          File MP3
+        </label>
+
+        <input
+          id="musicFile"
+          class="input"
+          type="file"
+          accept=".mp3,audio/mpeg"
+        >
+
+        <div class="help">
+          Maksimal 20 MB. Format MP3.
+        </div>
+
+      </div>
+
+
+      <div class="form-group">
+
+        <label>
+          Cover / Logo Music
+        </label>
+
+        <input
+          id="coverFile"
+          class="input"
+          type="file"
+          accept="image/png,image/jpeg,image/webp"
+        >
+
+        <img
+          id="coverPreview"
+          class="cover-preview"
+          alt="Preview cover"
+        >
+
+        <div class="help">
+          PNG, JPG, atau WEBP. Maksimal 5 MB.
+        </div>
+
+      </div>
+
+
+      <div class="modal-actions">
+
+        <button
+          id="cancelButton"
+          class="back"
+          type="button"
+        >
+          Batal
+        </button>
+
+        <button
+          id="saveButton"
+          class="add-button"
+          type="submit"
+        >
+          Upload Lagu
+        </button>
+
+      </div>
+
+
+    </form>
+
+  </div>
+
+</div>
+
+
+<div
+  id="toast"
+  class="toast"
+></div>
+
+
+<script type="module">
+
+  import {
+    auth,
+    db
+  } from "./firebase-config.js";
+
+
+  import {
+    onAuthStateChanged
+  } from
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
+
+
+  import {
+    collection,
+    getDocs,
+    getDoc,
+    doc,
+    updateDoc,
+    setDoc,
+    deleteDoc,
+    serverTimestamp
+  } from
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-firestore.js";
+
+
+  import {
+    getStorage,
+    ref,
+    uploadBytes,
+    getDownloadURL,
+    deleteObject
+  } from
+    "https://www.gstatic.com/firebasejs/12.2.1/firebase-storage.js";
+
+
+  /* =====================================================
+     STORAGE
+  ===================================================== */
+
+  const storage =
+    getStorage();
+
+
+  /* =====================================================
+     STATE
+  ===================================================== */
+
+  let currentUser =
+    null;
+
+  let users = [];
+
+  let music = [];
+
+  let editingMusicId =
+    null;
+
+  let oldAudioPath =
+    "";
+
+  let oldCoverPath =
+    "";
+
+
+  const $ =
+    id =>
+      document.getElementById(id);
+
+
+  /* =====================================================
+     HELPERS
+  ===================================================== */
+
+  function escapeHtml(value) {
+
+    return String(value ?? "")
+
+      .replaceAll("&","&amp;")
+      .replaceAll("<","&lt;")
+      .replaceAll(">","&gt;")
+      .replaceAll('"',"&quot;")
+      .replaceAll("'","&#039;");
+
+  }
+
+
+  function formatTime(seconds) {
+
+    if (
+      !Number.isFinite(seconds)
     ) {
+      return "0:00";
+    }
 
-      return String(value)
 
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
+    const min =
+      Math.floor(
+        seconds / 60
+      );
 
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
 
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
+    const sec =
+      Math.floor(
+        seconds % 60
+      );
 
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
 
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
+    return (
+      min +
+      ":" +
+      String(sec).padStart(2,"0")
+    );
+
+  }
+
+
+  function showToast(
+    message,
+    type=""
+  ) {
+
+    const toast =
+      $("toast");
+
+
+    toast.textContent =
+      message;
+
+
+    toast.className =
+      "toast show " + type;
+
+
+    clearTimeout(
+      showToast.timer
+    );
+
+
+    showToast.timer =
+      setTimeout(
+        () => {
+          toast.className =
+            "toast";
+        },
+        3000
+      );
+
+  }
+
+
+  /* =====================================================
+     ADMIN CHECK
+  ===================================================== */
+
+  async function checkAdmin(
+    user
+  ) {
+
+    const ref =
+      doc(
+        db,
+        "users",
+        user.uid
+      );
+
+
+    const snapshot =
+      await getDoc(ref);
+
+
+    if (!snapshot.exists()) {
+
+      window.location.href =
+        "./index.html";
+
+      return false;
 
     }
 
 
-
-    /* =========================
-       ADMIN CHECK
-    ========================== */
-
-    async function loadAdmin() {
+    const data =
+      snapshot.data();
 
 
-      onAuthStateChanged(
+    if (
+      data.role !== "admin"
+    ) {
 
-        auth,
+      showToast(
+        "Akses admin diperlukan.",
+        "error"
+      );
 
-        async user => {
+
+      setTimeout(
+        () => {
+          window.location.href =
+            "./index.html";
+        },
+        1000
+      );
 
 
-          if (!user) {
+      return false;
 
-            window.location.href =
-              "./index.html";
+    }
 
-            return;
+
+    return true;
+
+  }
+
+
+  /* =====================================================
+     USERS
+  ===================================================== */
+
+  async function loadUsers() {
+
+    const snapshot =
+      await getDocs(
+        collection(
+          db,
+          "users"
+        )
+      );
+
+
+    users = [];
+
+
+    snapshot.forEach(
+      item => {
+
+        users.push({
+          id:item.id,
+          ...item.data()
+        });
+
+      }
+    );
+
+
+    renderUsers();
+
+  }
+
+
+  function renderUsers() {
+
+    $("totalUsers")
+      .textContent =
+        users.length;
+
+
+    $("totalAdmins")
+      .textContent =
+        users.filter(
+          item =>
+            item.role === "admin"
+        ).length;
+
+
+    $("totalMembers")
+      .textContent =
+        users.filter(
+          item =>
+            item.role !== "admin"
+        ).length;
+
+
+    if (!users.length) {
+
+      $("userList").innerHTML =
+        `
+        <div class="message">
+          Belum ada pengguna.
+        </div>
+        `;
+
+      return;
+
+    }
+
+
+    $("userList").innerHTML =
+      users.map(
+        user => {
+
+          const isSelf =
+            currentUser &&
+            user.id ===
+            currentUser.uid;
+
+
+          const photo =
+            escapeHtml(
+              user.photoURL ||
+              "https://www.gravatar.com/avatar/?d=mp"
+            );
+
+
+          const name =
+            escapeHtml(
+              user.name ||
+              "User"
+            );
+
+
+          const email =
+            escapeHtml(
+              user.email ||
+              "-"
+            );
+
+
+          const uid =
+            escapeHtml(
+              user.uid ||
+              user.id
+            );
+
+
+          if (isSelf) {
+
+            return `
+              <div class="user-row">
+
+                <div class="user-main">
+
+                  <img
+                    class="avatar"
+                    src="${photo}"
+                    alt=""
+                  >
+
+                  <div class="user-details">
+
+                    <div class="name">
+                      ${name}
+                    </div>
+
+                    <div class="email">
+                      ${email}
+                    </div>
+
+                  </div>
+
+                </div>
+
+                <div>
+                  <span class="self-role">
+                    ADMIN · YOU
+                  </span>
+                </div>
+
+                <div class="uid">
+                  ${uid}
+                </div>
+
+              </div>
+            `;
 
           }
 
 
+          const role =
+            user.role === "admin"
+              ? "admin"
+              : "member";
 
-          try {
+
+          return `
+            <div class="user-row">
+
+              <div class="user-main">
+
+                <img
+                  class="avatar"
+                  src="${photo}"
+                  alt=""
+                >
+
+                <div class="user-details">
+
+                  <div class="name">
+                    ${name}
+                  </div>
+
+                  <div class="email">
+                    ${email}
+                  </div>
+
+                </div>
+
+              </div>
 
 
-            const currentRef =
-              doc(
-                db,
-                "users",
-                user.uid
+              <div>
+
+                <select
+                  class="role-select"
+                  data-user-id="${uid}"
+                >
+
+                  <option
+                    value="member"
+                    ${role === "member" ? "selected" : ""}
+                  >
+                    Member
+                  </option>
+
+                  <option
+                    value="admin"
+                    ${role === "admin" ? "selected" : ""}
+                  >
+                    Admin
+                  </option>
+
+                </select>
+
+              </div>
+
+
+              <div class="uid">
+                ${uid}
+              </div>
+
+            </div>
+          `;
+
+        }
+      ).join("");
+
+
+    document
+      .querySelectorAll(
+        ".role-select"
+      )
+      .forEach(
+        select => {
+
+          select.addEventListener(
+            "change",
+            async event => {
+
+              const userId =
+                event.target.dataset.userId;
+
+
+              const newRole =
+                event.target.value;
+
+
+              try {
+
+                await updateDoc(
+                  doc(
+                    db,
+                    "users",
+                    userId
+                  ),
+                  {
+                    role:newRole,
+                    updatedAt:
+                      serverTimestamp()
+                  }
+                );
+
+
+                showToast(
+                  "Role berhasil diubah.",
+                  "success"
+                );
+
+
+                await loadUsers();
+
+              } catch(error) {
+
+                console.error(
+                  error
+                );
+
+
+                showToast(
+                  "Gagal mengubah role.",
+                  "error"
+                );
+
+
+                await loadUsers();
+
+              }
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =====================================================
+     MUSIC
+  ===================================================== */
+
+  async function loadMusic() {
+
+    try {
+
+      const snapshot =
+        await getDocs(
+          collection(
+            db,
+            "music"
+          )
+        );
+
+
+      music = [];
+
+
+      snapshot.forEach(
+        item => {
+
+          music.push({
+            id:item.id,
+            ...item.data()
+          });
+
+        }
+      );
+
+
+      music.sort(
+        (a,b) => {
+
+          const aTime =
+            a.createdAt?.seconds ||
+            0;
+
+          const bTime =
+            b.createdAt?.seconds ||
+            0;
+
+          return bTime - aTime;
+
+        }
+      );
+
+
+      renderMusic();
+
+    } catch(error) {
+
+      console.error(
+        error
+      );
+
+
+      $("musicList").innerHTML =
+        `
+        <div class="message error">
+          Gagal memuat music.
+        </div>
+        `;
+
+    }
+
+  }
+
+
+  function renderMusic() {
+
+    $("totalMusic")
+      .textContent =
+        music.length;
+
+
+    if (!music.length) {
+
+      $("musicList").innerHTML =
+        `
+        <div class="empty">
+          Belum ada lagu.
+        </div>
+        `;
+
+      return;
+
+    }
+
+
+    $("musicList").innerHTML =
+      music.map(
+        song => {
+
+          const title =
+            escapeHtml(
+              song.title ||
+              "Untitled"
+            );
+
+
+          const artist =
+            escapeHtml(
+              song.artist ||
+              "Unknown"
+            );
+
+
+          const cover =
+            escapeHtml(
+              song.coverUrl ||
+              "https://files.catbox.moe/brdrmx.png"
+            );
+
+
+          return `
+            <div class="music-row">
+
+              <img
+                class="cover"
+                src="${cover}"
+                alt="${title}"
+                onerror="
+                  this.src='https://files.catbox.moe/brdrmx.png'
+                "
+              >
+
+
+              <div class="song-info">
+
+                <div class="song-title">
+                  ${title}
+                </div>
+
+                <div class="song-artist">
+                  ${artist}
+                </div>
+
+                <div class="song-duration">
+                  ${formatTime(
+                    Number(
+                      song.duration || 0
+                    )
+                  )}
+                </div>
+
+              </div>
+
+
+              <div class="music-actions">
+
+                <button
+                  class="small-button"
+                  data-edit="${song.id}"
+                  type="button"
+                >
+                  Edit
+                </button>
+
+
+                <button
+                  class="small-button danger"
+                  data-delete="${song.id}"
+                  type="button"
+                >
+                  Delete
+                </button>
+
+              </div>
+
+            </div>
+          `;
+
+        }
+      ).join("");
+
+
+    document
+      .querySelectorAll(
+        "[data-edit]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              openEdit(
+                button.dataset.edit
+              );
+
+            }
+          );
+
+        }
+      );
+
+
+    document
+      .querySelectorAll(
+        "[data-delete]"
+      )
+      .forEach(
+        button => {
+
+          button.addEventListener(
+            "click",
+            () => {
+
+              deleteMusic(
+                button.dataset.delete
+              );
+
+            }
+          );
+
+        }
+      );
+
+  }
+
+
+  /* =====================================================
+     GET AUDIO DURATION
+  ===================================================== */
+
+  function getAudioDuration(
+    file
+  ) {
+
+    return new Promise(
+      (resolve,reject) => {
+
+        const audio =
+          document.createElement(
+            "audio"
+          );
+
+
+        audio.preload =
+          "metadata";
+
+
+        audio.onloadedmetadata =
+          () => {
+
+            URL.revokeObjectURL(
+              audio.src
+            );
+
+
+            resolve(
+              audio.duration
+            );
+
+          };
+
+
+        audio.onerror =
+          () => {
+
+            URL.revokeObjectURL(
+              audio.src
+            );
+
+
+            reject(
+              new Error(
+                "File MP3 tidak valid."
+              )
+            );
+
+          };
+
+
+        audio.src =
+          URL.createObjectURL(
+            file
+          );
+
+      }
+    );
+
+  }
+
+
+  /* =====================================================
+     MODAL
+  ===================================================== */
+
+  function openModal() {
+
+    $("musicModal")
+      .classList.remove(
+        "hidden"
+      );
+
+  }
+
+
+  function closeModal() {
+
+    $("musicModal")
+      .classList.add(
+        "hidden"
+      );
+
+    $("musicForm")
+      .reset();
+
+
+    $("coverPreview")
+      .style.display =
+        "none";
+
+
+    $("coverPreview")
+      .src = "";
+
+
+    editingMusicId =
+      null;
+
+
+    oldAudioPath =
+      "";
+
+
+    oldCoverPath =
+      "";
+
+
+    $("modalTitle")
+      .textContent =
+        "Tambah Lagu";
+
+
+    $("saveButton")
+      .textContent =
+        "Upload Lagu";
+
+  }
+
+
+  $("addMusicButton")
+    .addEventListener(
+      "click",
+      () => {
+
+        closeModal();
+        openModal();
+
+      }
+    );
+
+
+  $("closeModalButton")
+    .addEventListener(
+      "click",
+      closeModal
+    );
+
+
+  $("cancelButton")
+    .addEventListener(
+      "click",
+      closeModal
+    );
+
+
+  $("musicModal")
+    .addEventListener(
+      "click",
+      event => {
+
+        if (
+          event.target ===
+          $("musicModal")
+        ) {
+
+          closeModal();
+
+        }
+
+      }
+    );
+
+
+  /* =====================================================
+     COVER PREVIEW
+  ===================================================== */
+
+  $("coverFile")
+    .addEventListener(
+      "change",
+      event => {
+
+        const file =
+          event.target.files[0];
+
+
+        if (!file) {
+
+          $("coverPreview")
+            .style.display =
+              "none";
+
+          return;
+
+        }
+
+
+        const url =
+          URL.createObjectURL(
+            file
+          );
+
+
+        $("coverPreview")
+          .src =
+            url;
+
+
+        $("coverPreview")
+          .style.display =
+            "block";
+
+      }
+    );
+
+
+  /* =====================================================
+     UPLOAD
+  ===================================================== */
+
+  $("musicForm")
+    .addEventListener(
+      "submit",
+      async event => {
+
+        event.preventDefault();
+
+
+        const title =
+          $("musicTitle")
+            .value
+            .trim();
+
+
+        const artist =
+          $("musicArtist")
+            .value
+            .trim();
+
+
+        const audioFile =
+          $("musicFile")
+            .files[0];
+
+
+        const coverFile =
+          $("coverFile")
+            .files[0];
+
+
+        if (!title || !artist) {
+
+          showToast(
+            "Judul dan artis wajib diisi.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        /*
+         * Lagu baru wajib memiliki MP3
+         */
+
+        if (
+          !editingMusicId &&
+          !audioFile
+        ) {
+
+          showToast(
+            "Pilih file MP3 terlebih dahulu.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          audioFile &&
+          (
+            audioFile.size >
+            20 * 1024 * 1024
+            ||
+            audioFile.type !==
+            "audio/mpeg"
+          )
+        ) {
+
+          showToast(
+            "MP3 harus berformat audio/mpeg dan maksimal 20 MB.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        if (
+          coverFile &&
+          (
+            coverFile.size >
+            5 * 1024 * 1024
+            ||
+            ![
+              "image/jpeg",
+              "image/png",
+              "image/webp"
+            ].includes(
+              coverFile.type
+            )
+          )
+        ) {
+
+          showToast(
+            "Cover harus JPG, PNG, atau WEBP dan maksimal 5 MB.",
+            "error"
+          );
+
+          return;
+
+        }
+
+
+        const button =
+          $("saveButton");
+
+
+        button.disabled =
+          true;
+
+        button.textContent =
+          "Uploading...";
+
+
+        try {
+
+          let audioUrl =
+            "";
+
+
+          let coverUrl =
+            "";
+
+
+          let duration =
+            0;
+
+
+          let audioPath =
+            oldAudioPath;
+
+
+          let coverPath =
+            oldCoverPath;
+
+
+          /*
+           * AUDIO
+           */
+
+          if (audioFile) {
+
+            duration =
+              await getAudioDuration(
+                audioFile
               );
 
 
-            const currentSnap =
-              await getDoc(
-                currentRef
+            const fileName =
+              Date.now() +
+              "_" +
+              sanitizeFileName(
+                audioFile.name
               );
 
 
-
-            if (
-              !currentSnap.exists() ||
-
-              currentSnap.data().role !==
-              "admin"
-            ) {
+            audioPath =
+              "music/audio/" +
+              currentUser.uid +
+              "/" +
+              fileName;
 
 
-              $("message").innerHTML =
+            const audioRef =
+              ref(
+                storage,
+                audioPath
+              );
 
-                `<span class="error">
-                  Kamu tidak memiliki akses Admin.
-                </span>`;
+
+            await uploadBytes(
+              audioRef,
+              audioFile,
+              {
+                contentType:
+                  "audio/mpeg"
+              }
+            );
 
 
-              return;
+            audioUrl =
+              await getDownloadURL(
+                audioRef
+              );
+
+          }
+
+
+          /*
+           * COVER
+           */
+
+          if (coverFile) {
+
+            const fileName =
+              Date.now() +
+              "_" +
+              sanitizeFileName(
+                coverFile.name
+              );
+
+
+            coverPath =
+              "music/covers/" +
+              currentUser.uid +
+              "/" +
+              fileName;
+
+
+            const coverRef =
+              ref(
+                storage,
+                coverPath
+              );
+
+
+            await uploadBytes(
+              coverRef,
+              coverFile,
+              {
+                contentType:
+                  coverFile.type
+              }
+            );
+
+
+            coverUrl =
+              await getDownloadURL(
+                coverRef
+              );
+
+          }
+
+
+          /*
+           * EDIT
+           */
+
+          if (editingMusicId) {
+
+            const oldSong =
+              music.find(
+                item =>
+                  item.id ===
+                  editingMusicId
+              );
+
+
+            const payload = {
+
+              title,
+
+              artist,
+
+              updatedAt:
+                serverTimestamp()
+
+            };
+
+
+            if (audioUrl) {
+
+              payload.audioUrl =
+                audioUrl;
+
+              payload.audioPath =
+                audioPath;
+
+              payload.duration =
+                duration;
 
             }
 
 
+            if (coverUrl) {
 
-            await loadUsers(
-              user.uid
+              payload.coverUrl =
+                coverUrl;
+
+              payload.coverPath =
+                coverPath;
+
+            }
+
+
+            await updateDoc(
+              doc(
+                db,
+                "music",
+                editingMusicId
+              ),
+              payload
             );
 
 
-          } catch(error) {
+            /*
+             * Hapus file lama setelah
+             * Firestore berhasil update.
+             */
+
+            if (
+              audioFile &&
+              oldSong?.audioPath
+            ) {
+
+              await safeDelete(
+                oldSong.audioPath
+              );
+
+            }
 
 
-            console.error(
-              error
+            if (
+              coverFile &&
+              oldSong?.coverPath
+            ) {
+
+              await safeDelete(
+                oldSong.coverPath
+              );
+
+            }
+
+
+            showToast(
+              "Lagu berhasil diperbarui.",
+              "success"
             );
-
-
-            $("message").innerHTML =
-
-              `<span class="error">
-                Gagal memuat Admin Dashboard.
-              </span>`;
 
           }
 
+          /*
+           * CREATE
+           */
+
+          else {
+
+            if (!audioUrl) {
+
+              throw new Error(
+                "Upload MP3 gagal."
+              );
+
+            }
+
+
+            if (!coverUrl) {
+
+              coverUrl =
+                "https://files.catbox.moe/brdrmx.png";
+
+            }
+
+
+            const musicRef =
+              doc(
+                collection(
+                  db,
+                  "music"
+                )
+              );
+
+
+            await setDoc(
+              musicRef,
+              {
+
+                title,
+
+                artist,
+
+                audioUrl,
+
+                audioPath,
+
+                coverUrl,
+
+                coverPath,
+
+                duration,
+
+                createdBy:
+                  currentUser.uid,
+
+                createdByEmail:
+                  currentUser.email,
+
+                createdAt:
+                  serverTimestamp(),
+
+                updatedAt:
+                  serverTimestamp()
+
+              }
+            );
+
+
+            showToast(
+              "Lagu berhasil ditambahkan.",
+              "success"
+            );
+
+          }
+
+
+          closeModal();
+
+
+          await loadMusic();
+
+        } catch(error) {
+
+          console.error(
+            "Upload music error:",
+            error
+          );
+
+
+          showToast(
+            error.message ||
+            "Gagal menyimpan lagu.",
+            "error"
+          );
+
+        } finally {
+
+          button.disabled =
+            false;
+
+          button.textContent =
+            editingMusicId
+              ? "Simpan Perubahan"
+              : "Upload Lagu";
+
         }
 
+      }
+    );
+
+
+  /* =====================================================
+     SANITIZE
+  ===================================================== */
+
+  function sanitizeFileName(
+    name
+  ) {
+
+    return name
+
+      .replace(
+        /[^a-zA-Z0-9._-]/g,
+        "_"
+      )
+
+      .replace(
+        /_+/g,
+        "_"
       );
+
+  }
+
+
+  /* =====================================================
+     EDIT
+  ===================================================== */
+
+  function openEdit(
+    id
+  ) {
+
+    const song =
+      music.find(
+        item =>
+          item.id === id
+      );
+
+
+    if (!song) {
+      return;
+    }
+
+
+    editingMusicId =
+      id;
+
+
+    oldAudioPath =
+      song.audioPath ||
+      "";
+
+
+    oldCoverPath =
+      song.coverPath ||
+      "";
+
+
+    $("modalTitle")
+      .textContent =
+        "Edit Lagu";
+
+
+    $("saveButton")
+      .textContent =
+        "Simpan Perubahan";
+
+
+    $("musicTitle")
+      .value =
+        song.title ||
+        "";
+
+
+    $("musicArtist")
+      .value =
+        song.artist ||
+        "";
+
+
+    $("musicFile")
+      .value =
+        "";
+
+
+    $("coverFile")
+      .value =
+        "";
+
+
+    if (song.coverUrl) {
+
+      $("coverPreview")
+        .src =
+          song.coverUrl;
+
+
+      $("coverPreview")
+        .style.display =
+          "block";
 
     }
 
 
+    openModal();
 
-    /* =========================
-       LOAD USERS
-    ========================== */
-
-    async function loadUsers(
-      currentUid
-    ) {
+  }
 
 
-      const snapshot =
-        await getDocs(
+  /* =====================================================
+     DELETE STORAGE
+  ===================================================== */
 
-          collection(
-            db,
-            "users"
-          )
+  async function safeDelete(
+    path
+  ) {
 
-        );
-
-
-
-      const users =
-        snapshot.docs.map(
-
-          item => ({
-
-            id:item.id,
-
-            ...item.data()
-
-          })
-
-        );
+    if (!path) {
+      return;
+    }
 
 
+    try {
 
-      let admins = 0;
+      await deleteObject(
+        ref(
+          storage,
+          path
+        )
+      );
 
-      let members = 0;
+    } catch(error) {
+
+      console.warn(
+        "Storage delete skipped:",
+        error
+      );
+
+    }
+
+  }
 
 
+  /* =====================================================
+     DELETE MUSIC
+  ===================================================== */
 
-      users.forEach(
-        user => {
+  async function deleteMusic(
+    id
+  ) {
 
-          if (
-            user.role === "admin"
-          ) {
-
-            admins++;
-
-          } else {
-
-            members++;
-
-          }
-
-        }
+    const song =
+      music.find(
+        item =>
+          item.id === id
       );
 
 
-
-      $("totalUsers").textContent =
-        users.length;
-
-
-      $("totalAdmins").textContent =
-        admins;
+    if (!song) {
+      return;
+    }
 
 
-      $("totalMembers").textContent =
-        members;
+    const confirmed =
+      window.confirm(
+        "Hapus lagu \"" +
+        song.title +
+        "\"?"
+      );
 
 
+    if (!confirmed) {
+      return;
+    }
 
-      if (!users.length) {
 
-        $("message").textContent =
-          "Belum ada user.";
+    try {
 
-        $("message").style.display =
-          "block";
+      /*
+       * Hapus Firestore dulu.
+       */
 
-        $("usersTable").style.display =
-          "none";
+      await deleteDoc(
+        doc(
+          db,
+          "music",
+          id
+        )
+      );
+
+
+      /*
+       * Setelah metadata terhapus,
+       * hapus file Storage.
+       */
+
+      await safeDelete(
+        song.audioPath
+      );
+
+
+      await safeDelete(
+        song.coverPath
+      );
+
+
+      showToast(
+        "Lagu berhasil dihapus.",
+        "success"
+      );
+
+
+      await loadMusic();
+
+    } catch(error) {
+
+      console.error(
+        error
+      );
+
+
+      showToast(
+        "Gagal menghapus lagu.",
+        "error"
+      );
+
+    }
+
+  }
+
+
+  /* =====================================================
+     BACK
+  ===================================================== */
+
+  $("backButton")
+    .addEventListener(
+      "click",
+      () => {
+
+        window.location.href =
+          "./index.html";
+
+      }
+    );
+
+
+  /* =====================================================
+     AUTH
+  ===================================================== */
+
+  onAuthStateChanged(
+    auth,
+    async user => {
+
+      if (!user) {
+
+        window.location.href =
+          "./index.html";
 
         return;
 
       }
 
 
+      currentUser =
+        user;
 
-      $("message").style.display =
-        "none";
 
+      try {
 
-      $("usersTable").style.display =
-        "block";
+        const isAdmin =
+          await checkAdmin(
+            user
+          );
 
 
+        if (!isAdmin) {
+          return;
+        }
 
-      $("usersTable").innerHTML =
 
+        await Promise.all([
+          loadUsers(),
+          loadMusic()
+        ]);
 
-        users.map(
-          user => {
+      } catch(error) {
 
-
-            const photo =
-              user.photoURL ||
-
-              "https://www.gravatar.com/avatar/?d=mp";
-
-
-
-            const isSelf =
-              user.id === currentUid;
-
-
-
-            return `
-
-              <div class="user-row">
-
-
-                <div class="user-main">
-
-
-                  <img
-                    class="avatar"
-                    src="${escapeHTML(photo)}"
-                    alt=""
-                  >
-
-
-                  <div class="user-details">
-
-
-                    <div class="name">
-
-                      ${escapeHTML(
-                        user.name ||
-                        "User"
-                      )}
-
-                    </div>
-
-
-                    <div class="email">
-
-                      ${escapeHTML(
-                        user.email ||
-                        "-"
-                      )}
-
-                    </div>
-
-
-                  </div>
-
-
-                </div>
-
-
-
-                <div>
-
-
-                  ${
-                    isSelf
-
-                    ?
-
-                    `<div class="self-role">
-                      ADMIN · YOU
-                    </div>`
-
-                    :
-
-                    `<select
-                      class="role-select roleSelect"
-                      data-uid="${escapeHTML(user.id)}"
-                    >
-
-                      <option
-                        value="member"
-                        ${
-                          user.role === "member"
-                            ? "selected"
-                            : ""
-                        }
-                      >
-                        Member
-                      </option>
-
-
-                      <option
-                        value="admin"
-                        ${
-                          user.role === "admin"
-                            ? "selected"
-                            : ""
-                        }
-                      >
-                        Admin
-                      </option>
-
-                    </select>`
-
-                  }
-
-
-                </div>
-
-
-
-                <div class="uid">
-
-                  ${escapeHTML(
-                    user.id
-                  )}
-
-                </div>
-
-
-              </div>
-
-            `;
-
-          }
-
-        ).join("");
-
-
-
-      /* =========================
-         ROLE CHANGE
-      ========================== */
-
-      document
-        .querySelectorAll(
-          ".roleSelect"
-        )
-        .forEach(
-
-          select => {
-
-
-            select.addEventListener(
-
-              "change",
-
-              async event => {
-
-
-                const uid =
-                  event.target.dataset.uid;
-
-
-                const newRole =
-                  event.target.value;
-
-
-
-                try {
-
-
-                  event.target.disabled =
-                    true;
-
-
-
-                  await updateDoc(
-
-                    doc(
-                      db,
-                      "users",
-                      uid
-                    ),
-
-                    {
-
-                      role:newRole,
-
-                      updatedAt:
-                        serverTimestamp()
-
-                    }
-
-                  );
-
-
-
-                  await loadUsers(
-                    currentUid
-                  );
-
-
-                } catch(error) {
-
-
-                  console.error(
-                    error
-                  );
-
-
-                  alert(
-                    "Gagal mengubah role: " +
-
-                    (
-                      error.code ||
-                      error.message
-                    )
-                  );
-
-
-                  event.target.disabled =
-                    false;
-
-                }
-
-              }
-
-            );
-
-          }
-
+        console.error(
+          error
         );
 
+
+        showToast(
+          "Gagal memuat Admin Panel.",
+          "error"
+        );
+
+      }
+
     }
+  );
 
-
-
-    /* =========================
-       BACK
-    ========================== */
-
-    $("backButton").onclick =
-
-      () => {
-
-        window.location.href =
-          "./index.html";
-
-      };
-
-
-
-    /* =========================
-       START
-    ========================== */
-
-    loadAdmin();
-
-
-  </script>
-
+</script>
 
 </body>
 </html>
