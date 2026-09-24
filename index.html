@@ -1675,37 +1675,52 @@
       <!-- LOCAL MUSIC PLAYER -->
       <section id="musicSection" class="music-section">
         <div class="music-header">
-          <div class="music-title">LOCAL MUSIC</div>
-          <button id="musicRefresh" class="music-refresh" type="button" title="Refresh">↻</button>
-          <button id="musicCollapse" class="music-collapse" type="button" title="Kecilkan">−</button>
+          <div class="music-header-left">
+            <span class="music-header-dot"></span>
+            <div class="music-title-wrap">
+              <div class="music-title">LOCAL MUSIC</div>
+              <div id="musicStatus" class="music-status">Player siap</div>
+            </div>
+          </div>
+          <button id="musicRefresh" class="music-refresh" type="button" title="Refresh playlist">↻</button>
+          <button id="musicCollapse" class="music-collapse" type="button" title="Kecilkan player">−</button>
         </div>
+
         <div class="music-body">
           <div class="music-now">
-            <div id="musicIcon" class="music-icon" title="Buka/tutup player">♪</div>
-            <div>
+            <div id="musicIcon" class="music-icon" title="Putar / buka player">♪</div>
+            <div class="music-now-info">
               <div id="musicName" class="music-name">Belum ada lagu</div>
               <div id="musicSub" class="music-sub">Upload lagu ke folder music</div>
             </div>
           </div>
+
           <audio id="musicAudio" preload="metadata"></audio>
+
           <div class="music-seek">
             <span id="musicCurrent">0:00</span>
-            <input id="musicSeek" type="range" min="0" max="100" value="0" step="0.1">
+            <input id="musicSeek" type="range" min="0" max="100" value="0" step="0.1" aria-label="Progress lagu">
             <span id="musicDuration">0:00</span>
           </div>
+
           <div class="music-controls">
-            <button id="musicPrev" class="music-btn" type="button">‹</button>
-            <button id="musicPlay" class="music-btn music-main" type="button">▶</button>
-            <button id="musicNext" class="music-btn" type="button">›</button>
+            <button id="musicPrev" class="music-btn" type="button" title="Sebelumnya">‹</button>
+            <button id="musicPlay" class="music-btn music-main" type="button" title="Putar">▶</button>
+            <button id="musicNext" class="music-btn" type="button" title="Berikutnya">›</button>
           </div>
+
           <div class="music-options">
-            <label class="music-volume">VOL <input id="musicVolume" type="range" min="0" max="1" value="0.8" step="0.01"></label>
-            <button id="musicShuffle" class="music-toggle" type="button">Shuffle</button>
-            <button id="musicLoop" class="music-toggle" type="button">Loop</button>
+            <label class="music-volume" title="Volume">VOL <input id="musicVolume" type="range" min="0" max="1" value="0.8" step="0.01"></label>
+            <button id="musicShuffle" class="music-toggle" type="button">Shuffle: Off</button>
+            <button id="musicLoop" class="music-toggle" type="button">Loop: Off</button>
           </div>
-          <div id="musicList" class="music-list"><div class="music-empty">Memuat playlist...</div></div>
+
+          <div id="musicList" class="music-list">
+            <div class="music-empty">Memuat playlist...</div>
+          </div>
         </div>
       </section>
+
       <div class="footer">
         Rojak DriveK1t
       </div>
@@ -3528,6 +3543,7 @@
     const musicSection = $("musicSection");
     const musicCollapse = $("musicCollapse");
     const musicIcon = $("musicIcon");
+    const musicStatus = $("musicStatus");
 
     function toggleMusicCompact() {
       musicSection.classList.toggle("collapsed");
@@ -3588,7 +3604,8 @@
         item.className = "music-item" + (i === musicPlayer.index ? " active" : "");
         item.innerHTML =
           '<div class="music-item-num">' + (i + 1) + '</div>' +
-          '<div class="music-item-name">' + musicEscape(track.title) + '</div>';
+          '<div class="music-item-name">' + musicEscape(track.title) + '</div>' +
+          '<div class="music-item-play">' + (i === musicPlayer.index ? '●' : '›') + '</div>';
         item.onclick = () => loadMusic(i, true);
         list.appendChild(item);
       });
@@ -3613,6 +3630,7 @@
       $("musicName").textContent = track.title;
       $("musicSub").textContent =
         "Track " + (index + 1) + " dari " + musicPlayer.tracks.length;
+      if (musicStatus) musicStatus.textContent = "Track " + (index + 1) + " / " + musicPlayer.tracks.length;
 
       $("musicCurrent").textContent = "0:00";
       $("musicDuration").textContent = "0:00";
@@ -3686,6 +3704,7 @@
           : [];
 
         musicPlayer.index = -1;
+        if (musicStatus) musicStatus.textContent = musicPlayer.tracks.length ? (musicPlayer.tracks.length + " lagu") : "Playlist kosong";
         musicAudio.pause();
         musicAudio.removeAttribute("src");
         musicAudio.load();
@@ -3704,6 +3723,7 @@
         console.warn("Music playlist:", error);
         musicPlayer.tracks = [];
         musicPlayer.index = -1;
+        if (musicStatus) musicStatus.textContent = "Playlist belum dibuat";
         renderMusic();
         $("musicName").textContent = "Playlist belum dibuat";
         $("musicSub").textContent = "Buat file music/playlist.json";
@@ -3759,11 +3779,13 @@
     musicAudio.addEventListener("play", () => {
       $("musicPlay").textContent = "Ⅱ";
       $("musicIcon").textContent = "♫";
+      if (musicStatus) musicStatus.textContent = "Sedang diputar";
     });
 
     musicAudio.addEventListener("pause", () => {
       $("musicPlay").textContent = "▶";
       $("musicIcon").textContent = "♪";
+      if (musicStatus && musicPlayer.index >= 0) musicStatus.textContent = "Dijeda";
     });
 
     musicAudio.addEventListener("ended", () => {
