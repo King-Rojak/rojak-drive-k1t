@@ -1,0 +1,11 @@
+{
+  "name": "rojak-drive-k1t",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "dependencies": {
+    "@octokit/rest": "^22.0.0",
+    "firebase-admin": "^13.6.0",
+    "formidable": "^3.5.4"
+  }
+}
