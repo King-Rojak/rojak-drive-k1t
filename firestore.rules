@@ -2,30 +2,58 @@ rules_version = '2';
 
 service cloud.firestore {
   match /databases/{database}/documents {
-    function signedIn() { return request.auth != null; }
+
+    function signedIn() {
+      return request.auth != null;
+    }
+
     function isAdmin() {
       return signedIn()
-        && exists(/databases/$(database)/documents/users/$(request.auth.uid))
-        && get(/databases/$(database)/documents/users/$(request.auth.uid)).data.role == "admin";
+        && exists(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        )
+        && get(
+          /databases/$(database)/documents/users/$(request.auth.uid)
+        ).data.role == "admin";
     }
 
     match /users/{userId} {
+
+      // User baru hanya boleh membuat profil dirinya sendiri
+      // dengan role member.
       allow create: if signedIn()
         && request.auth.uid == userId
-        && request.resource.data.uid == request.auth.uid
-        && request.resource.data.email == request.auth.token.email
-        && request.resource.data.role == "member";
-      allow read: if signedIn() && (request.auth.uid == userId || isAdmin());
-      allow update: if signedIn() && request.auth.uid == userId
-        && request.resource.data.role == resource.data.role
-        && request.resource.data.diff(resource.data).affectedKeys().hasOnly(["name","email","photoURL","updatedAt"]);
-      allow update: if isAdmin();
-      allow delete: if isAdmin();
-    }
+        && request.resource.data.role == "member"
+        && request.resource.data.email == request.auth.token.email;
 
-    match /music/{musicId} {
-      allow read: if signedIn();
-      allow create, update, delete: if isAdmin();
+      // User bisa membaca profil sendiri.
+      // Admin bisa membaca semua user.
+      allow read: if signedIn()
+        && (
+          request.auth.uid == userId
+          || isAdmin()
+        );
+
+      // Member hanya boleh mengubah data profil.
+      // Tidak boleh mengubah role.
+      allow update: if signedIn()
+        && request.auth.uid == userId
+        && request.resource.data.diff(resource.data)
+          .affectedKeys()
+          .hasOnly([
+            "name",
+            "email",
+            "photoURL",
+            "updatedAt"
+          ])
+        && request.resource.data.role == resource.data.role;
+
+      // Admin dapat mengubah data user,
+      // termasuk role.
+      allow update: if isAdmin();
+
+      // Hanya Admin yang dapat menghapus user.
+      allow delete: if isAdmin();
     }
   }
 }
