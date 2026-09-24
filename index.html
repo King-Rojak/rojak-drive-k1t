@@ -845,6 +845,104 @@
       background: var(--orange-hover);
     }
 
+
+    /* ================================
+       LOCAL MUSIC PLAYER
+    ================================= */
+    .music-section {
+      margin-top: 8px;
+      overflow: hidden;
+      border: 1px solid var(--border);
+      border-radius: 6px;
+      background: var(--panel);
+    }
+    .music-header {
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:10px;
+      padding:10px 12px;
+      border-bottom:1px solid var(--border);
+    }
+    .music-title {
+      color:var(--muted);
+      font-size:8px;
+      font-weight:600;
+    }
+    .music-refresh {
+      border:1px solid var(--border);
+      border-radius:4px;
+      background:transparent;
+      color:var(--muted);
+      padding:5px 8px;
+      font-size:7px;
+    }
+    .music-body { padding:10px 12px; }
+    .music-now {
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+    .music-icon {
+      width:38px;height:38px;flex:0 0 38px;
+      display:grid;place-items:center;
+      border:1px solid var(--border);
+      border-radius:50%;
+      color:var(--orange);
+      font-size:15px;
+      background:#151613;
+    }
+    .music-name {
+      min-width:0;flex:1;
+      overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      color:var(--text);font-size:9px;font-weight:700;
+    }
+    .music-sub { margin-top:3px;color:var(--muted);font-size:7px; }
+    .music-seek {
+      display:grid;grid-template-columns:30px 1fr 30px;
+      align-items:center;gap:6px;margin-top:9px;
+      color:var(--muted);font-size:7px;
+    }
+    .music-seek input,.music-volume input {
+      width:100%;accent-color:var(--orange);
+    }
+    .music-controls {
+      display:flex;justify-content:center;align-items:center;gap:7px;margin-top:8px;
+    }
+    .music-btn {
+      width:29px;height:29px;padding:0;
+      border:1px solid var(--border);border-radius:5px;
+      background:transparent;color:var(--muted);font-size:9px;font-weight:700;
+    }
+    .music-btn:hover { background:var(--panel-2);color:var(--text); }
+    .music-main {
+      border-color:var(--orange);background:var(--orange);color:#fff;
+    }
+    .music-options {
+      display:flex;align-items:center;gap:7px;margin-top:8px;
+    }
+    .music-volume {
+      display:flex;align-items:center;gap:5px;flex:1;color:var(--muted);font-size:7px;
+    }
+    .music-toggle {
+      padding:6px 8px;border:1px solid var(--border);border-radius:5px;
+      background:transparent;color:var(--muted);font-size:7px;
+    }
+    .music-toggle.active { border-color:var(--orange);color:var(--orange); }
+    .music-list { margin-top:9px;border-top:1px solid var(--border); }
+    .music-item {
+      display:flex;align-items:center;gap:8px;min-height:35px;
+      border-bottom:1px solid var(--border-soft);cursor:pointer;padding:6px 3px;
+    }
+    .music-item:hover,.music-item.active { background:#151613; }
+    .music-item.active .music-item-name { color:var(--orange); }
+    .music-item-num { width:18px;text-align:center;color:var(--muted);font-size:7px; }
+    .music-item-name {
+      min-width:0;flex:1;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;
+      color:var(--text);font-size:8px;
+    }
+    .music-empty { padding:12px 4px;color:var(--muted);font-size:7px;line-height:1.5; }
+
     /* ================================
        SPOTIFY
     ================================= */
@@ -1581,25 +1679,56 @@
       </section>
 
 
-      <!-- SPOTIFY -->
 
-      <section class="spotify-section">
+      <!-- LOCAL MUSIC PLAYER -->
 
-        <div class="spotify-title">
-          MY PLAYLIST - KING ROJAK
+      <section class="music-section">
+
+        <div class="music-header">
+          <div class="music-title">LOCAL MUSIC - KING ROJAK</div>
+          <button id="musicRefresh" class="music-refresh" type="button">Refresh</button>
         </div>
 
-        <iframe
-          class="spotify"
-          src="https://open.spotify.com/embed/playlist/62BORDwM23XQGzlFvXZNvy?utm_source=generator&theme=0"
-          title="MY PLAYLIST - KING ROJAK"
-          allow="autoplay; clipboard-write; encrypted-media; fullscreen; picture-in-picture"
-          loading="lazy"
-        ></iframe>
+        <div class="music-body">
+
+          <div class="music-now">
+            <div id="musicIcon" class="music-icon">♪</div>
+            <div>
+              <div id="musicName" class="music-name">Belum ada lagu</div>
+              <div id="musicSub" class="music-sub">Upload lagu ke folder music</div>
+            </div>
+          </div>
+
+          <audio id="musicAudio" preload="metadata"></audio>
+
+          <div class="music-seek">
+            <span id="musicCurrent">0:00</span>
+            <input id="musicSeek" type="range" min="0" max="100" value="0" step="0.1">
+            <span id="musicDuration">0:00</span>
+          </div>
+
+          <div class="music-controls">
+            <button id="musicPrev" class="music-btn" type="button">‹</button>
+            <button id="musicPlay" class="music-btn music-main" type="button">▶</button>
+            <button id="musicNext" class="music-btn" type="button">›</button>
+          </div>
+
+          <div class="music-options">
+            <label class="music-volume">
+              VOL
+              <input id="musicVolume" type="range" min="0" max="1" value="0.8" step="0.01">
+            </label>
+            <button id="musicShuffle" class="music-toggle" type="button">Shuffle: Off</button>
+            <button id="musicLoop" class="music-toggle" type="button">Loop: Off</button>
+          </div>
+
+          <div id="musicList" class="music-list">
+            <div class="music-empty">Memuat playlist...</div>
+          </div>
+
+        </div>
 
       </section>
-
-
       <div class="footer">
         Rojak DriveK1t
       </div>
@@ -3333,6 +3462,244 @@
         }
 
       };
+
+
+
+    /* =========================================
+       LOCAL MUSIC PLAYER
+    ========================================== */
+
+    const musicAudio = $("musicAudio");
+
+    const musicPlayer = {
+      tracks: [],
+      index: -1,
+      shuffle: false,
+      loop: false
+    };
+
+    function musicEscape(value) {
+      return String(value)
+        .replace(/&/g, "&amp;")
+        .replace(/</g, "&lt;")
+        .replace(/>/g, "&gt;")
+        .replace(/"/g, "&quot;")
+        .replace(/'/g, "&#039;");
+    }
+
+    function musicTime(seconds) {
+      if (!Number.isFinite(seconds)) return "0:00";
+      const m = Math.floor(seconds / 60);
+      const s = Math.floor(seconds % 60).toString().padStart(2, "0");
+      return m + ":" + s;
+    }
+
+    function renderMusic() {
+      const list = $("musicList");
+      list.innerHTML = "";
+
+      if (!musicPlayer.tracks.length) {
+        list.innerHTML =
+          '<div class="music-empty">' +
+          'Belum ada lagu. Upload file ke folder <b>music</b> lalu isi <b>playlist.json</b>.' +
+          '</div>';
+        return;
+      }
+
+      musicPlayer.tracks.forEach((track, i) => {
+        const item = document.createElement("div");
+        item.className = "music-item" + (i === musicPlayer.index ? " active" : "");
+        item.innerHTML =
+          '<div class="music-item-num">' + (i + 1) + '</div>' +
+          '<div class="music-item-name">' + musicEscape(track.title) + '</div>';
+        item.onclick = () => loadMusic(i, true);
+        list.appendChild(item);
+      });
+    }
+
+    function updateMusicActive() {
+      document.querySelectorAll(".music-item").forEach((item, i) => {
+        item.classList.toggle("active", i === musicPlayer.index);
+      });
+    }
+
+    function loadMusic(index, autoplay = false) {
+      if (!musicPlayer.tracks.length) return;
+      if (index < 0 || index >= musicPlayer.tracks.length) return;
+
+      musicPlayer.index = index;
+      const track = musicPlayer.tracks[index];
+
+      musicAudio.src = track.src;
+      musicAudio.load();
+
+      $("musicName").textContent = track.title;
+      $("musicSub").textContent =
+        "Track " + (index + 1) + " dari " + musicPlayer.tracks.length;
+
+      $("musicCurrent").textContent = "0:00";
+      $("musicDuration").textContent = "0:00";
+      $("musicSeek").value = 0;
+
+      updateMusicActive();
+
+      if (autoplay) {
+        musicAudio.play().catch(() => {});
+      }
+    }
+
+    function playMusic() {
+      if (!musicPlayer.tracks.length) return;
+
+      if (musicPlayer.index === -1) {
+        loadMusic(0, true);
+        return;
+      }
+
+      musicAudio.play().catch(() => {});
+    }
+
+    function nextMusic() {
+      if (!musicPlayer.tracks.length) return;
+
+      let next;
+      if (musicPlayer.shuffle && musicPlayer.tracks.length > 1) {
+        do {
+          next = Math.floor(Math.random() * musicPlayer.tracks.length);
+        } while (next === musicPlayer.index);
+      } else {
+        next = (musicPlayer.index + 1) % musicPlayer.tracks.length;
+      }
+
+      loadMusic(next, true);
+    }
+
+    function prevMusic() {
+      if (!musicPlayer.tracks.length) return;
+
+      if (musicAudio.currentTime > 3) {
+        musicAudio.currentTime = 0;
+        return;
+      }
+
+      const prev =
+        (musicPlayer.index - 1 + musicPlayer.tracks.length) %
+        musicPlayer.tracks.length;
+
+      loadMusic(prev, true);
+    }
+
+    async function loadMusicPlaylist() {
+      try {
+        const response = await fetch("./music/playlist.json?v=" + Date.now(), {
+          cache: "no-store"
+        });
+
+        if (!response.ok) throw new Error("playlist.json tidak ditemukan");
+
+        const data = await response.json();
+
+        musicPlayer.tracks = Array.isArray(data)
+          ? data
+              .filter(t => t && typeof t.src === "string")
+              .map(t => ({
+                title: String(t.title || t.src.split("/").pop()),
+                src: String(t.src)
+              }))
+          : [];
+
+        musicPlayer.index = -1;
+        musicAudio.pause();
+        musicAudio.removeAttribute("src");
+        musicAudio.load();
+
+        renderMusic();
+
+        if (musicPlayer.tracks.length) {
+          $("musicName").textContent = "Pilih lagu";
+          $("musicSub").textContent =
+            musicPlayer.tracks.length + " lagu tersedia";
+        } else {
+          $("musicName").textContent = "Playlist kosong";
+          $("musicSub").textContent = "Tambahkan lagu ke folder music";
+        }
+      } catch (error) {
+        console.warn("Music playlist:", error);
+        musicPlayer.tracks = [];
+        musicPlayer.index = -1;
+        renderMusic();
+        $("musicName").textContent = "Playlist belum dibuat";
+        $("musicSub").textContent = "Buat file music/playlist.json";
+      }
+    }
+
+    $("musicPlay").onclick = () => {
+      if (musicAudio.paused) playMusic();
+      else musicAudio.pause();
+    };
+
+    $("musicPrev").onclick = prevMusic;
+    $("musicNext").onclick = nextMusic;
+    $("musicRefresh").onclick = loadMusicPlaylist;
+
+    $("musicVolume").oninput = event => {
+      musicAudio.volume = Number(event.target.value);
+    };
+
+    $("musicShuffle").onclick = () => {
+      musicPlayer.shuffle = !musicPlayer.shuffle;
+      $("musicShuffle").textContent =
+        "Shuffle: " + (musicPlayer.shuffle ? "On" : "Off");
+      $("musicShuffle").classList.toggle("active", musicPlayer.shuffle);
+    };
+
+    $("musicLoop").onclick = () => {
+      musicPlayer.loop = !musicPlayer.loop;
+      $("musicLoop").textContent =
+        "Loop: " + (musicPlayer.loop ? "On" : "Off");
+      $("musicLoop").classList.toggle("active", musicPlayer.loop);
+    };
+
+    $("musicSeek").oninput = event => {
+      if (musicAudio.duration) {
+        musicAudio.currentTime =
+          (Number(event.target.value) / 100) * musicAudio.duration;
+      }
+    };
+
+    musicAudio.addEventListener("loadedmetadata", () => {
+      $("musicDuration").textContent = musicTime(musicAudio.duration);
+    });
+
+    musicAudio.addEventListener("timeupdate", () => {
+      $("musicCurrent").textContent = musicTime(musicAudio.currentTime);
+      if (musicAudio.duration) {
+        $("musicSeek").value =
+          (musicAudio.currentTime / musicAudio.duration) * 100;
+      }
+    });
+
+    musicAudio.addEventListener("play", () => {
+      $("musicPlay").textContent = "Ⅱ";
+      $("musicIcon").textContent = "♫";
+    });
+
+    musicAudio.addEventListener("pause", () => {
+      $("musicPlay").textContent = "▶";
+      $("musicIcon").textContent = "♪";
+    });
+
+    musicAudio.addEventListener("ended", () => {
+      if (musicPlayer.loop) {
+        musicAudio.currentTime = 0;
+        musicAudio.play().catch(() => {});
+      } else {
+        nextMusic();
+      }
+    });
+
+    musicAudio.volume = 0.8;
+    loadMusicPlaylist();
 
 
     /* =========================================
