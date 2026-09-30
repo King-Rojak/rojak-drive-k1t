@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://drivekit-rojak.vercel.app/sitemap.xml
