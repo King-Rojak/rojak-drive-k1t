@@ -1804,7 +1804,8 @@
 
       gapiInited: false,
       gisInited: false,
-      tokenClient: null
+      tokenClient: null,
+      tokenClientReady: false
 
     };
 
@@ -1936,7 +1937,9 @@
       signInWithRedirect,
       getRedirectResult,
       signOut,
-      onAuthStateChanged
+      onAuthStateChanged,
+      setPersistence,
+      browserLocalPersistence
     } from "https://www.gstatic.com/firebasejs/12.2.1/firebase-auth.js";
 
 
@@ -1969,6 +1972,169 @@
     const googleState =
       window.RDK_GOOGLE;
 
+
+    /* =========================================
+       DRIVE TOKEN STORAGE
+    ========================================= */
+
+    const DRIVE_TOKEN_KEY =
+      "rdk_drive_token_v1";
+
+
+    const DRIVE_EVER_KEY =
+      "rdk_drive_ever_connected_v1";
+
+
+    function saveDriveToken(
+      token,
+      expiresIn
+    ) {
+
+      try {
+
+        localStorage.setItem(
+
+          DRIVE_TOKEN_KEY,
+
+          JSON.stringify({
+
+            token,
+
+            expiresAt:
+              Date.now() +
+              (expiresIn * 1000) -
+              60000
+
+          })
+
+        );
+
+      } catch (e) {
+
+        console.error(
+          "saveDriveToken:",
+          e
+        );
+
+      }
+
+    }
+
+
+    function loadDriveToken() {
+
+      try {
+
+        const raw =
+          localStorage.getItem(
+            DRIVE_TOKEN_KEY
+          );
+
+
+        if (!raw) {
+          return null;
+        }
+
+
+        const data =
+          JSON.parse(raw);
+
+
+        if (
+          !data.token ||
+          !data.expiresAt
+        ) {
+          return null;
+        }
+
+
+        if (
+          Date.now() >=
+          data.expiresAt
+        ) {
+
+          localStorage.removeItem(
+            DRIVE_TOKEN_KEY
+          );
+
+          return null;
+
+        }
+
+
+        return data.token;
+
+      } catch (e) {
+
+        return null;
+
+      }
+
+    }
+
+
+    function clearDriveToken() {
+
+      try {
+
+        localStorage.removeItem(
+          DRIVE_TOKEN_KEY
+        );
+
+      } catch (e) {}
+
+    }
+
+
+    function hasEverConnectedDrive() {
+
+      try {
+
+        return (
+          localStorage.getItem(
+            DRIVE_EVER_KEY
+          ) === "1"
+        );
+
+      } catch (e) {
+
+        return false;
+
+      }
+
+    }
+
+
+    function markDriveEverConnected() {
+
+      try {
+
+        localStorage.setItem(
+          DRIVE_EVER_KEY,
+          "1"
+        );
+
+      } catch (e) {}
+
+    }
+
+
+    function unmarkDriveEverConnected() {
+
+      try {
+
+        localStorage.removeItem(
+          DRIVE_EVER_KEY
+        );
+
+      } catch (e) {}
+
+    }
+
+
+    /* =========================================
+       UI HELPERS
+    ========================================= */
 
     function showLogin() {
 
@@ -2035,6 +2201,80 @@
 
     }
 
+
+    function setDriveButtonConnected() {
+
+      const btn =
+        $("connectDriveButton");
+
+      btn.textContent =
+        "Connected";
+
+      btn.classList.add(
+        "connected"
+      );
+
+      btn.disabled =
+        false;
+
+    }
+
+
+    function setDriveButtonDisconnected() {
+
+      const btn =
+        $("connectDriveButton");
+
+      btn.textContent =
+        "Connect Drive";
+
+      btn.classList.remove(
+        "connected"
+      );
+
+      btn.disabled =
+        false;
+
+    }
+
+
+    function escapeHTML(
+      value
+    ) {
+
+      return String(value)
+
+        .replaceAll(
+          "&",
+          "&amp;"
+        )
+
+        .replaceAll(
+          "<",
+          "&lt;"
+        )
+
+        .replaceAll(
+          ">",
+          "&gt;"
+        )
+
+        .replaceAll(
+          '"',
+          "&quot;"
+        )
+
+        .replaceAll(
+          "'",
+          "&#039;"
+        );
+
+    }
+
+
+    /* =========================================
+       FIRESTORE PROFILE
+    ========================================= */
 
     async function ensureProfile(
       user
@@ -2118,6 +2358,7 @@
 
       const avatar =
         user.photoURL ||
+
         "https://www.gravatar.com/avatar/?d=mp";
 
 
@@ -2131,8 +2372,12 @@
 
       const displayName =
         user.displayName ||
-        user.email?.split("@")[0] ||
-        "User";
+
+        (
+          user.email
+            ? user.email.split("@")[0]
+            : "User"
+        );
 
 
       $("profileName").value =
@@ -2167,6 +2412,10 @@
 
     }
 
+
+    /* =========================================
+       LOGIN
+    ========================================= */
 
     async function loginGoogle() {
 
@@ -2210,17 +2459,26 @@
 
 
         if (
+
           error.code ===
             "auth/popup-blocked" ||
+
           error.code ===
-            "auth/popup-closed-by-user"
+            "auth/popup-closed-by-user" ||
+
+          error.code ===
+            "auth/cancelled-popup-request"
+
         ) {
 
           try {
 
             await signInWithRedirect(
+
               auth,
+
               new GoogleAuthProvider()
+
             );
 
             return;
@@ -2249,6 +2507,7 @@
 
           loginError(
             "Login gagal: " +
+
             (
               error.code ||
               error.message
@@ -2276,58 +2535,102 @@
       loginGoogle;
 
 
-    onAuthStateChanged(
-      auth,
-      async user => {
+    /* =========================================
+       INIT — PERSISTENCE + REDIRECT + AUTH
+    ========================================= */
 
-        if (!user) {
+    (async () => {
 
-          showLogin();
+      /* 1. Set persistence SEBELUM apapun */
 
-          return;
+      try {
 
-        }
+        await setPersistence(
+          auth,
+          browserLocalPersistence
+        );
 
+      } catch (e) {
 
-        $("loadingText").textContent =
-          "Memuat profil...";
-
-
-        try {
-
-          await loadProfile(
-            user
-          );
-
-        } catch (error) {
-
-          console.error(
-            error
-          );
-
-          showLogin();
-
-        }
+        console.error(
+          "setPersistence error:",
+          e
+        );
 
       }
-    );
 
 
-    try {
+      /* 2. Handle redirect result SEBELUM listener */
 
-      await getRedirectResult(
-        auth
+      try {
+
+        await getRedirectResult(
+          auth
+        );
+
+      } catch (error) {
+
+        console.error(
+          "Redirect result:",
+          error
+        );
+
+      }
+
+
+      /* 3. Baru pasang listener */
+
+      onAuthStateChanged(
+
+        auth,
+
+        async user => {
+
+          if (!user) {
+
+            showLogin();
+
+            return;
+
+          }
+
+
+          $("loadingText").textContent =
+            "Memuat profil...";
+
+
+          try {
+
+            await loadProfile(
+              user
+            );
+
+
+            /* 4. Restore Drive setelah login Firebase siap */
+
+            await trySilentDriveRestore();
+
+
+          } catch (error) {
+
+            console.error(
+              error
+            );
+
+            showLogin();
+
+          }
+
+        }
+
       );
 
-    } catch (error) {
+    })();
 
-      console.error(
-        "Redirect result:",
-        error
-      );
 
-    }
-
+    /* =========================================
+       GOOGLE API READY WAITER
+    ========================================= */
 
     async function waitForGoogle(
       timeout = 10000
@@ -2343,9 +2646,13 @@
       ) {
 
         if (
+
           googleState.gapiInited &&
+
           googleState.gisInited &&
+
           googleState.tokenClient
+
         ) {
 
           return true;
@@ -2354,9 +2661,9 @@
 
 
         await new Promise(
-          resolve =>
+          r =>
             setTimeout(
-              resolve,
+              r,
               200
             )
         );
@@ -2369,24 +2676,32 @@
     }
 
 
-    async function connectDrive() {
+    /* =========================================
+       DRIVE CONNECT (dengan silent refresh)
+    ========================================= */
+
+    async function connectDrive(
+      { silent = false } = {}
+    ) {
 
       const button =
         $("connectDriveButton");
 
 
-      button.disabled =
-        true;
+      if (!silent) {
 
+        button.disabled =
+          true;
 
-      button.textContent =
-        "Loading...";
+        button.textContent =
+          "Loading...";
 
+        setDriveStatus(
+          "Menghubungkan...",
+          "loading"
+        );
 
-      setDriveStatus(
-        "Menghubungkan...",
-        "loading"
-      );
+      }
 
 
       const ready =
@@ -2395,25 +2710,25 @@
 
       if (!ready) {
 
-        button.disabled =
-          false;
+        if (!silent) {
 
+          button.disabled =
+            false;
 
-        button.textContent =
-          "Connect Drive";
+          button.textContent =
+            "Connect Drive";
 
+          setDriveStatus(
+            "Google belum siap",
+            "error"
+          );
 
-        setDriveStatus(
-          "Google belum siap",
-          "error"
-        );
+          setStatus(
+            "Google Drive gagal dimuat. Coba refresh halaman.",
+            "error"
+          );
 
-
-        setStatus(
-          "Google Drive gagal dimuat. Coba refresh halaman.",
-          "error"
-        );
-
+        }
 
         return false;
 
@@ -2426,39 +2741,37 @@
           googleState.tokenClient.callback =
             response => {
 
-              button.disabled =
-                false;
-
-
               if (
                 response.error ||
                 !response.access_token
               ) {
 
-                button.textContent =
-                  "Connect Drive";
+                if (!silent) {
 
+                  button.disabled =
+                    false;
 
-                button.classList.remove(
-                  "connected"
-                );
+                  button.textContent =
+                    "Connect Drive";
 
+                  button.classList.remove(
+                    "connected"
+                  );
 
-                accessToken =
-                  null;
+                  accessToken =
+                    null;
 
+                  setDriveStatus(
+                    "Belum terhubung",
+                    "error"
+                  );
 
-                setDriveStatus(
-                  "Belum terhubung",
-                  "error"
-                );
+                  setStatus(
+                    "Izin Google Drive tidak diberikan.",
+                    "error"
+                  );
 
-
-                setStatus(
-                  "Izin Google Drive tidak diberikan.",
-                  "error"
-                );
-
+                }
 
                 resolve(false);
 
@@ -2479,13 +2792,20 @@
               });
 
 
-              button.textContent =
-                "Connected";
+              saveDriveToken(
 
+                response.access_token,
 
-              button.classList.add(
-                "connected"
+                response.expires_in ||
+                3600
+
               );
+
+
+              markDriveEverConnected();
+
+
+              setDriveButtonConnected();
 
 
               setDriveStatus(
@@ -2494,10 +2814,14 @@
               );
 
 
-              setStatus(
-                "Google Drive berhasil terhubung.",
-                "success"
-              );
+              if (!silent) {
+
+                setStatus(
+                  "Google Drive berhasil terhubung.",
+                  "success"
+                );
+
+              }
 
 
               resolve(true);
@@ -2510,7 +2834,9 @@
             googleState.tokenClient.requestAccessToken({
 
               prompt:
-                "consent"
+                silent
+                  ? ""
+                  : "consent"
 
             });
 
@@ -2521,24 +2847,25 @@
             );
 
 
-            button.disabled =
-              false;
+            if (!silent) {
 
+              button.disabled =
+                false;
 
-            button.textContent =
-              "Connect Drive";
+              button.textContent =
+                "Connect Drive";
 
+              setDriveStatus(
+                "Belum terhubung",
+                "error"
+              );
 
-            setDriveStatus(
-              "Belum terhubung",
-              "error"
-            );
+              setStatus(
+                "Gagal membuka Google Drive.",
+                "error"
+              );
 
-
-            setStatus(
-              "Gagal membuka Google Drive.",
-              "error"
-            );
+            }
 
 
             resolve(false);
@@ -2551,21 +2878,93 @@
     }
 
 
-    $("connectDriveButton").onclick =
-      async () => {
+    /* =========================================
+       RESTORE DRIVE SAAT HALAMAN DIBUKA
+    ========================================= */
 
-        const connected =
-          await connectDrive();
+    async function trySilentDriveRestore() {
+
+      /* 1. Coba dari localStorage dulu */
+
+      const saved =
+        loadDriveToken();
 
 
-        if (connected) {
+      if (saved) {
+
+        accessToken =
+          saved;
+
+
+        try {
+
+          window.gapi.client.setToken({
+
+            access_token:
+              saved
+
+          });
+
+        } catch (e) {}
+
+
+        setDriveButtonConnected();
+
+
+        setDriveStatus(
+          "Connected",
+          "connected"
+        );
+
+
+        await loadRecentFiles();
+
+
+        return true;
+
+      }
+
+
+      /* 2. Kalau belum ada tapi pernah connect → silent refresh */
+
+      if (hasEverConnectedDrive()) {
+
+        setDriveStatus(
+          "Memulihkan sesi...",
+          "loading"
+        );
+
+
+        const ok =
+          await connectDrive({
+            silent: true
+          });
+
+
+        if (ok) {
 
           await loadRecentFiles();
 
+          return true;
+
         }
 
-      };
 
+        setDriveStatus(
+          "Belum terhubung"
+        );
+
+      }
+
+
+      return false;
+
+    }
+
+
+    /* =========================================
+       CREATE TXT
+    ========================================= */
 
     async function createTXT() {
 
@@ -2615,9 +3014,7 @@
 
 
         if (!connected) {
-
           return;
-
         }
 
       }
@@ -2636,8 +3033,7 @@
 
       const metadata = {
 
-        name:
-          name,
+        name,
 
         mimeType:
           "text/plain"
@@ -2662,12 +3058,19 @@
 
 
       const body =
+
         delimiter +
+
         "Content-Type: application/json; charset=UTF-8\r\n\r\n" +
+
         JSON.stringify(metadata) +
+
         delimiter +
+
         "Content-Type: text/plain\r\n\r\n" +
+
         content +
+
         closeDelimiter;
 
 
@@ -2704,8 +3107,7 @@
 
               },
 
-              body:
-                body
+              body
 
             }
 
@@ -2720,19 +3122,15 @@
             null;
 
 
+          clearDriveToken();
+
+
           window.gapi.client.setToken(
             null
           );
 
 
-          $("connectDriveButton")
-            .classList.remove(
-              "connected"
-            );
-
-
-          $("connectDriveButton").textContent =
-            "Connect Drive";
+          setDriveButtonDisconnected();
 
 
           setDriveStatus(
@@ -2804,6 +3202,7 @@
           "error"
         );
 
+
       } finally {
 
         $("createButton").disabled =
@@ -2832,17 +3231,19 @@
       };
 
 
+    /* =========================================
+       RECENT FILES
+    ========================================= */
+
     async function loadRecentFiles() {
 
       if (!accessToken) {
 
         $("filesList").innerHTML =
 
-          `
-            <div class="empty">
-              Hubungkan Google Drive terlebih dahulu.
-            </div>
-          `;
+          `<div class="empty">
+            Hubungkan Google Drive terlebih dahulu.
+          </div>`;
 
         return;
 
@@ -2853,11 +3254,9 @@
 
         $("filesList").innerHTML =
 
-          `
-            <div class="empty">
-              Memuat file...
-            </div>
-          `;
+          `<div class="empty">
+            Memuat file...
+          </div>`;
 
 
         const response =
@@ -2887,11 +3286,9 @@
 
           $("filesList").innerHTML =
 
-            `
-              <div class="empty">
-                Belum ada file.
-              </div>
-            `;
+            `<div class="empty">
+              Belum ada file.
+            </div>`;
 
           return;
 
@@ -2905,11 +3302,13 @@
 
                 const date =
                   file.modifiedTime
+
                     ? new Date(
                         file.modifiedTime
                       ).toLocaleString(
                         "id-ID"
                       )
+
                     : "-";
 
 
@@ -2975,11 +3374,9 @@
 
         $("filesList").innerHTML =
 
-          `
-            <div class="empty">
-              Gagal memuat file.
-            </div>
-          `;
+          `<div class="empty">
+            Gagal memuat file.
+          </div>`;
 
       }
 
@@ -2987,11 +3384,8 @@
 
 
     $("refreshFilesButton").onclick =
-      async () => {
-
-        await loadRecentFiles();
-
-      };
+      () =>
+        loadRecentFiles();
 
 
     async function openFile(
@@ -3003,8 +3397,7 @@
         const response =
           await window.gapi.client.drive.files.get({
 
-            fileId:
-              fileId,
+            fileId,
 
             fields:
               "id,name,mimeType,webViewLink"
@@ -3019,6 +3412,7 @@
         window.open(
 
           file.webViewLink ||
+
           (
             "https://drive.google.com/file/d/" +
             fileId +
@@ -3056,9 +3450,7 @@
 
 
           if (!connected) {
-
             return;
-
           }
 
         }
@@ -3071,6 +3463,10 @@
 
       };
 
+
+    /* =========================================
+       PROFILE MODAL
+    ========================================= */
 
     function openProfile() {
 
@@ -3111,9 +3507,7 @@
       async () => {
 
         if (!currentUser) {
-
           return;
-
         }
 
 
@@ -3156,8 +3550,7 @@
 
             {
 
-              name:
-                name,
+              name,
 
               updatedAt:
                 serverTimestamp()
@@ -3206,6 +3599,10 @@
       };
 
 
+    /* =========================================
+       ADMIN & LOGOUT
+    ========================================= */
+
     $("adminButton").onclick =
       () => {
 
@@ -3249,6 +3646,11 @@
             null;
 
 
+          clearDriveToken();
+
+          unmarkDriveEverConnected();
+
+
           if (
             window.gapi &&
             window.gapi.client
@@ -3261,14 +3663,7 @@
           }
 
 
-          $("connectDriveButton")
-            .classList.remove(
-              "connected"
-            );
-
-
-          $("connectDriveButton").textContent =
-            "Connect Drive";
+          setDriveButtonDisconnected();
 
 
           setDriveStatus(
@@ -3292,6 +3687,10 @@
       };
 
 
+    /* =========================================
+       TABS
+    ========================================= */
+
     document
       .querySelectorAll(".tab")
       .forEach(
@@ -3304,26 +3703,20 @@
               document
                 .querySelectorAll(".tab")
                 .forEach(
-                  item => {
-
-                    item.classList.remove(
+                  t =>
+                    t.classList.remove(
                       "active"
-                    );
-
-                  }
+                    )
                 );
 
 
               document
                 .querySelectorAll(".panel")
                 .forEach(
-                  panel => {
-
-                    panel.classList.remove(
+                  p =>
+                    p.classList.remove(
                       "active"
-                    );
-
-                  }
+                    )
                 );
 
 
@@ -3360,6 +3753,10 @@
         }
       );
 
+
+    /* =========================================
+       MISC LISTENERS
+    ========================================= */
 
     $("profileModal").addEventListener(
       "click",
@@ -3414,40 +3811,6 @@
 
         }
       );
-
-
-    function escapeHTML(
-      value
-    ) {
-
-      return String(value)
-
-        .replaceAll(
-          "&",
-          "&amp;"
-        )
-
-        .replaceAll(
-          "<",
-          "&lt;"
-        )
-
-        .replaceAll(
-          ">",
-          "&gt;"
-        )
-
-        .replaceAll(
-          '"',
-          "&quot;"
-        )
-
-        .replaceAll(
-          "'",
-          "&#039;"
-        );
-
-    }
 
   </script>
 
