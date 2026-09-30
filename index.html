@@ -1804,8 +1804,7 @@
 
       gapiInited: false,
       gisInited: false,
-      tokenClient: null,
-      tokenClientReady: false
+      tokenClient: null
 
     };
 
@@ -2677,8 +2676,12 @@
 
 
     /* =========================================
-       DRIVE CONNECT (dengan silent refresh)
+       DRIVE CONNECT
     ========================================= */
+
+    let connectInFlight =
+      false;
+
 
     async function connectDrive(
       { silent = false } = {}
@@ -2686,6 +2689,15 @@
 
       const button =
         $("connectDriveButton");
+
+
+      if (connectInFlight) {
+        return false;
+      }
+
+
+      connectInFlight =
+        true;
 
 
       if (!silent) {
@@ -2709,6 +2721,10 @@
 
 
       if (!ready) {
+
+        connectInFlight =
+          false;
+
 
         if (!silent) {
 
@@ -2738,8 +2754,60 @@
       return new Promise(
         resolve => {
 
+          let settled =
+            false;
+
+
+          const finish =
+            ok => {
+
+              if (settled) {
+                return;
+              }
+
+
+              settled =
+                true;
+
+              connectInFlight =
+                false;
+
+
+              if (!silent) {
+
+                button.disabled =
+                  false;
+
+              }
+
+
+              resolve(ok);
+
+            };
+
+
+          const timeoutId =
+            setTimeout(
+              () => {
+
+                console.warn(
+                  "Drive connect timeout"
+                );
+
+                finish(false);
+
+              },
+              60000
+            );
+
+
           googleState.tokenClient.callback =
             response => {
+
+              clearTimeout(
+                timeoutId
+              );
+
 
               if (
                 response.error ||
@@ -2747,9 +2815,6 @@
               ) {
 
                 if (!silent) {
-
-                  button.disabled =
-                    false;
 
                   button.textContent =
                     "Connect Drive";
@@ -2773,7 +2838,7 @@
 
                 }
 
-                resolve(false);
+                finish(false);
 
                 return;
 
@@ -2824,7 +2889,7 @@
               }
 
 
-              resolve(true);
+              finish(true);
 
             };
 
@@ -2842,15 +2907,16 @@
 
           } catch (error) {
 
+            clearTimeout(
+              timeoutId
+            );
+
             console.error(
               error
             );
 
 
             if (!silent) {
-
-              button.disabled =
-                false;
 
               button.textContent =
                 "Connect Drive";
@@ -2868,7 +2934,7 @@
             }
 
 
-            resolve(false);
+            finish(false);
 
           }
 
@@ -2882,9 +2948,20 @@
        RESTORE DRIVE SAAT HALAMAN DIBUKA
     ========================================= */
 
+    let driveRestoreDone =
+      false;
+
+
     async function trySilentDriveRestore() {
 
-      /* 1. Coba dari localStorage dulu */
+      if (driveRestoreDone) {
+        return false;
+      }
+
+
+      driveRestoreDone =
+        true;
+
 
       const saved =
         loadDriveToken();
@@ -2925,8 +3002,6 @@
       }
 
 
-      /* 2. Kalau belum ada tapi pernah connect → silent refresh */
-
       if (hasEverConnectedDrive()) {
 
         setDriveStatus(
@@ -2935,24 +3010,42 @@
         );
 
 
-        const ok =
-          await connectDrive({
-            silent: true
-          });
+        connectDrive({ silent: true })
+          .then(
+            async ok => {
 
+              if (ok) {
 
-        if (ok) {
+                await loadRecentFiles();
 
-          await loadRecentFiles();
+              } else {
 
-          return true;
+                setDriveStatus(
+                  "Belum terhubung"
+                );
 
-        }
+                setDriveButtonDisconnected();
 
+              }
 
-        setDriveStatus(
-          "Belum terhubung"
-        );
+            }
+          )
+          .catch(
+            err => {
+
+              console.error(
+                "silent restore error:",
+                err
+              );
+
+              setDriveStatus(
+                "Belum terhubung"
+              );
+
+              setDriveButtonDisconnected();
+
+            }
+          );
 
       }
 
